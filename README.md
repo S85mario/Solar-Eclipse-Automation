@@ -1,18 +1,15 @@
-# SolarEclipse2026
-Automate DSLR/Mirrorless cameras for the 2026 Total Solar Eclipse via digiCamControl. Features smart C2 diamond ring burst &amp; continuous HDR corona bracketing.
+# Universal Total Solar Eclipse Automation Script
 
+An advanced Python automation script designed to orchestrate DSLR/Mirrorless camera operations during **any Total Solar Eclipse worldwide**. 
 
-# Solar Eclipse 2026 Automation Script
-
-An advanced Python automation script designed to orchestrate DSLR/Mirrorless camera operations during the **Total Solar Eclipse on August 12, 2026, in Northern Spain**. 
-
-Utilizing the `digiCamControl` CLI interface (`CameraControlRemoteCmd.exe`), this script completely automates tethered shooting across all critical eclipse phases. It eliminates human error and hardware communication latency, allowing photographers to focus entirely on the experience.
+Utilizing the `digiCamControl` CLI interface (`CameraControlRemoteCmd.exe`), this script completely automates tethered shooting across all critical eclipse phases. By accurately calculating and tracking contact times, it eliminates human error and hardware communication latency, allowing photographers to focus entirely on the astronomical event.
 
 ## Key Features
 
-* **Dual-Phase Partial Tracking:** Independent interval configurations for Ingress (C1 -> C2) and Egress (C3 -> C4) to perfectly handle atmospheric extinction as the Sun approaches the horizon.
-* **Smart Diamond Ring Burst (C2):** Minimizes USB command overhead by locking the shutter speed and firing a rapid 4-shot sequence per exposure level, maximizing the chances of capturing Baily's Beads and the perfect diamond flash.
-* **Continuous Corona Bracketing:** Seamless, high-dynamic-range (HDR) looping sequence covering up to 17 exposure values ($1/8000s$ to $4s$) during the brief totality window.
+* **Universal & Fully Configurable:** Easily adaptable to any eclipse date, time, and geographical location by simply updating the local contact timestamps (C1, C2, C3, and C4).
+* **Dual-Phase Partial Tracking:** Independent interval configurations for Ingress (C1 -> C2) and Egress (C3 -> C4) to perfectly handle changing light levels and atmospheric extinction as the Sun changes altitude.
+* **Smart Diamond Ring Burst (C2/C3):** Minimizes USB command overhead by locking the shutter speed and firing a rapid 4-shot sequence per exposure level, maximizing the chances of capturing Baily's Beads and the perfect diamond flash.
+* **Continuous Corona Bracketing:** Seamless, high-dynamic-range (HDR) looping sequence covering up to 17 exposure values (from ultra-fast speeds like $1/8000s$ down to multi-second long exposures) during the brief totality window.
 * **Integrated Simulation Engine (`SimClock`):** Built-in time acceleration clock allows you to thoroughly test and review your entire sequence timeline within seconds at home before hitting the field.
 * **Acoustic Warning System:** Uses system-level audio cues to alert you precisely when to remove and reinstall the physical solar ND filter.
 
@@ -21,11 +18,11 @@ Utilizing the `digiCamControl` CLI interface (`CameraControlRemoteCmd.exe`), thi
 ## Architecture & Logic Flow
 
 1. **Pre-Eclipse Phase:** Monitors the clock until Contact 1 (C1).
-2. **Partial Ingress Phase:** Fires a set number of shots spaced out evenly (e.g., every 18 minutes).
-3. **The C2 Window (-12s to +3s from Totality):** Triggers audio alert to remove the solar filter, changes shutter speed to fast safety margins, and shoots rapid 4-photo cycles.
-4. **Totality Core (C2 +3s to C3):** Loops through the deep bracketing stack continuously. Triggers a safety warning 20 seconds before C3.
-5. **Contact 3 (C3):** Sounds a critical alarm to slide the solar filter back on, resets exposure to standard baselines.
-6. **Partial Egress Phase:** Fires symmetrically timed shots down to the horizon/C4 limit.
+2. **Partial Ingress Phase:** Fires a set number of shots spaced out evenly based on the ingress duration.
+3. **The C2 Window (Pre-Totality):** Triggers an audio alert to remove the solar filter, changes shutter speed to fast safety margins, and shoots rapid 4-photo cycles to capture the Diamond Ring.
+4. **Totality Core (C2 to C3):** Loops through the deep bracketing stack continuously to capture the solar corona. Triggers a safety warning 20 seconds before C3.
+5. **Contact 3 (C3):** Sounds a critical alarm to slide the solar filter back on and resets exposure to standard baselines.
+6. **Partial Egress Phase:** Fires symmetrically timed shots down to Contact 4 (C4) or sunset.
 
 ---
 
@@ -43,18 +40,19 @@ Utilizing the `digiCamControl` CLI interface (`CameraControlRemoteCmd.exe`), thi
 
 ## Configuration
 
-Open the script file and update the parameters in the top section:
+To adapt the script to your specific eclipse site, open the file and update the parameters in the top section with your local contact coordinates:
 
 ```python
 # Path to digiCamControl remote CLI tool
 CMD_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe"
 
-# Real local contact timings based on your specific coordination site 
-P1_START       = datetime_time(19, 30, 0)
-TOTALITY_START = datetime_time(20, 27, 0)
-TOTALITY_END   = datetime_time(20, 28, 45)
-P3_END         = datetime_time(21, 15, 0)
+# Real local contact timings based on your exact observation site
+# (Defaults configured for the August 12, 2026 Eclipse in Northern Spain)
+P1_START       = datetime_time(19, 30, 0)   # C1: Partial phase starts
+TOTALITY_START = datetime_time(20, 27, 0)   # C2: Totality starts
+TOTALITY_END   = datetime_time(20, 28, 45)  # C3: Totality ends
+P3_END         = datetime_time(21, 15, 0)   # C4: Partial phase ends (or sunset limit)
 
-# Interval spacing in seconds
-INTERVAL_INGRESS = 1080  # 18 minutes split for 5 shots
-INTERVAL_EGRESS  = 690   # 11.5 minutes split for 5 shots
+# Custom interval spacing in seconds
+INTERVAL_INGRESS = 1080  # Spacing between partial shots before totality
+INTERVAL_EGRESS  = 690   # Spacing between partial shots after totality
