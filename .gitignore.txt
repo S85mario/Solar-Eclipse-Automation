@@ -1,0 +1,42 @@
+# Cache di Python (file compilati automaticamente)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambienti virtuali (se usi venv)
+venv/
+.venv/
+env/
+ENV/
+
+# File di configurazione degli IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# File di sistema (Windows / macOS)
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# --- SPECIFICO PER FOTOGRAFIA / TEST ---
+# Evita di caricare su GitHub le foto scattate durante i test o i file RAW pesanti
+*.CR2
+*.CR3
+*.NEF
+*.ARW
+*.DNG
+*.raw
+*.JPG
+*.jpg
+*.jpeg
+*.tiff
+
+# Eventuali file di log generati da digiCamControl o dallo script
+*.log
