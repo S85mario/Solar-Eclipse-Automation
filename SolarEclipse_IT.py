@@ -8,7 +8,8 @@ from datetime import datetime, timedelta, time as datetime_time
 # ==============================================================================
 # CONFIGURAZIONE GLOBALE
 # ==============================================================================
-
+# Percorsi esecutivi di digiCamControl (GUI principale e Utility a riga di comando)
+GUI_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControl.exe"
 CMD_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe"
 LOG_FILE = "eclipse_log.txt"
 
@@ -39,22 +40,41 @@ AUDIO_METTI_FILTRO   = r"C:\Eclissi\Audio\metti_filtro.wav"
 # --- SCALETTA TEMPI PER DIAMOND RING BURST ---
 SHUTTER_SPEEDS_BURST = ["1/8000", "1/4000", "1/2000", "1/1000"]
 
-# --- SCALETTA TEMPI PER BRACKETING CORONA HDR ---
+# --- SCALETTA TEMPI PER BRACKETING CORONA HDR (AGGIORNATA CON NOTAZIONE HARDWARE) ---
 SHUTTER_SPEEDS_HDR = [
     "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
-    "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "1/2", "1", "2", "4"
+    "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", 
+    "0.5",  # Configurazione decimale nativa per la tua mirrorless
+    "1"
 ]
 
 # ==============================================================================
 # STRUMENTI DI SISTEMA (LOG, AUDIO, OROLOGIO)
 # ==============================================================================
+def start_digicamcontrol():
+    """Avvia automaticamente l'interfaccia grafica di digiCamControl in background"""
+    if SIM_MODE:
+        log_message("[SIM] Avvio automatico di digiCamControl simulato.")
+        return
+        
+    log_message("Verifica stato digiCamControl...")
+    if os.path.exists(GUI_PATH):
+        try:
+            subprocess.Popen([GUI_PATH])
+            log_message("Applicazione digiCamControl lanciata con successo.")
+            log_message("Attesa di 5 secondi per consentire il caricamento del software e l'handshake USB...")
+            time.sleep(5)
+        except Exception as e:
+            log_message(f"Incapace di avviare digiCamControl automaticamente: {e}", level="ERROR")
+    else:
+        log_message(f"Eseguibile GUI non trovato al percorso specificato: {GUI_PATH}", level="ERROR")
+
 
 def log_message(message, level="INFO"):
     """Scrive il log a schermo e contemporaneamente sul file di testo d'emergenza"""
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     formatted_msg = f"[{timestamp}] [{level}] {message}"
     
-    # Pulisce la riga del countdown prima di stampare un log fisso
     sys.stdout.write("\r" + " " * 80 + "\r")
     sys.stdout.flush()
     
@@ -102,7 +122,7 @@ def set_shutter_speed(shutter_speed):
         if "error" in result.stdout.lower() or result.returncode != 0:
             log_message(f"Errore hardware nel cambio tempo a {shutter_speed}: {result.stdout.strip()}", level="ERROR")
             return False
-        time.sleep(0.15)  # Delay di sincronizzazione firmware
+        time.sleep(0.15)  
         return True
     except Exception as e:
         log_message(f"Fallimento critico subprocess su set shutterspeed: {e}", level="ERROR")
@@ -125,16 +145,24 @@ def capture_image(phase_name):
         log_message(f"Fallimento critico subprocess su capture: {e}", level="ERROR")
         return False
 
-# ==============================================================================
-# VOCE 1: PRE-FLIGHT CHECKLIST (CONTROLLI INIZIALI MANDATORI)
-# ==============================================================================
 
 def run_preflight_checklist():
-    print("=" * 70)
+    # ----------------------------------------------------------------------
+    # NUOVA SEZIONE: STEP DI CONNESSIONE OBBLIGATORI (ANTI-BLOCCO USB)
+    # ----------------------------------------------------------------------
+    print("\n" + "!" * 75)
+    print("      ATTENZIONE: PROCEDURA DI CONNESSIONE HARDWARE OBBLIGATORIA")
+    print("!" * 75)
+    print("  1. ACCENDI LA FOTOCAMERA (assicurati che sia in modalità 'M').")
+    print("  2. COLLEGA IL CAVO USB al computer solo dopo averla accesa.")
+    print("  3. SE DA ERRORE DI CONNESSIONE:")
+    print("     -> Rimuovi la batteria della fotocamera, reinseriscila e ripeti.")
+    print("!" * 75)
+    input("\nHai eseguito la sequenza corretta? [Premi INVIO per confermare ed andare avanti] ")
+    print("\n" + "=" * 70)
     print("                CHECKLIST DI SICUREZZA PRE-ECLISSI")
     print("=" * 70)
     
-    # 1. Test di inizializzazione file di Log
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(f"\n--- NUOVA SESSIONE DI SCATTO: {datetime.now()} ---\n")
@@ -143,7 +171,6 @@ def run_preflight_checklist():
         print(f"[FALLITO] Impossibile creare il file di log: {e}. Esco per sicurezza.")
         sys.exit(1)
 
-    # 2. Test Audio hardware
     print("[... ] Avvio del test audio. Dovresti sentire un segnale acustico...")
     if not SIM_MODE:
         try:
@@ -153,7 +180,6 @@ def run_preflight_checklist():
     else:
         print("[ OK ] Test audio simulato superato.")
 
-    # 3. Test di connessione USB reale con la Mirrorless
     if not SIM_MODE:
         print("[... ] Verifica comunicazione USB con la fotocamera...")
         test_speed = "1/2000"
@@ -161,7 +187,7 @@ def run_preflight_checklist():
             result = subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", test_speed], capture_output=True, text=True)
             if "error" in result.stdout.lower() or result.returncode != 0:
                 print(f"\n[ERRORE CRITICO] La mirrorless ha rifiutato il comando di test! Risposta: {result.stdout.strip()}")
-                print("Verifica che la fotocamera sia accesa, su modalità 'M' e che il software digiCamControl sia aperto.")
+                print("Verifica la sequenza di accensione. Se si è bloccata, applica il punto 3 (Rimuovi Batteria).")
                 confirm = input("Vuoi forzare l'avvio dello script comunque? (s/n): ")
                 if confirm.lower() != 's':
                     sys.exit(1)
@@ -171,7 +197,6 @@ def run_preflight_checklist():
             print(f"[ERRORE] Impossibile eseguire CameraControlRemoteCmd.exe: {e}")
             sys.exit(1)
             
-    # 4. Checklist Manuale per il fotografo
     checklist_items = [
         "Filtro Solare inserito saldamente sull'obiettivo?",
         "Messa a fuoco impostata su MANUALE (MF) e bloccata sulle stelle/sole?",
@@ -188,7 +213,7 @@ def run_preflight_checklist():
     time.sleep(3)
 
 # ==============================================================================
-# LOGICA DI AUTOMAZIONE PRINCIPALE CON COUNTDOWN DINAMICO (VOCE 2 E 3)
+# LOGICA DI AUTOMAZIONE PRINCIPALE
 # ==============================================================================
 
 def run_eclipse_automation():
@@ -200,7 +225,7 @@ def run_eclipse_automation():
     
     clock = SimClock(P1_START, speed_up=SIM_SPEED_UP, active=SIM_MODE)
     
-    log_message("ENGINE ECLISSI ATTIVO - AGGIORNATO CON REQUISITI DI LIVE FIELD")
+    log_message("ENGINE ECLISSI ATTIVO")
     
     last_ingress_shot = dt_c1
     last_egress_shot = None
@@ -215,16 +240,17 @@ def run_eclipse_automation():
     c3_burst_done = False
     
     hdr_index = 0
+    hdr_shot_count = 0
+    hdr_sequence_done = False
+    
     last_countdown_update = 0
     
     while True:
         now = clock.get_now()
         timestamp_str = now.strftime('%H:%M:%S')
         
-        # Intervallo del ciclo principale leggero
         time.sleep(0.05 if SIM_MODE else 0.1)
         
-        # --- SEZIONE DEL COUNTDOWN DINAMICO IN TEMPO REALE (VOCE 2) ---
         current_epoch = time.time()
         if current_epoch - last_countdown_update >= 1.0:
             last_countdown_update = current_epoch
@@ -236,7 +262,8 @@ def run_eclipse_automation():
                 sys.stdout.write(f"\r[{timestamp_str}] Fase Parziale (Ingresso) | Tempo a C2: -{str(diff).split('.')[0]} ")
             elif now < dt_c3 and not c3_burst_done:
                 diff = dt_c3 - now
-                sys.stdout.write(f"\r[{timestamp_str}] TOTALITÀ IN CORSO | Fine della totalità C3 tra: {str(diff).split('.')[0]} ")
+                status_hdr = "In attesa" if hdr_sequence_done else f"Progresso {hdr_index}/{len(SHUTTER_SPEEDS_HDR)}"
+                sys.stdout.write(f"\r[{timestamp_str}] TOTALITÀ | HDR: {status_hdr} | Fine C3 tra: {str(diff).split('.')[0]} ")
             elif now < dt_c4:
                 diff = dt_c4 - now
                 sys.stdout.write(f"\r[{timestamp_str}] Fase Parziale (Uscita) | Fine Eclissi C4 tra: {str(diff).split('.')[0]} ")
@@ -262,7 +289,6 @@ def run_eclipse_automation():
                     play_alert(AUDIO_TOGLI_FILTRO)
                     alert_12s_done = True
                     
-                # BURST C2 (Anello di Diamante Ingresso)
                 if time_to_c2 <= 4 and not c2_burst_done:
                     log_message("INIZIO SEQUENZA BURST C2 (Diamond Ring & Baily's Beads)")
                     for speed in SHUTTER_SPEEDS_BURST:
@@ -288,7 +314,6 @@ def run_eclipse_automation():
                 play_alert(AUDIO_20_SEC)
                 alert_20s_done = True
                 
-            # BURST C3 (Anello di Diamante Uscita)
             if time_to_c3 <= 2 and not c3_burst_done:
                 log_message("INIZIO SEQUENZA BURST C3 (Diamond Ring Uscita)")
                 for speed in SHUTTER_SPEEDS_BURST:
@@ -297,12 +322,24 @@ def run_eclipse_automation():
                             capture_image(f"Diamond_Ring_Uscita_{speed.replace('/', '_')}_S{shot}")
                 c3_burst_done = True
             
-            # Sequenza Bracketing Corona HDR Continua
-            if time_to_c3 > 2:
+            if time_to_c3 > 2 and not hdr_sequence_done:
                 current_shutter = SHUTTER_SPEEDS_HDR[hdr_index]
-                if set_shutter_speed(current_shutter):
-                    capture_image("Corona_Totale_HDR")
-                hdr_index = (hdr_index + 1) % len(SHUTTER_SPEEDS_HDR)
+                
+                if hdr_shot_count == 0:
+                    set_shutter_speed(current_shutter)
+                
+                shot_num = hdr_shot_count + 1
+                clean_shutter_name = current_shutter.replace('/', '_').replace('.', '_')
+                capture_image(f"Corona_Totale_HDR_{clean_shutter_name}_S{shot_num}")
+                
+                hdr_shot_count += 1
+                if hdr_shot_count >= 2:
+                    hdr_shot_count = 0  
+                    hdr_index += 1      
+                    
+                    if hdr_index >= len(SHUTTER_SPEEDS_HDR):
+                        log_message("FINE SEQUENZA BRACKETING CORONA HDR. Tutti i tempi eseguiti doppi. Macchina in stand-by.")
+                        hdr_sequence_done = True
                 
         # ----------------------------------------------------------------------
         # FASE 4: ECLISSI PARZIALE USCITA (C3 -> C4)
@@ -325,6 +362,6 @@ def run_eclipse_automation():
             break
 
 if __name__ == "__main__":
-    # Avvia prima i controlli fisici e hardware, poi l'automazione temporizzata
+    start_digicamcontrol()
     run_preflight_checklist()
     run_eclipse_automation()

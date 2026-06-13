@@ -78,3 +78,66 @@
 [2026-06-12 17:20:51] [INFO] Scatto automatico Parziale Uscita #4
 [2026-06-12 17:20:51] [INFO] [SIM] Scatto eseguito: Parziale_Uscita
 [2026-06-12 17:21:01] [INFO] Contatto C4 superato. Fine dell'eclissi. Automazione terminata.
+
+--- NUOVA SESSIONE DI SCATTO: 2026-06-13 10:33:05.550385 ---
+[2026-06-13 10:33:20] [INFO] ENGINE ECLISSI ATTIVO - AGGIORNATO CON REQUISITI DI LIVE FIELD
+[2026-06-13 10:33:20] [INFO] Scatto automatico Parziale Ingresso #1
+[2026-06-13 10:33:23] [INFO] Scatto completato con successo: Parziale_Ingresso
+[2026-06-13 10:39:00] [INFO] T-60s a C2: Riproduzione avviso vocale.
+[2026-06-13 10:39:48] [INFO] T-12s: RIMOZIONE FILTRO SOLARE ORA!
+[2026-06-13 10:39:56] [INFO] INIZIO SEQUENZA BURST C2 (Diamond Ring & Baily's Beads)
+[2026-06-13 10:39:59] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_8000_S1
+[2026-06-13 10:40:01] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_8000_S2
+[2026-06-13 10:40:03] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_8000_S3
+[2026-06-13 10:40:05] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_8000_S4
+[2026-06-13 10:40:08] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_8000_S5
+[2026-06-13 10:40:11] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_4000_S1
+[2026-06-13 10:40:13] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_4000_S2
+[2026-06-13 10:40:15] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_4000_S3
+[2026-06-13 10:40:18] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_4000_S4
+[2026-06-13 10:40:20] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_4000_S5
+[2026-06-13 10:40:23] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_2000_S1
+[2026-06-13 10:40:25] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_2000_S2
+[2026-06-13 10:40:27] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_2000_S3
+[2026-06-13 10:40:29] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_2000_S4
+[2026-06-13 10:40:31] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_2000_S5
+[2026-06-13 10:40:34] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_1000_S1
+[2026-06-13 10:40:36] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_1000_S2
+[2026-06-13 10:40:39] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_1000_S3
+[2026-06-13 10:40:41] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_1000_S4
+[2026-06-13 10:40:43] [INFO] Scatto completato con successo: Diamond_Ring_Ingresso_1_1000_S5
+[2026-06-13 10:40:46] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:40:49] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:40:52] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:40:55] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:40:58] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:01] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:04] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:07] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:10] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:13] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:16] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:19] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:19] [ERROR] Errore hardware nel cambio tempo a 1/2: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:error;message:Wrong value 1/2 for property shutterspeed
+[2026-06-13 10:41:23] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:29] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:29] [INFO] T-20s a C3: Avviso fine totalità imminente.
+[2026-06-13 10:41:36] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:39] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:42] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:45] [INFO] Scatto completato con successo: Corona_Totale_HDR
+[2026-06-13 10:41:45] [INFO] C3 Superato: RIPRISTINARE IL FILTRO SOLARE IMMEDIATAMENTE!
+[2026-06-13 10:41:45] [INFO] Scatto automatico Parziale Uscita #1
+[2026-06-13 10:41:47] [INFO] Scatto completato con successo: Parziale_Uscita
+[2026-06-13 10:50:00] [INFO] Contatto C4 superato. Fine dell'eclissi. Automazione terminata.
+
+--- NUOVA SESSIONE DI SCATTO: 2026-06-13 11:15:23.326856 ---
+[2026-06-13 11:21:05] [INFO] Verifica stato digiCamControl...
+[2026-06-13 11:21:05] [INFO] Applicazione digiCamControl lanciata con successo.
+[2026-06-13 11:21:05] [INFO] Attesa di 5 secondi per consentire il caricamento del software e l'handshake USB...
+
+--- NUOVA SESSIONE DI SCATTO: 2026-06-13 11:22:10.927145 ---
+[2026-06-13 11:22:51] [INFO] ENGINE ECLISSI ATTIVO
+[2026-06-13 11:22:51] [INFO] Contatto C4 superato. Fine dell'eclissi. Automazione terminata.
