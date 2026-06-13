@@ -141,3 +141,9 @@
 --- NUOVA SESSIONE DI SCATTO: 2026-06-13 11:22:10.927145 ---
 [2026-06-13 11:22:51] [INFO] ENGINE ECLISSI ATTIVO
 [2026-06-13 11:22:51] [INFO] Contatto C4 superato. Fine dell'eclissi. Automazione terminata.
+[2026-06-13 11:40:46] [INFO] Verifica stato digiCamControl per profilo CANON...
+[2026-06-13 11:40:46] [INFO] Applicazione digiCamControl lanciata con successo.
+[2026-06-13 11:40:46] [INFO] Attesa di 5 secondi per l'inizializzazione dell'handshake USB...
+
+--- NUOVA SESSIONE DI SCATTO (CANON): 2026-06-13 11:40:56.436222 ---
+[2026-06-13 11:41:05] [INFO] ENGINE ECLISSI ATTIVO [PROFILO: CANON]

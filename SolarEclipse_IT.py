@@ -6,32 +6,63 @@ import subprocess
 from datetime import datetime, timedelta, time as datetime_time
 
 # ==============================================================================
-# CONFIGURAZIONE GLOBALE
+# CONFIGURAZIONE FOTOCAMERA E MARCHIO
 # ==============================================================================
-# Percorsi esecutivi di digiCamControl (GUI principale e Utility a riga di comando)
+
+# Scegli il tuo marchio: "CANON", "NIKON" oppure "SONY"
+CAMERA_BRAND = "CANON"  
+
+# --- PROFILI CODIFICA TEMPI HDR PER BRAND ---
+# digiCamControl interpreta la riga di comando in base al protocollo del firmware nativo.
+SHUTTER_PROFILES = {
+    "CANON": [
+        "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
+        "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", 
+        "0.5",  # Notazione decimale nativa Canon
+        "1"
+    ],
+    "NIKON": [
+        "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
+        "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", 
+        "1/2",  # Notazione frazionaria standard Nikon
+        "1"
+    ],
+    "SONY": [
+        "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
+        "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", 
+        "1/2",  # Sony (via MTP/Remote) solitamente si allinea allo standard frazionario
+        "1"
+    ]
+}
+
+# Assegnazione dinamica della scaletta HDR in base al brand selezionato
+if CAMERA_BRAND.upper() in SHUTTER_PROFILES:
+    SHUTTER_SPEEDS_HDR = SHUTTER_PROFILES[CAMERA_BRAND.upper()]
+else:
+    print(f"[ERRORE CRITICO] Marchio '{CAMERA_BRAND}' non supportato. Uso profilo standard CANON.")
+    SHUTTER_SPEEDS_HDR = SHUTTER_PROFILES["CANON"]
+
+# ==============================================================================
+# CONFIGURAZIONE GLOBALE SISTEMA
+# ==============================================================================
+
 GUI_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControl.exe"
 CMD_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe"
 LOG_FILE = "eclipse_log.txt"
 
-SIM_MODE = False        # Imposta su True per simulare l'intera eclissi a casa
-SIM_SPEED_UP = 1.0      # Fattore di accelerazione per i test (lascia 1.0 in live)
+SIM_MODE = False        
+SIM_SPEED_UP = 1.0      
 
-# Orari locali dei 4 Contatti dell'Eclissi usare per test reale a casa
-P1_START       = datetime_time(10, 30, 0)   
-TOTALITY_START = datetime_time(10, 40, 0)   
-TOTALITY_END   = datetime_time(10, 41, 45)  
-P3_END         = datetime_time(10, 50, 0) 
-'''
-# Orari locali dei 4 Contatti dell'Eclissi in location
+# Orari locali dei 4 Contatti dell'Eclissi
 P1_START       = datetime_time(19, 30, 0)   
 TOTALITY_START = datetime_time(20, 27, 0)   
 TOTALITY_END   = datetime_time(20, 28, 45)  
 P3_END         = datetime_time(21, 15, 0)   
-'''
+
 INTERVAL_INGRESS = 1080  
 INTERVAL_EGRESS  = 690   
 
-# --- PERCORSI FILE AUDIO LOCALIZZATI --- creare dei file audio ---
+# --- PERCORSI FILE AUDIO LOCALIZZATI ---
 AUDIO_1_MIN          = r"C:\Eclissi\Audio\manca_un_minuto.wav"
 AUDIO_TOGLI_FILTRO   = r"C:\Eclissi\Audio\togli_filtro.wav"
 AUDIO_20_SEC         = r"C:\Eclissi\Audio\mancano_20_secondi.wav"
@@ -40,29 +71,22 @@ AUDIO_METTI_FILTRO   = r"C:\Eclissi\Audio\metti_filtro.wav"
 # --- SCALETTA TEMPI PER DIAMOND RING BURST ---
 SHUTTER_SPEEDS_BURST = ["1/8000", "1/4000", "1/2000", "1/1000"]
 
-# --- SCALETTA TEMPI PER BRACKETING CORONA HDR (AGGIORNATA CON NOTAZIONE HARDWARE) ---
-SHUTTER_SPEEDS_HDR = [
-    "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
-    "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", 
-    "0.5",  # Configurazione decimale nativa per la tua mirrorless
-    "1"
-]
+# ==============================================================================
+# STRUMENTI DI SISTEMA (AVVIO SOFTWARE, LOG, AUDIO, OROLOGIO)
+# ==============================================================================
 
-# ==============================================================================
-# STRUMENTI DI SISTEMA (LOG, AUDIO, OROLOGIO)
-# ==============================================================================
 def start_digicamcontrol():
     """Avvia automaticamente l'interfaccia grafica di digiCamControl in background"""
     if SIM_MODE:
         log_message("[SIM] Avvio automatico di digiCamControl simulato.")
         return
         
-    log_message("Verifica stato digiCamControl...")
+    log_message(f"Verifica stato digiCamControl per profilo {CAMERA_BRAND}...")
     if os.path.exists(GUI_PATH):
         try:
             subprocess.Popen([GUI_PATH])
             log_message("Applicazione digiCamControl lanciata con successo.")
-            log_message("Attesa di 5 secondi per consentire il caricamento del software e l'handshake USB...")
+            log_message("Attesa di 5 secondi per l'inizializzazione dell'handshake USB...")
             time.sleep(5)
         except Exception as e:
             log_message(f"Incapace di avviare digiCamControl automaticamente: {e}", level="ERROR")
@@ -114,13 +138,13 @@ def play_alert(file_path):
 
 
 def set_shutter_speed(shutter_speed):
-    """Cambia il tempo di scatto sulla mirrorless usando la sintassi corretta"""
+    """Cambia il tempo di scatto sulla fotocamera usando la sintassi corretta per il brand"""
     if SIM_MODE:
         return True
     try:
         result = subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", shutter_speed], capture_output=True, text=True)
         if "error" in result.stdout.lower() or result.returncode != 0:
-            log_message(f"Errore hardware nel cambio tempo a {shutter_speed}: {result.stdout.strip()}", level="ERROR")
+            log_message(f"Errore hardware [{CAMERA_BRAND}] nel cambio tempo a {shutter_speed}: {result.stdout.strip()}", level="ERROR")
             return False
         time.sleep(0.15)  
         return True
@@ -137,7 +161,7 @@ def capture_image(phase_name):
     try:
         result = subprocess.run([CMD_PATH, "/c", "capture"], capture_output=True, text=True)
         if "error" in result.stdout.lower() or result.returncode != 0:
-            log_message(f"Errore hardware durante lo scatto {phase_name}: {result.stdout.strip()}", level="ERROR")
+            log_message(f"Errore hardware [{CAMERA_BRAND}] durante lo scatto {phase_name}: {result.stdout.strip()}", level="ERROR")
             return False
         log_message(f"Scatto completato con successo: {phase_name}")
         return True
@@ -148,11 +172,12 @@ def capture_image(phase_name):
 
 def run_preflight_checklist():
     # ----------------------------------------------------------------------
-    # NUOVA SEZIONE: STEP DI CONNESSIONE OBBLIGATORI (ANTI-BLOCCO USB)
+    # STEP DI CONNESSIONE OBBLIGATORI (ANTI-BLOCCO USB)
     # ----------------------------------------------------------------------
     print("\n" + "!" * 75)
     print("      ATTENZIONE: PROCEDURA DI CONNESSIONE HARDWARE OBBLIGATORIA")
     print("!" * 75)
+    print(f"  FOTOCAMERA SELEZIONATA: Profilo {CAMERA_BRAND}")
     print("  1. ACCENDI LA FOTOCAMERA (assicurati che sia in modalità 'M').")
     print("  2. COLLEGA IL CAVO USB al computer solo dopo averla accesa.")
     print("  3. SE DA ERRORE DI CONNESSIONE:")
@@ -165,7 +190,7 @@ def run_preflight_checklist():
     
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
-            f.write(f"\n--- NUOVA SESSIONE DI SCATTO: {datetime.now()} ---\n")
+            f.write(f"\n--- NUOVA SESSIONE DI SCATTO ({CAMERA_BRAND}): {datetime.now()} ---\n")
         print("[ OK ] File di log d'emergenza inizializzato correttamente.")
     except Exception as e:
         print(f"[FALLITO] Impossibile creare il file di log: {e}. Esco per sicurezza.")
@@ -181,13 +206,13 @@ def run_preflight_checklist():
         print("[ OK ] Test audio simulato superato.")
 
     if not SIM_MODE:
-        print("[... ] Verifica comunicazione USB con la fotocamera...")
+        print(f"[... ] Verifica comunicazione USB con fotocamera {CAMERA_BRAND}...")
         test_speed = "1/2000"
         try:
             result = subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", test_speed], capture_output=True, text=True)
             if "error" in result.stdout.lower() or result.returncode != 0:
-                print(f"\n[ERRORE CRITICO] La mirrorless ha rifiutato il comando di test! Risposta: {result.stdout.strip()}")
-                print("Verifica la sequenza di accensione. Se si è bloccata, applica il punto 3 (Rimuovi Batteria).")
+                print(f"\n[ERRORE CRITICO] La fotocamera {CAMERA_BRAND} ha rifiutato il comando di test! Risposta: {result.stdout.strip()}")
+                print("Verifica la sequenza di accensione o la compatibilità del driver in digiCamControl.")
                 confirm = input("Vuoi forzare l'avvio dello script comunque? (s/n): ")
                 if confirm.lower() != 's':
                     sys.exit(1)
@@ -202,14 +227,14 @@ def run_preflight_checklist():
         "Messa a fuoco impostata su MANUALE (MF) e bloccata sulle stelle/sole?",
         "La ghiera di scatto della fotocamera è fisicamente su 'M' (Manuale)?",
         "Alimentazione PC e fotocamera collegate (Powerbank/Batterie cariche)?",
-        "La mirrorless è impostata per salvare le foto *SOLO SU SCHEDA SD* interna?"
+        f"La macchina [{CAMERA_BRAND}] è impostata per salvare le foto *SOLO SU SCHEDA SD* interna?"
     ]
     
     print("\nConferma i seguenti punti fisici premendo INVIO:")
     for i, item in enumerate(checklist_items, 1):
         input(f"  [{i}/{len(checklist_items)}] {item} [Premi INVIO per confermare] ")
         
-    print("\n[ SUCCESS ] Checklist completata. Avvio dell'automation engine tra 3 secondi...\n")
+    print(f"\n[ SUCCESS ] Checklist completata per {CAMERA_BRAND}. Avvio dell'automation engine tra 3 secondi...\n")
     time.sleep(3)
 
 # ==============================================================================
@@ -225,7 +250,7 @@ def run_eclipse_automation():
     
     clock = SimClock(P1_START, speed_up=SIM_SPEED_UP, active=SIM_MODE)
     
-    log_message("ENGINE ECLISSI ATTIVO")
+    log_message(f"ENGINE ECLISSI ATTIVO [PROFILO: {CAMERA_BRAND}]")
     
     last_ingress_shot = dt_c1
     last_egress_shot = None
@@ -263,7 +288,7 @@ def run_eclipse_automation():
             elif now < dt_c3 and not c3_burst_done:
                 diff = dt_c3 - now
                 status_hdr = "In attesa" if hdr_sequence_done else f"Progresso {hdr_index}/{len(SHUTTER_SPEEDS_HDR)}"
-                sys.stdout.write(f"\r[{timestamp_str}] TOTALITÀ | HDR: {status_hdr} | Fine C3 tra: {str(diff).split('.')[0]} ")
+                sys.stdout.write(f"\r[{timestamp_str}] TOTALITÀ ({CAMERA_BRAND}) | HDR: {status_hdr} | Fine C3 tra: {str(diff).split('.')[0]} ")
             elif now < dt_c4:
                 diff = dt_c4 - now
                 sys.stdout.write(f"\r[{timestamp_str}] Fase Parziale (Uscita) | Fine Eclissi C4 tra: {str(diff).split('.')[0]} ")
