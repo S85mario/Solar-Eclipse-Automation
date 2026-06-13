@@ -1,0 +1,80 @@
+
+--- NUOVA SESSIONE DI SCATTO: 2026-06-12 17:17:56.720239 ---
+[2026-06-12 17:18:34] [INFO] ENGINE ECLISSI ATTIVO - AGGIORNATO CON REQUISITI DI LIVE FIELD
+[2026-06-12 17:18:40] [INFO] Scatto automatico Parziale Ingresso #1
+[2026-06-12 17:18:40] [INFO] [SIM] Scatto eseguito: Parziale_Ingresso
+
+--- NUOVA SESSIONE DI SCATTO: 2026-06-12 17:19:08.468882 ---
+[2026-06-12 17:19:15] [INFO] ENGINE ECLISSI ATTIVO - AGGIORNATO CON REQUISITI DI LIVE FIELD
+[2026-06-12 17:19:16] [INFO] Scatto automatico Parziale Ingresso #1
+[2026-06-12 17:19:16] [INFO] [SIM] Scatto eseguito: Parziale_Ingresso
+[2026-06-12 17:19:34] [INFO] Scatto automatico Parziale Ingresso #2
+[2026-06-12 17:19:34] [INFO] [SIM] Scatto eseguito: Parziale_Ingresso
+[2026-06-12 17:19:52] [INFO] Scatto automatico Parziale Ingresso #3
+[2026-06-12 17:19:52] [INFO] [SIM] Scatto eseguito: Parziale_Ingresso
+[2026-06-12 17:20:10] [INFO] Scatto automatico Parziale Ingresso #4
+[2026-06-12 17:20:10] [INFO] [SIM] Scatto eseguito: Parziale_Ingresso
+[2026-06-12 17:20:12] [INFO] T-60s a C2: Riproduzione avviso vocale.
+[2026-06-12 17:20:12] [INFO] [SIM - AUDIO] Riproduzione: manca_un_minuto.wav
+[2026-06-12 17:20:13] [INFO] T-12s: RIMOZIONE FILTRO SOLARE ORA!
+[2026-06-12 17:20:13] [INFO] [SIM - AUDIO] Riproduzione: togli_filtro.wav
+[2026-06-12 17:20:13] [INFO] INIZIO SEQUENZA BURST C2 (Diamond Ring & Baily's Beads)
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_8000_S1
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_8000_S2
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_8000_S3
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_8000_S4
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_8000_S5
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_4000_S1
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_4000_S2
+[2026-06-12 17:20:13] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_4000_S3
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_4000_S4
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_4000_S5
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_2000_S1
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_2000_S2
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_2000_S3
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_2000_S4
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_2000_S5
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_1000_S1
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_1000_S2
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_1000_S3
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_1000_S4
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Ingresso_1_1000_S5
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Corona_Totale_HDR
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Corona_Totale_HDR
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Corona_Totale_HDR
+[2026-06-12 17:20:14] [INFO] [SIM] Scatto eseguito: Corona_Totale_HDR
+[2026-06-12 17:20:15] [INFO] T-20s a C3: Avviso fine totalità imminente.
+[2026-06-12 17:20:15] [INFO] [SIM - AUDIO] Riproduzione: mancano_20_secondi.wav
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Corona_Totale_HDR
+[2026-06-12 17:20:15] [INFO] INIZIO SEQUENZA BURST C3 (Diamond Ring Uscita)
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_8000_S1
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_8000_S2
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_8000_S3
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_8000_S4
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_8000_S5
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_4000_S1
+[2026-06-12 17:20:15] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_4000_S2
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_4000_S3
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_4000_S4
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_4000_S5
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_2000_S1
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_2000_S2
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_2000_S3
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_2000_S4
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_2000_S5
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_1000_S1
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_1000_S2
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_1000_S3
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_1000_S4
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Diamond_Ring_Uscita_1_1000_S5
+[2026-06-12 17:20:16] [INFO] C3 Superato: RIPRISTINARE IL FILTRO SOLARE IMMEDIATAMENTE!
+[2026-06-12 17:20:16] [INFO] [SIM - AUDIO] Riproduzione: metti_filtro.wav
+[2026-06-12 17:20:16] [INFO] Scatto automatico Parziale Uscita #1
+[2026-06-12 17:20:16] [INFO] [SIM] Scatto eseguito: Parziale_Uscita
+[2026-06-12 17:20:28] [INFO] Scatto automatico Parziale Uscita #2
+[2026-06-12 17:20:28] [INFO] [SIM] Scatto eseguito: Parziale_Uscita
+[2026-06-12 17:20:39] [INFO] Scatto automatico Parziale Uscita #3
+[2026-06-12 17:20:39] [INFO] [SIM] Scatto eseguito: Parziale_Uscita
+[2026-06-12 17:20:51] [INFO] Scatto automatico Parziale Uscita #4
+[2026-06-12 17:20:51] [INFO] [SIM] Scatto eseguito: Parziale_Uscita
+[2026-06-12 17:21:01] [INFO] Contatto C4 superato. Fine dell'eclissi. Automazione terminata.

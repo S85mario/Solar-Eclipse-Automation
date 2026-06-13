@@ -1,247 +1,330 @@
+import os
+import sys
 import time
+import winsound
 import subprocess
-from datetime import datetime, time as datetime_time, timedelta
+from datetime import datetime, timedelta, time as datetime_time
 
 # ==============================================================================
-# ECLIPSE PARAMETERS & HARDWARE CONFIGURATIONS
+# CONFIGURAZIONE GLOBALE
 # ==============================================================================
-# Path to the digiCamControl executable
+
 CMD_PATH = r"C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe"
+LOG_FILE = "eclipse_log.txt"
 
-# --- REAL TIME CONFIGURATION (Eclipse August 12, 2026 - Northern Spain) ---
-P1_START       = datetime_time(19, 30, 0)   # Start of partial phase (C1)
-TOTALITY_START = datetime_time(20, 27, 0)   # Start of totality (C2)
-TOTALITY_END   = datetime_time(20, 28, 45)  # End of totality (C3)
-P3_END         = datetime_time(21, 15, 0)   # Observability limit / Sunset (C4)
+SIM_MODE = False        # Imposta su True per simulare l'intera eclissi a casa
+SIM_SPEED_UP = 1.0      # Fattore di accelerazione per i test (lascia 1.0 in live)
 
-# --- PARTIAL PHASE SHOT INTERVALS (in seconds) ---
-INTERVAL_INGRESS = 1080  # 18 minutes to distribute 5 equidistant shots during ingress
-INTERVAL_EGRESS  = 690   # 11.5 minutes to distribute 5 equidistant shots during egress
+# Orari locali dei 4 Contatti dell'Eclissi usare per test reale a casa
+P1_START       = datetime_time(10, 30, 0)   
+TOTALITY_START = datetime_time(10, 40, 0)   
+TOTALITY_END   = datetime_time(10, 41, 45)  
+P3_END         = datetime_time(10, 50, 0) 
+'''
+# Orari locali dei 4 Contatti dell'Eclissi in location
+P1_START       = datetime_time(19, 30, 0)   
+TOTALITY_START = datetime_time(20, 27, 0)   
+TOTALITY_END   = datetime_time(20, 28, 45)  
+P3_END         = datetime_time(21, 15, 0)   
+'''
+INTERVAL_INGRESS = 1080  
+INTERVAL_EGRESS  = 690   
 
-# --- EXPOSURE LIST CONFIGURATION ---
-# Solar Corona Bracketing (Total Phase)
-TOTALITY_EXPOSURES = [
-    "1/8000", "1/6400", "1/5000", "1/4000", "1/2000", "1/1000", "1/500", 
-    "1/250", "1/125", "1/80", "1/30", "1/20", "1/10", "1/2", "1", "2", "4"
+# --- PERCORSI FILE AUDIO LOCALIZZATI --- creare dei file audio ---
+AUDIO_1_MIN          = r"C:\Eclissi\Audio\manca_un_minuto.wav"
+AUDIO_TOGLI_FILTRO   = r"C:\Eclissi\Audio\togli_filtro.wav"
+AUDIO_20_SEC         = r"C:\Eclissi\Audio\mancano_20_secondi.wav"
+AUDIO_METTI_FILTRO   = r"C:\Eclissi\Audio\metti_filtro.wav"
+
+# --- SCALETTA TEMPI PER DIAMOND RING BURST ---
+SHUTTER_SPEEDS_BURST = ["1/8000", "1/4000", "1/2000", "1/1000"]
+
+# --- SCALETTA TEMPI PER BRACKETING CORONA HDR ---
+SHUTTER_SPEEDS_HDR = [
+    "1/8000", "1/4000", "1/2000", "1/1000", "1/500", "1/250", 
+    "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "1/2", "1", "2", "4"
 ]
 
-# Safety shutter speeds for the Diamond Ring (C2 Burst)
-DIAMOND_EXPOSURES = ["1/8000", "1/4000", "1/2000"]
-
-# --- EXECUTION MODES ---
-SIM_MODE = False  # Set to False for the actual live event
-SIM_SPEED_UP    = 60.0  # Time acceleration factor in simulation (e.g., 60x)
-
 # ==============================================================================
-# TIME SIMULATION ENGINE (SimClock)
+# STRUMENTI DI SISTEMA (LOG, AUDIO, OROLOGIO)
 # ==============================================================================
+
+def log_message(message, level="INFO"):
+    """Scrive il log a schermo e contemporaneamente sul file di testo d'emergenza"""
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    formatted_msg = f"[{timestamp}] [{level}] {message}"
+    
+    # Pulisce la riga del countdown prima di stampare un log fisso
+    sys.stdout.write("\r" + " " * 80 + "\r")
+    sys.stdout.flush()
+    
+    print(formatted_msg)
+    try:
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(formatted_msg + "\n")
+    except Exception as e:
+        print(f"[ERRORE SCRITTURA LOG] Impossibile scrivere su file: {e}")
+
+
 class SimClock:
-    def __init__(self, start_time, speed_up=1.0, active=False):
+    def __init__(self, start_time_obj, speed_up=1.0, active=False):
         self.active = active
         self.speed_up = speed_up
         self.real_start = time.time()
-        self.sim_start_dt = datetime.combine(datetime.today(), start_time) - timedelta(minutes=2)
-
-    def now(self):
+        today = datetime.now().date()
+        anchor_dt = datetime.combine(today, start_time_obj)
+        self.sim_start_dt = anchor_dt - timedelta(minutes=1)
+        
+    def get_now(self):
         if not self.active:
             return datetime.now()
         elapsed_real = time.time() - self.real_start
         elapsed_sim = elapsed_real * self.speed_up
         return self.sim_start_dt + timedelta(seconds=elapsed_sim)
 
-    def sleep(self, seconds, critical=False):
-        if not self.active or critical:
-            time.sleep(seconds)
-        else:
-            time.sleep(seconds / self.speed_up)
 
-# System clock initialization
-clock = SimClock(P1_START, speed_up=SIM_SPEED_UP, active=SIM_MODE)
-
-# ==============================================================================
-# CAMERA INTERFACE FUNCTIONS (digiCamControl)
-# ==============================================================================
-def set_shutter_speed(speed):
-    """Sends the USB command to change the shutter speed."""
+def play_alert(file_path):
     if SIM_MODE:
+        log_message(f"[SIM - AUDIO] Riproduzione: {os.path.basename(file_path)}")
         return
     try:
-        subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", speed], capture_output=True)
+        winsound.PlaySound(file_path, winsound.SND_FILENAME | winsound.SND_ASYNC)
     except Exception as e:
-        print(f"\n[USB ERROR] Unable to set shutter: {e}")
+        log_message(f"Impossibile riprodurre file audio {os.path.basename(file_path)}: {e}", level="ERROR")
 
-def capture_image(filename):
-    """Sends the USB command to trigger the DSLR."""
-    now_str = clock.now().strftime('%H:%M:%S')
-    print(f"[{now_str}] [SHOT] -> {filename}")
+
+def set_shutter_speed(shutter_speed):
+    """Cambia il tempo di scatto sulla mirrorless usando la sintassi corretta"""
     if SIM_MODE:
-        return
+        return True
     try:
-        subprocess.run([CMD_PATH, "/c", "capture", filename], capture_output=True)
+        result = subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", shutter_speed], capture_output=True, text=True)
+        if "error" in result.stdout.lower() or result.returncode != 0:
+            log_message(f"Errore hardware nel cambio tempo a {shutter_speed}: {result.stdout.strip()}", level="ERROR")
+            return False
+        time.sleep(0.15)  # Delay di sincronizzazione firmware
+        return True
     except Exception as e:
-        print(f"\n[USB ERROR] Shot failed for {filename}: {e}")
+        log_message(f"Fallimento critico subprocess su set shutterspeed: {e}", level="ERROR")
+        return False
 
-def play_sound_alert(alert_type):
-    """Generates a system audio alert differentiated by event type."""
-    import winsound
-    if alert_type == "pre_totality":
-        winsound.Beep(880, 1000) # High A note for 1 second
-    elif alert_type == "start_totality":
-        winsound.Beep(1200, 500); winsound.Beep(1200, 500) # Aggressive double beep (Filter off!)
-    elif alert_type == "pre_end_totality":
-        winsound.Beep(440, 300); winsound.Beep(440, 300) # Warning notice to put filter back on
-    elif alert_type == "end_totality":
-        winsound.Beep(2000, 1500) # Long, piercing beep (Filter on immediately!)
 
-def calculate_exposure_wait(speed_str):
-    """Calculates the physical seconds required for the exposure."""
-    if "/" in speed_str:
-        num, denom = speed_str.split("/")
-        return float(num) / float(denom)
-    return float(speed_str)
+def capture_image(phase_name):
+    """Invia il comando di scatto puro"""
+    if SIM_MODE:
+        log_message(f"[SIM] Scatto eseguito: {phase_name}")
+        return True
+    try:
+        result = subprocess.run([CMD_PATH, "/c", "capture"], capture_output=True, text=True)
+        if "error" in result.stdout.lower() or result.returncode != 0:
+            log_message(f"Errore hardware durante lo scatto {phase_name}: {result.stdout.strip()}", level="ERROR")
+            return False
+        log_message(f"Scatto completato con successo: {phase_name}")
+        return True
+    except Exception as e:
+        log_message(f"Fallimento critico subprocess su capture: {e}", level="ERROR")
+        return False
 
 # ==============================================================================
-# CORE ECLIPSE AUTOMATION
+# VOCE 1: PRE-FLIGHT CHECKLIST (CONTROLLI INIZIALI MANDATORI)
 # ==============================================================================
-def run_eclipse_automation():
-    # Time logs for the last executed shots
-    last_partial_shot_sim_ts = 0
-    
-    # Safety Switches (Status flags)
-    pre_totality_executed = False  
-    pre_end_totality_executed = False 
-    totality_executed = False
-    filter_remove_warned = False
-    diamond_burst_c2_executed = False
 
-    # Dynamic and automatic calculation of critical time windows
-    PRE_TOTALITY_TIME     = (datetime.combine(datetime.today(), TOTALITY_START) - timedelta(minutes=1)).time()
-    WARN_REMOVE_FILTER    = (datetime.combine(datetime.today(), TOTALITY_START) - timedelta(seconds=12)).time() 
-    START_DIAMOND_BURST   = (datetime.combine(datetime.today(), TOTALITY_START) - timedelta(seconds=8)).time()  
-    START_CORONA_BRACKET  = (datetime.combine(datetime.today(), TOTALITY_START) + timedelta(seconds=3)).time()  
-    PRE_END_TOTALITY_TIME = (datetime.combine(datetime.today(), TOTALITY_END) - timedelta(seconds=20)).time()
+def run_preflight_checklist():
+    print("=" * 70)
+    print("                CHECKLIST DI SICUREZZA PRE-ECLISSI")
+    print("=" * 70)
     
-    print("=" * 70)
-    print(f" ECLIPSE AUTOMATION LOGISTICS 2026 - SIMULATION MODE: {SIM_MODE}")
-    print("=" * 70)
-    print(f" C2 Diamond Window:   From {START_DIAMOND_BURST.strftime('%H:%M:%S')} to {START_CORONA_BRACKET.strftime('%H:%M:%S')}")
-    print(f" Corona Bracketing:   From {START_CORONA_BRACKET.strftime('%H:%M:%S')} to {TOTALITY_END.strftime('%H:%M:%S')}")
-    print("-" * 70)
+    # 1. Test di inizializzazione file di Log
+    try:
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(f"\n--- NUOVA SESSIONE DI SCATTO: {datetime.now()} ---\n")
+        print("[ OK ] File di log d'emergenza inizializzato correttamente.")
+    except Exception as e:
+        print(f"[FALLITO] Impossibile creare il file di log: {e}. Esco per sicurezza.")
+        sys.exit(1)
 
-    while True:
-        now_dt = clock.now()
-        now_time = now_dt.time()
-        current_sim_ts = now_dt.timestamp()
+    # 2. Test Audio hardware
+    print("[... ] Avvio del test audio. Dovresti sentire un segnale acustico...")
+    if not SIM_MODE:
+        try:
+            winsound.Beep(1000, 400)
+        except:
+            print("[AVVISO] Altoparlanti non disponibili o disattivati.")
+    else:
+        print("[ OK ] Test audio simulato superato.")
+
+    # 3. Test di connessione USB reale con la Mirrorless
+    if not SIM_MODE:
+        print("[... ] Verifica comunicazione USB con la fotocamera...")
+        test_speed = "1/2000"
+        try:
+            result = subprocess.run([CMD_PATH, "/c", "set", "shutterspeed", test_speed], capture_output=True, text=True)
+            if "error" in result.stdout.lower() or result.returncode != 0:
+                print(f"\n[ERRORE CRITICO] La mirrorless ha rifiutato il comando di test! Risposta: {result.stdout.strip()}")
+                print("Verifica che la fotocamera sia accesa, su modalità 'M' e che il software digiCamControl sia aperto.")
+                confirm = input("Vuoi forzare l'avvio dello script comunque? (s/n): ")
+                if confirm.lower() != 's':
+                    sys.exit(1)
+            else:
+                print(f"[ OK ] Comunicazione USB stabilita. Tempo impostato a {test_speed} con successo.")
+        except Exception as e:
+            print(f"[ERRORE] Impossibile eseguire CameraControlRemoteCmd.exe: {e}")
+            sys.exit(1)
+            
+    # 4. Checklist Manuale per il fotografo
+    checklist_items = [
+        "Filtro Solare inserito saldamente sull'obiettivo?",
+        "Messa a fuoco impostata su MANUALE (MF) e bloccata sulle stelle/sole?",
+        "La ghiera di scatto della fotocamera è fisicamente su 'M' (Manuale)?",
+        "Alimentazione PC e fotocamera collegate (Powerbank/Batterie cariche)?",
+        "La mirrorless è impostata per salvare le foto *SOLO SU SCHEDA SD* interna?"
+    ]
+    
+    print("\nConferma i seguenti punti fisici premendo INVIO:")
+    for i, item in enumerate(checklist_items, 1):
+        input(f"  [{i}/{len(checklist_items)}] {item} [Premi INVIO per confermare] ")
         
-        if SIM_MODE:
-            print(f" Simulated Time: {now_dt.strftime('%H:%M:%S')} | Status: Loop monitoring", end="\r")
+    print("\n[ SUCCESS ] Checklist completata. Avvio dell'automation engine tra 3 secondi...\n")
+    time.sleep(3)
 
-        # ----------------------------------------------------------------------
-        # 1. INITIAL WAIT (Before C1 contact)
-        # ----------------------------------------------------------------------
-        if now_time < P1_START:
-            clock.sleep(0.5)
+# ==============================================================================
+# LOGICA DI AUTOMAZIONE PRINCIPALE CON COUNTDOWN DINAMICO (VOCE 2 E 3)
+# ==============================================================================
+
+def run_eclipse_automation():
+    today = datetime.now().date()
+    dt_c1 = datetime.combine(today, P1_START)
+    dt_c2 = datetime.combine(today, TOTALITY_START)
+    dt_c3 = datetime.combine(today, TOTALITY_END)
+    dt_c4 = datetime.combine(today, P3_END)
+    
+    clock = SimClock(P1_START, speed_up=SIM_SPEED_UP, active=SIM_MODE)
+    
+    log_message("ENGINE ECLISSI ATTIVO - AGGIORNATO CON REQUISITI DI LIVE FIELD")
+    
+    last_ingress_shot = dt_c1
+    last_egress_shot = None
+    ingress_captured_count = 0
+    egress_captured_count = 0
+    
+    alert_1m_done = False
+    alert_12s_done = False
+    alert_20s_done = False
+    alert_c3_done = False
+    c2_burst_done = False
+    c3_burst_done = False
+    
+    hdr_index = 0
+    last_countdown_update = 0
+    
+    while True:
+        now = clock.get_now()
+        timestamp_str = now.strftime('%H:%M:%S')
+        
+        # Intervallo del ciclo principale leggero
+        time.sleep(0.05 if SIM_MODE else 0.1)
+        
+        # --- SEZIONE DEL COUNTDOWN DINAMICO IN TEMPO REALE (VOCE 2) ---
+        current_epoch = time.time()
+        if current_epoch - last_countdown_update >= 1.0:
+            last_countdown_update = current_epoch
+            if now < dt_c1:
+                diff = dt_c1 - now
+                sys.stdout.write(f"\r[{timestamp_str}] In attesa del Contatto C1: -{str(diff).split('.')[0]} ")
+            elif now < dt_c2 and not c2_burst_done:
+                diff = dt_c2 - now
+                sys.stdout.write(f"\r[{timestamp_str}] Fase Parziale (Ingresso) | Tempo a C2: -{str(diff).split('.')[0]} ")
+            elif now < dt_c3 and not c3_burst_done:
+                diff = dt_c3 - now
+                sys.stdout.write(f"\r[{timestamp_str}] TOTALITÀ IN CORSO | Fine della totalità C3 tra: {str(diff).split('.')[0]} ")
+            elif now < dt_c4:
+                diff = dt_c4 - now
+                sys.stdout.write(f"\r[{timestamp_str}] Fase Parziale (Uscita) | Fine Eclissi C4 tra: {str(diff).split('.')[0]} ")
+            sys.stdout.flush()
+
+        if now < dt_c1:
             continue
             
         # ----------------------------------------------------------------------
-        # 2. INCOMING PARTIAL PHASE (C1 -> Diamond Window)
+        # FASE 2: ECLISSI PARZIALE INGRESSO (C1 -> C2)
         # ----------------------------------------------------------------------
-        elif P1_START <= now_time < START_DIAMOND_BURST:
+        elif dt_c1 <= now < dt_c2:
+            time_to_c2 = (dt_c2 - now).total_seconds()
             
-            # Standard pre-alarm voice check (-1 minute to totality)
-            if now_time >= PRE_TOTALITY_TIME and not pre_totality_executed:
-                print(f"\n\n[!!!] ALERT: -1 MINUTE TO TOTALITY! Get ready.")
-                play_sound_alert("pre_totality")
-                pre_totality_executed = True 
-            
-            # Immediate audio warning to remove solar filter (-12 seconds to C2)
-            if now_time >= WARN_REMOVE_FILTER and not filter_remove_warned:
-                print(f"\n\n[!!!] ACTION: REMOVE SOLAR FILTER NOW! [!!!]")
-                play_sound_alert("start_totality")
-                filter_remove_warned = True
-
-            # Managed interval shots (Uses INTERVAL_INGRESS = 1080s)
-            if current_sim_ts - last_partial_shot_sim_ts >= INTERVAL_INGRESS:
-                capture_image("Partial_Ingress")
-                last_partial_shot_sim_ts = current_sim_ts
-                
-        # ----------------------------------------------------------------------
-        # 3. INCOMING DIAMOND RING PHASE (C2 Burst - 4 Shots x Exposure)
-        # ----------------------------------------------------------------------
-        elif START_DIAMOND_BURST <= now_time < START_CORONA_BRACKET and not diamond_burst_c2_executed:
-            print(f"\n\n[>>>] ENTERING DIAMOND RING PHASE (C2). Executing fast bursts...")
-            
-            for speed in DIAMOND_EXPOSURES:
-                set_shutter_speed(speed)
-                clock.sleep(0.05, critical=True)  # Minimum hardware latency for command reception
-                
-                # Executes 4 continuous shots at the same stabilized speed
-                for shot_num in range(1, 5):
-                    capture_image(f"C2_Diamond_{speed.replace('/', '_')}_shot{shot_num}")
-                    clock.sleep(0.15, critical=True) # Fast camera buffer clearing
-            
-            if now_time >= START_CORONA_BRACKET:
-                diamond_burst_c2_executed = True
-
-        # ----------------------------------------------------------------------
-        # 4. TOTAL PHASE: DEEP SOLAR CORONA BRACKETING
-        # ----------------------------------------------------------------------
-        elif START_CORONA_BRACKET <= now_time <= TOTALITY_END and not totality_executed:
-            print(f"\n\n[!!!] TOTAL PHASE: STARTING DEEP CORONA BRACKETING ({now_time.strftime('%H:%M:%S')})")
-            
-            sim_seconds_left = (datetime.combine(datetime.today(), TOTALITY_END) - clock.now()).total_seconds()
-            real_seconds_left = sim_seconds_left / SIM_SPEED_UP if SIM_MODE else sim_seconds_left
-            real_end_time = time.time() + real_seconds_left
-            
-            # Continuous loop until the very last second of totality
-            while time.time() <= real_end_time:
-                for speed in TOTALITY_EXPOSURES:
-                    if time.time() > real_end_time: 
-                        break
+            if time_to_c2 <= 60:
+                if time_to_c2 <= 60 and not alert_1m_done:
+                    log_message("T-60s a C2: Riproduzione avviso vocale.")
+                    play_alert(AUDIO_1_MIN)
+                    alert_1m_done = True
                     
-                    # Integrated pre-alarm check for end of totality (-20 seconds to C3)
-                    sim_now = clock.now().time()
-                    if sim_now >= PRE_END_TOTALITY_TIME and not pre_end_totality_executed:
-                        print(f"\n\n[!!!] SAFETY WARNING: -20 SECONDS TO THE END OF TOTALITY!")
-                        play_sound_alert("pre_end_totality")
-                        pre_end_totality_executed = True
+                if time_to_c2 <= 12 and not alert_12s_done:
+                    log_message("T-12s: RIMOZIONE FILTRO SOLARE ORA!")
+                    play_alert(AUDIO_TOGLI_FILTRO)
+                    alert_12s_done = True
                     
-                    # Executing bracketing shot
-                    set_shutter_speed(speed)
-                    clock.sleep(0.1, critical=True)
-                    capture_image(f"Totality_Corona_{speed.replace('/', '_')}")
+                # BURST C2 (Anello di Diamante Ingresso)
+                if time_to_c2 <= 4 and not c2_burst_done:
+                    log_message("INIZIO SEQUENZA BURST C2 (Diamond Ring & Baily's Beads)")
+                    for speed in SHUTTER_SPEEDS_BURST:
+                        if set_shutter_speed(speed):
+                            for shot in range(1, 6):
+                                capture_image(f"Diamond_Ring_Ingresso_{speed.replace('/', '_')}_S{shot}")
+                    c2_burst_done = True
+            else:
+                if (now - last_ingress_shot).total_seconds() >= INTERVAL_INGRESS or ingress_captured_count == 0:
+                    log_message(f"Scatto automatico Parziale Ingresso #{ingress_captured_count + 1}")
+                    capture_image("Parziale_Ingresso")
+                    last_ingress_shot = now
+                    ingress_captured_count += 1
                     
-                    # Dynamic calculation of sensor write times to avoid mirror lockups
-                    exp_time = calculate_exposure_wait(speed)
-                    buffer_time = 2.5 if exp_time >= 1.0 else 1.4
-                    wait_time = exp_time + (buffer_time if not SIM_MODE else buffer_time / 2)
-                    clock.sleep(wait_time, critical=True) 
+        # ----------------------------------------------------------------------
+        # FASE 3: TOTALITÀ CORE (C2 -> C3)
+        # ----------------------------------------------------------------------
+        elif dt_c2 <= now < dt_c3:
+            time_to_c3 = (dt_c3 - now).total_seconds()
             
-            # Closing the total window (C3 contact)
-            print(f"\n\n[!] END OF TOTALITY ({clock.now().strftime('%H:%M:%S')}). REMOUNT SOLAR FILTER IMMEDIATELY!")
-            play_sound_alert("end_totality")
-            set_shutter_speed("1/1000") # Safety shutter speed reset for the partial phase
-            totality_executed = True
-            # Aligns the partial timer with the current time for a clean restart during egress
-            last_partial_shot_sim_ts = clock.now().timestamp()
+            if time_to_c3 <= 20 and not alert_20s_done:
+                log_message("T-20s a C3: Avviso fine totalità imminente.")
+                play_alert(AUDIO_20_SEC)
+                alert_20s_done = True
+                
+            # BURST C3 (Anello di Diamante Uscita)
+            if time_to_c3 <= 2 and not c3_burst_done:
+                log_message("INIZIO SEQUENZA BURST C3 (Diamond Ring Uscita)")
+                for speed in SHUTTER_SPEEDS_BURST:
+                    if set_shutter_speed(speed):
+                        for shot in range(1, 6):
+                            capture_image(f"Diamond_Ring_Uscita_{speed.replace('/', '_')}_S{shot}")
+                c3_burst_done = True
+            
+            # Sequenza Bracketing Corona HDR Continua
+            if time_to_c3 > 2:
+                current_shutter = SHUTTER_SPEEDS_HDR[hdr_index]
+                if set_shutter_speed(current_shutter):
+                    capture_image("Corona_Totale_HDR")
+                hdr_index = (hdr_index + 1) % len(SHUTTER_SPEEDS_HDR)
                 
         # ----------------------------------------------------------------------
-        # 5. OUTGOING PARTIAL PHASE (C3 -> C4 / Sunset)
+        # FASE 4: ECLISSI PARZIALE USCITA (C3 -> C4)
         # ----------------------------------------------------------------------
-        elif TOTALITY_END < now_time <= P3_END:
-            # Managed short interval shots (Uses INTERVAL_EGRESS = 690s)
-            if current_sim_ts - last_partial_shot_sim_ts >= INTERVAL_EGRESS:
-                capture_image("Partial_Egress")
-                last_partial_shot_sim_ts = current_sim_ts
+        elif dt_c3 <= now <= dt_c4:
+            if not alert_c3_done:
+                log_message("C3 Superato: RIPRISTINARE IL FILTRO SOLARE IMMEDIATAMENTE!")
+                play_alert(AUDIO_METTI_FILTRO)
+                alert_c3_done = True
+                last_egress_shot = now
                 
-        # ----------------------------------------------------------------------
-        # 6. END OF THE EVENT
-        # ----------------------------------------------------------------------
+            if (now - last_egress_shot).total_seconds() >= INTERVAL_EGRESS or egress_captured_count == 0:
+                log_message(f"Scatto automatico Parziale Uscita #{egress_captured_count + 1}")
+                capture_image("Parziale_Uscita")
+                last_egress_shot = now
+                egress_captured_count += 1
+                
         else:
-            print(f"\n\n[+] Automation completed successfully at {now_time.strftime('%H:%M:%S')}.")
+            log_message("Contatto C4 superato. Fine dell'eclissi. Automazione terminata.")
             break
-            
-        clock.sleep(0.1)
 
 if __name__ == "__main__":
+    # Avvia prima i controlli fisici e hardware, poi l'automazione temporizzata
+    run_preflight_checklist()
     run_eclipse_automation()
