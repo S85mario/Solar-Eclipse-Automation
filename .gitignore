@@ -42,3 +42,4 @@ Desktop.ini
 # Eventuali file di log generati da digiCamControl o dallo script
 *.log
 *.txt
+*.html
