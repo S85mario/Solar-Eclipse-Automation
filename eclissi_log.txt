@@ -44,3 +44,122 @@
 [11:55:27] [INFO] 🚀 MOTORE ECLISSE ATTIVO
 [11:55:27] [INFO] 📷 MODALITA REALE
 [11:55:27] [INFO] ⏳ Attesa 454.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[12:29:19] [INFO] 🚀 MOTORE ECLISSE ATTIVO
+[12:29:19] [INFO] 🔧 SIMULAZIONE ATTIVA
+[12:29:19] [INFO] ⏳ Attesa 420.7 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[12:48:45] [ERROR] File config_eclipse.json non trovato!
+[12:49:10] [ERROR] File config_eclipse.json non trovato!
+[12:50:11] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[12:50:11] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:50:11] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:50:11] [INFO]    1 minuto reale = 1 ora eclisse
+[12:50:11] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[12:50:11] [INFO]    P1: 12:56:51 (reale 19:30:00)
+[12:50:11] [INFO]    C2: 12:57:48 (reale 20:27:10)
+[12:50:11] [INFO]    C3: 12:57:49 (reale 20:28:50)
+[12:50:11] [INFO]    P4: 12:58:33 (reale 21:12:00)
+[12:50:11] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[12:50:21] [INFO] ⏳ Attesa 389.7 sec reali (389.7 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
+[12:51:49] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[12:51:49] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:51:49] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:51:49] [INFO]    1 minuto reale = 1 ora eclisse
+[12:51:49] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[12:51:49] [INFO]    P1: 12:58:28 (reale 19:30:00)
+[12:51:49] [INFO]    C2: 12:59:25 (reale 20:27:10)
+[12:51:49] [INFO]    C3: 12:59:26 (reale 20:28:50)
+[12:51:49] [INFO]    P4: 13:00:10 (reale 21:12:00)
+[12:51:49] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[12:54:05] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[12:54:05] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:54:05] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:54:05] [INFO]    1 minuto reale = 1 ora eclisse
+[12:54:05] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[12:54:05] [INFO]    P1: 13:00:41 (reale 19:30:00)
+[12:54:05] [INFO]    C2: 13:01:38 (reale 20:27:10)
+[12:54:05] [INFO]    C3: 13:01:40 (reale 20:28:50)
+[12:54:05] [INFO]    P4: 13:02:23 (reale 21:12:00)
+[12:54:05] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[12:54:15] [INFO] ⏳ Attesa 385.8 sec reali (385.8 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
+[13:01:48] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:01:48] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[13:01:48] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 10x
+[13:01:48] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[13:01:48] [INFO]    P1: 13:40:37 (reale 19:30:00)
+[13:01:48] [INFO]    C2: 13:46:20 (reale 20:27:10)
+[13:01:48] [INFO]    C3: 13:46:30 (reale 20:28:50)
+[13:01:48] [INFO]    P4: 13:50:49 (reale 21:12:00)
+[13:01:48] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[13:01:58] [INFO] ⏳ Attesa 2319.1 sec reali (386.5 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
+[13:02:14] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:02:14] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[13:02:14] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 1x
+[13:02:14] [INFO]    Velocità reale
+[13:02:14] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[13:02:14] [INFO]    P1: 19:30:00 (reale 19:30:00)
+[13:02:14] [INFO]    C2: 20:27:10 (reale 20:27:10)
+[13:02:14] [INFO]    C3: 20:28:50 (reale 20:28:50)
+[13:02:14] [INFO]    P4: 21:12:00 (reale 21:12:00)
+[13:02:14] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[13:02:35] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:02:35] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[13:02:35] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 2x
+[13:02:35] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[13:02:35] [INFO]    P1: 16:16:17 (reale 19:30:00)
+[13:02:35] [INFO]    C2: 16:44:52 (reale 20:27:10)
+[13:02:35] [INFO]    C3: 16:45:42 (reale 20:28:50)
+[13:02:35] [INFO]    P4: 17:07:17 (reale 21:12:00)
+[13:02:35] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[13:02:57] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:02:57] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[13:02:57] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 4x
+[13:02:57] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[13:02:57] [INFO]    P1: 14:39:43 (reale 19:30:00)
+[13:02:57] [INFO]    C2: 14:54:00 (reale 20:27:10)
+[13:02:57] [INFO]    C3: 14:54:25 (reale 20:28:50)
+[13:02:57] [INFO]    P4: 15:05:13 (reale 21:12:00)
+[13:02:57] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[13:03:07] [INFO] ⏳ Attesa 5795.5 sec reali (386.4 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
+[13:07:19] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:07:19] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[13:07:19] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 8x
+[13:07:19] [INFO] 
+📅 TIMING SIMULAZIONE (tempo reale):
+[13:07:19] [INFO]    P1: 13:55:09 (reale 19:30:00)
+[13:07:19] [INFO]    C2: 14:02:18 (reale 20:27:10)
+[13:07:19] [INFO]    C3: 14:02:31 (reale 20:28:50)
+[13:07:19] [INFO]    P4: 14:07:54 (reale 21:12:00)
+[13:07:19] [INFO] 
+⏳ Attesa iniziale di 10 secondi...
+[13:07:29] [INFO] ⏳ Attesa 2860.0 sec reali (381.3 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
+[13:07:42] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:07:57] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[13:07:57] [INFO] ⏳ Attesa 382.0 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[13:08:41] [ERROR] File config_SolarEclipse_IT4.json non trovato!
+[13:09:04] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:10:24] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:10:30] [INFO] ✅ digiCamControl già in esecuzione
+[13:10:30] [INFO] 🔍 Test connessione camera...
+[13:10:31] [INFO] ✅ Camera connessa!
+[13:10:31] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:22:52] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
+[13:22:54] [INFO] ✅ digiCamControl già in esecuzione
+[13:22:54] [INFO] 🔍 Verifica camera reale...
+[13:22:54] [INFO]    Tempo attuale: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:error;message:no camera is connected
+[13:22:55] [ERROR] ❌ Camera NON connessa!
