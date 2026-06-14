@@ -89,40 +89,6 @@ config_eclipse.json File Structure
 <<<<<<< HEAD
 json  https://github.com/S85mario/Solar-Eclipse-Automation/blob/main/config_SolarEclipse_IT.json
 
-
-=======
-json https://github.com/S85mario/Solar-Eclipse-Automation/blob/main/config_SolarEclipse_IT.json
-
-
-📝 Advanced Configuration Guide
-Geographic Coordinates - DMS Format
-json
-
-// Valid examples:
-"latitudine_dms": "45°27'52.5\"N"    // Degrees, minutes, seconds
-"longitudine_dms": "12°15'30.0\"E"
-"latitudine_dms": "-45.4642"          // Decimal degrees (alternative)
-
-Shutter Speed Formats Supported
-json
-
-"1/8000"    // Fraction of a second
-"1/500"     
-"0.5"       // Half second
-"2"         // Two seconds
-
-Customizing Eclipse Phases
-json
-
-{
-  "nome": "OUTER CORONA",              // Name shown in logs
-  "tempo_riferimento": "totalita_inizio", // p1_inizio, totalita_inizio, totalita_fine
-  "durata_sec": 45,                    // Phase duration in seconds
-  "lista_tempi": "corona_esterna",     // hdr, burst, corona_interna, corona_esterna
-  "usa_raffica": false                 // true = multiple shots per exposure
-}
-
->>>>>>> c148c98478660985878be7ffdb85203d80b46520
 Simulation vs Debug Mode
 Mode	Use Case	Effects
 sim_mode: true	Feature testing	No real camera commands
