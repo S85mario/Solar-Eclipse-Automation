@@ -18,3 +18,29 @@
 [10:24:00] [INFO] 🚀 MOTORE ECLISSE ATTIVO
 [10:24:00] [INFO] 📷 REAL MODE
 [10:24:00] [INFO] ⏳ Attesa 546.0 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[11:18:10] [INFO] 🚀 Avvio digiCamControl...
+[11:18:15] [INFO] ✅ digiCamControl avviato
+[11:18:15] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
+[11:18:39] [INFO] 🚀 MOTORE ECLISSE ATTIVO
+[11:18:39] [INFO] 📷 REAL MODE
+[11:18:39] [INFO] ⏳ Attesa 491.3 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[11:20:02] [INFO] ✅ digiCamControl già in esecuzione
+[11:20:02] [WARN] Calcolo GPS avanzato non implementato
+[11:22:01] [INFO] ✅ digiCamControl già in esecuzione
+[11:29:08] [INFO] ✅ digiCamControl già in esecuzione
+[11:31:32] [INFO] ✅ digiCamControl già in esecuzione
+[11:33:34] [INFO] ✅ digiCamControl già in esecuzione
+[11:35:17] [INFO] ✅ digiCamControl già in esecuzione
+[11:45:00] [INFO] ✅ digiCamControl già in esecuzione
+[11:47:00] [INFO] ✅ digiCamControl già in esecuzione
+[11:47:35] [INFO] ✅ digiCamControl già in esecuzione
+[11:48:19] [INFO] ✅ digiCamControl già in esecuzione
+[11:48:19] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
+[11:55:09] [INFO] ✅ digiCamControl già in esecuzione
+[11:55:09] [INFO] 🔍 Test connessione camera...
+[11:55:10] [INFO] ✅ Camera connessa!
+[11:55:20] [INFO] 🔍 Test connessione camera...
+[11:55:20] [INFO] ✅ Camera connessa!
+[11:55:27] [INFO] 🚀 MOTORE ECLISSE ATTIVO
+[11:55:27] [INFO] 📷 MODALITA REALE
+[11:55:27] [INFO] ⏳ Attesa 454.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
