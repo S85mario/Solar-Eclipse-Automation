@@ -86,93 +86,15 @@ python SolarEclipse_IT.py
 
 ⚙️ Detailed Configuration
 config_eclipse.json File Structure
-json
+json  https://github.com/S85mario/Solar-Eclipse-Automation/blob/main/config_SolarEclipse_IT.json
 
-
-"hardware": 
-    "marca_camera": "CANON",           // CANON, NIKON, SONY
-    "gui_path": "C:\\...\\CameraControl.exe",
-    "cmd_path": "C:\\...\\CameraControlRemoteCmd.exe",
-    "sim_mode": false,                 // true = test without camera
-    "debug_mode": false                // true = detailed logging
-  
-  
-"coordinate": 
-    "latitudine_dms": "43°44'08.77\"N",  // Degrees/minutes/seconds format
-    "longitudine_dms": "7°55'20.04\"W",  // N/S and E/W at the end
-    "uso_calcolo_gps": false            // true = auto-calculate with ephem
-
-  
-"timing_eclisse": 
-    "_data": "August 12, 2026",
-    "p1_inizio": "19:30:00",           // HH:MM:SS 24h format
-    "totalita_inizio": "20:27:10",     // Totality start
-    "totalita_fine": "20:28:50",       // Totality end
-    "p4_fine": "21:12:00"              // Eclipse end
-
-  
-"tempi_scatto": 
-    "protuberanze": ["1/8000", "1/4000", "1/2000", "1/1000"],
-    "corona": ["1/500", "1/250", "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "0.5", "1", "2"],
-    "burst": ["1/8000", "1/4000", "1/2000"],
-    "raffica_scatti": 3                 // Number of shots per exposure
-
-  
-"intervalli":
-    "ingresso_parziale_sec": 1080,      // 18 minutes
-    "uscita_parziale_sec": 690,         // 11.5 minutes
-    "watchdog_interval_sec": 30         // Check watchdog every 30 seconds
-
-  
-"fasi_eclisse":
-    // Define phase order and timing here
-
-  
-"checklist_items": 
-    "Solar filter mounted?",
-    "Focus on MANUAL (MF) and taped?",
-    // Add/modify checklist items
-  
-  
-"parametri_camera": 
-    "iso_default": 200,
-    "apertura_default": 8,
-    "test_tempo": "1/1000"
-
-
-📝 Advanced Configuration Guide
-Geographic Coordinates - DMS Format
-json
-
-// Valid examples:
-"latitudine_dms": "45°27'52.5\"N"    // Degrees, minutes, seconds
-"longitudine_dms": "12°15'30.0\"E"
-"latitudine_dms": "-45.4642"          // Decimal degrees (alternative)
-
-Shutter Speed Formats Supported
-json
-
-"1/8000"    // Fraction of a second
-"1/500"     
-"0.5"       // Half second
-"2"         // Two seconds
-
-Customizing Eclipse Phases
-json
-
-{
-  "nome": "OUTER CORONA",              // Name shown in logs
-  "tempo_riferimento": "totalita_inizio", // p1_inizio, totalita_inizio, totalita_fine
-  "durata_sec": 45,                    // Phase duration in seconds
-  "lista_tempi": "corona_esterna",     // hdr, burst, corona_interna, corona_esterna
-  "usa_raffica": false                 // true = multiple shots per exposure
-}
 
 Simulation vs Debug Mode
 Mode	Use Case	Effects
 sim_mode: true	Feature testing	No real camera commands
 debug_mode: true	Diagnostics	Extremely detailed logs
 Both false	Production	Real operation, minimal logs
+
 🎮 Basic Usage
 Running the Script
 bash

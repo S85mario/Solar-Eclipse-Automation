@@ -86,95 +86,17 @@ python SolarEclipse_IT.py
 
 ⚙️ Configurazione Dettagliata
 Struttura del File config_eclipse.json
-json
+json  https://github.com/S85mario/Solar-Eclipse-Automation/blob/main/config_SolarEclipse_IT.json
 
-{
-  "hardware": {
-    "marca_camera": "CANON",           // CANON, NIKON, SONY
-    "gui_path": "C:\\...\\CameraControl.exe",
-    "cmd_path": "C:\\...\\CameraControlRemoteCmd.exe",
-    "sim_mode": false,                 // true = test senza camera
-    "debug_mode": false                // true = log dettagliati
-  },
-  
-  "coordinate": {
-    "latitudine_dms": "43°44'08.77\"N",  // Formato gradi/minuti/secondi
-    "longitudine_dms": "7°55'20.04\"W",  // N/S e E/W alla fine
-    "uso_calcolo_gps": false            // true = calcolo automatico con ephem
-  },
-  
-  "timing_eclisse": {
-    "_data": "12 Agosto 2026",
-    "p1_inizio": "19:30:00",           // HH:MM:SS formato 24h
-    "totalita_inizio": "20:27:10",     // Inizio fase totale
-    "totalita_fine": "20:28:50",       // Fine fase totale
-    "p4_fine": "21:12:00"              // Fine eclisse
-  },
-  
-  "tempi_scatto": {
-    "protuberanze": ["1/8000", "1/4000", "1/2000", "1/1000"],
-    "corona": ["1/500", "1/250", "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "0.5", "1", "2"],
-    "burst": ["1/8000", "1/4000", "1/2000"],
-    "raffica_scatti": 3                 // Numero scatti per esposizione
-  },
-  
-  "intervalli": {
-    "ingresso_parziale_sec": 1080,      // 18 minuti
-    "uscita_parziale_sec": 690,         // 11.5 minuti
-    "watchdog_interval_sec": 30         // Check watchdog ogni 30 secondi
-  },
-  
-  "fasi_eclisse": [
-    // Definisci qui l'ordine e i tempi delle fasi
-  ],
-  
-  "checklist_items": [
-    "Filtro solare montato?",
-    "Fuoco su MANUALE (MF) e bloccato...",
-    // Aggiungi/modifica voci della checklist
-  ],
-  
-  "parametri_camera": {
-    "iso_default": 200,
-    "apertura_default": 8,
-    "test_tempo": "1/1000"
-  }
-}
-
-📝 Guida alle Configurazioni Avanzate
-Coordinate Geografiche - Formato DMS
-json
-
-// Esempi validi:
-"latitudine_dms": "45°27'52.5\"N"    // Gradi, minuti, secondi
-"longitudine_dms": "12°15'30.0\"E"
-"latitudine_dms": "-45.4642"          // Gradi decimali (alternativa)
-
-Tempi di Scatto - Formati Supportati
-json
-
-"1/8000"    // Frazioni di secondo
-"1/500"     
-"0.5"       // Mezzo secondo
-"2"         // Due secondi
-
-Personalizzazione Fasi Eclisse
-json
-
-{
-  "nome": "CORONA ESTERNA",           // Nome visualizzato nei log
-  "tempo_riferimento": "totalita_inizio", // p1_inizio, totalita_inizio, totalita_fine
-  "durata_sec": 45,                   // Durata della fase in secondi
-  "lista_tempi": "corona_esterna",    // hdr, burst, corona_interna, corona_esterna
-  "usa_raffica": false                // true = multipli scatti per esposizione
-}
 
 Modalità Debug vs Simulazione
 Modalità	Uso	Effetti
 sim_mode: true	Test funzionalità	Nessun comando reale alla camera
 debug_mode: true	Diagnostica	Log estremamente dettagliati
 Entrambe false	Produzione	Operazione reale, log minimi
+
 🎮 Utilizzo Base
+
 Avvio dello Script
 bash
 
