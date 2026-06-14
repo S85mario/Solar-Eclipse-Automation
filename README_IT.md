@@ -53,7 +53,7 @@ pip install ephem
 bash
 
 # Clona o scarica il repository
-git clone https://github.com/tuo-username/solar-eclipse-automation.git
+git clone https://github.com/S85mario/Solar-Eclipse-Automation.git
 cd solar-eclipse-automation
 
 # (Opzionale) Installa librerie aggiuntive
