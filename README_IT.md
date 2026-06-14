@@ -356,10 +356,7 @@ Miglioramenti Suggeriti
 
     Export metadati EXIF
 
-📄 Licenza
 
-MIT License - Uso libero per scopi non commerciali.
-Crediti apprezzati ma non obbligatori.
 🙏 Ringraziamenti
 
     Team digiCamControl per il software di controllo
