@@ -1,165 +1,217 @@
-[10:13:25] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
-[10:13:57] [WARN] Timeout cambio tempo al tentativo 1
-[10:14:02] [WARN] Timeout cambio tempo al tentativo 2
-[10:14:08] [WARN] Timeout cambio tempo al tentativo 3
-[10:14:08] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[10:14:30] [WARN] Timeout cambio tempo al tentativo 1
-[10:14:35] [WARN] Timeout cambio tempo al tentativo 2
-[10:14:40] [WARN] Timeout cambio tempo al tentativo 3
-[10:14:40] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[10:20:12] [INFO] 🚀 Avvio digiCamControl...
-[10:20:17] [INFO] ✅ digiCamControl avviato
-[10:20:17] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
-[10:20:59] [INFO] 🚀 MOTORE ECLISSE ATTIVO
-[10:20:59] [INFO] 📷 REAL MODE
-[10:20:59] [INFO] ⏳ Attesa 549.0 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[10:23:37] [INFO] ✅ digiCamControl già in esecuzione
-[10:23:37] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
-[10:24:00] [INFO] 🚀 MOTORE ECLISSE ATTIVO
-[10:24:00] [INFO] 📷 REAL MODE
-[10:24:00] [INFO] ⏳ Attesa 546.0 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[11:18:10] [INFO] 🚀 Avvio digiCamControl...
-[11:18:15] [INFO] ✅ digiCamControl avviato
-[11:18:15] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
-[11:18:39] [INFO] 🚀 MOTORE ECLISSE ATTIVO
-[11:18:39] [INFO] 📷 REAL MODE
-[11:18:39] [INFO] ⏳ Attesa 491.3 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[11:20:02] [INFO] ✅ digiCamControl già in esecuzione
-[11:20:02] [WARN] Calcolo GPS avanzato non implementato
-[11:22:01] [INFO] ✅ digiCamControl già in esecuzione
-[11:29:08] [INFO] ✅ digiCamControl già in esecuzione
-[11:31:32] [INFO] ✅ digiCamControl già in esecuzione
-[11:33:34] [INFO] ✅ digiCamControl già in esecuzione
-[11:35:17] [INFO] ✅ digiCamControl già in esecuzione
-[11:45:00] [INFO] ✅ digiCamControl già in esecuzione
-[11:47:00] [INFO] ✅ digiCamControl già in esecuzione
-[11:47:35] [INFO] ✅ digiCamControl già in esecuzione
-[11:48:19] [INFO] ✅ digiCamControl già in esecuzione
-[11:48:19] [INFO] [TIMING] Configurazione oraria manuale caricata correttamente.
-[11:55:09] [INFO] ✅ digiCamControl già in esecuzione
-[11:55:09] [INFO] 🔍 Test connessione camera...
-[11:55:10] [INFO] ✅ Camera connessa!
-[11:55:20] [INFO] 🔍 Test connessione camera...
-[11:55:20] [INFO] ✅ Camera connessa!
-[11:55:27] [INFO] 🚀 MOTORE ECLISSE ATTIVO
-[11:55:27] [INFO] 📷 MODALITA REALE
-[11:55:27] [INFO] ⏳ Attesa 454.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[12:29:19] [INFO] 🚀 MOTORE ECLISSE ATTIVO
-[12:29:19] [INFO] 🔧 SIMULAZIONE ATTIVA
-[12:29:19] [INFO] ⏳ Attesa 420.7 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[12:48:45] [ERROR] File config_eclipse.json non trovato!
-[12:49:10] [ERROR] File config_eclipse.json non trovato!
-[12:50:11] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[12:50:11] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:50:11] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:50:11] [INFO]    1 minuto reale = 1 ora eclisse
-[12:50:11] [INFO] 
+[11:54:17] [INFO] Configurazione caricata da config_eclipse.json
+[11:54:31] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[11:54:31] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[11:54:31] [ERROR] ❌ ERRORE: name 'P1_INIZIO' is not defined
+[11:56:33] [INFO] Configurazione caricata da config_eclipse.json
+[11:56:36] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[11:56:36] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[11:56:36] [INFO] 
 📅 TIMING SIMULAZIONE (tempo reale):
-[12:50:11] [INFO]    P1: 12:56:51 (reale 19:30:00)
-[12:50:11] [INFO]    C2: 12:57:48 (reale 20:27:10)
-[12:50:11] [INFO]    C3: 12:57:49 (reale 20:28:50)
-[12:50:11] [INFO]    P4: 12:58:33 (reale 21:12:00)
-[12:50:11] [INFO] 
+[11:56:36] [INFO]    P1: 12:04:09 (reale 19:30:00)
+[11:56:36] [INFO]    C2: 12:05:06 (reale 20:27:10)
+[11:56:36] [INFO]    C3: 12:05:08 (reale 20:28:50)
+[11:56:36] [INFO]    P4: 12:05:51 (reale 21:12:00)
+[11:56:36] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[12:50:21] [INFO] ⏳ Attesa 389.7 sec reali (389.7 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
-[12:51:49] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[12:51:49] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:51:49] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:51:49] [INFO]    1 minuto reale = 1 ora eclisse
-[12:51:49] [INFO] 
+[11:56:46] [INFO] ⏳ Attesa 443.3 sec reali (443.3 min simulati) fino a PRE-PARZIALE (ingresso)
+[12:00:15] [INFO] Configurazione caricata da config_eclipse.json
+[12:00:17] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:00:17] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:00:17] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:00:17] [INFO]    1 minuto reale = 60 minuti di eclisse
+[12:00:17] [INFO]    Durata reale eclisse: 102 minuti
+[12:00:17] [INFO]    Durata simulata: 102.0 secondi
+[12:00:17] [INFO] 
 📅 TIMING SIMULAZIONE (tempo reale):
-[12:51:49] [INFO]    P1: 12:58:28 (reale 19:30:00)
-[12:51:49] [INFO]    C2: 12:59:25 (reale 20:27:10)
-[12:51:49] [INFO]    C3: 12:59:26 (reale 20:28:50)
-[12:51:49] [INFO]    P4: 13:00:10 (reale 21:12:00)
-[12:51:49] [INFO] 
+[12:00:17] [INFO]    Ora attuale: 12:00:17
+[12:00:17] [INFO]    P1: 12:00:27 (reale 19:30:00)
+[12:00:17] [INFO]    C2: 12:01:25 (reale 20:27:10)
+[12:00:17] [INFO]    C3: 12:01:26 (reale 20:28:50)
+[12:00:17] [INFO]    P4: 12:02:09 (reale 21:12:00)
+[12:00:17] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[12:54:05] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[12:54:05] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:54:05] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:54:05] [INFO]    1 minuto reale = 1 ora eclisse
-[12:54:05] [INFO] 
+[12:00:26] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:00:26] [INFO] 
+⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
+[12:00:27] [ERROR] ❌ ERRORE: list index out of range
+[12:00:45] [INFO] Configurazione caricata da config_eclipse.json
+[12:00:47] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:00:47] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:00:47] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:00:47] [INFO]    1 minuto reale = 60 minuti di eclisse
+[12:00:47] [INFO]    Durata reale eclisse: 102 minuti
+[12:00:47] [INFO]    Durata simulata: 102.0 secondi
+[12:00:47] [INFO] 
 📅 TIMING SIMULAZIONE (tempo reale):
-[12:54:05] [INFO]    P1: 13:00:41 (reale 19:30:00)
-[12:54:05] [INFO]    C2: 13:01:38 (reale 20:27:10)
-[12:54:05] [INFO]    C3: 13:01:40 (reale 20:28:50)
-[12:54:05] [INFO]    P4: 13:02:23 (reale 21:12:00)
-[12:54:05] [INFO] 
+[12:00:47] [INFO]    Ora attuale: 12:00:47
+[12:00:47] [INFO]    P1: 12:00:57 (reale 19:30:00)
+[12:00:47] [INFO]    C2: 12:01:55 (reale 20:27:10)
+[12:00:47] [INFO]    C3: 12:01:56 (reale 20:28:50)
+[12:00:47] [INFO]    P4: 12:02:39 (reale 21:12:00)
+[12:00:47] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[12:54:15] [INFO] ⏳ Attesa 385.8 sec reali (385.8 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
-[13:01:48] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:01:48] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[13:01:48] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 10x
-[13:01:48] [INFO] 
+[12:00:57] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:00:57] [INFO] 
+⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
+[12:00:57] [ERROR] ❌ ERRORE: list index out of range
+[12:02:46] [INFO] Configurazione caricata da config_eclipse.json
+[12:02:49] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:02:49] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:02:49] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:02:49] [INFO]    1 minuto reale = 60 minuti di eclisse
+[12:02:49] [INFO]    Durata reale eclisse: 102 minuti
+[12:02:49] [INFO]    Durata simulata: 102.0 secondi
+[12:02:49] [INFO] 
 📅 TIMING SIMULAZIONE (tempo reale):
-[13:01:48] [INFO]    P1: 13:40:37 (reale 19:30:00)
-[13:01:48] [INFO]    C2: 13:46:20 (reale 20:27:10)
-[13:01:48] [INFO]    C3: 13:46:30 (reale 20:28:50)
-[13:01:48] [INFO]    P4: 13:50:49 (reale 21:12:00)
-[13:01:48] [INFO] 
+[12:02:49] [INFO]    Ora attuale: 12:02:49
+[12:02:49] [INFO]    P1: 12:02:59 (reale 19:30:00)
+[12:02:49] [INFO]    C2: 12:03:56 (reale 20:27:10)
+[12:02:49] [INFO]    C3: 12:03:58 (reale 20:28:50)
+[12:02:49] [INFO]    P4: 12:04:41 (reale 21:12:00)
+[12:02:49] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[13:01:58] [INFO] ⏳ Attesa 2319.1 sec reali (386.5 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
-[13:02:14] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:02:14] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[13:02:14] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 1x
-[13:02:14] [INFO]    Velocità reale
-[13:02:14] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[13:02:14] [INFO]    P1: 19:30:00 (reale 19:30:00)
-[13:02:14] [INFO]    C2: 20:27:10 (reale 20:27:10)
-[13:02:14] [INFO]    C3: 20:28:50 (reale 20:28:50)
-[13:02:14] [INFO]    P4: 21:12:00 (reale 21:12:00)
-[13:02:14] [INFO] 
+[12:02:58] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:02:58] [INFO] 
+⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
+[12:02:59] [ERROR] ❌ ERRORE: list index out of range
+[12:04:35] [INFO] Configurazione caricata da config_eclipse.json
+[12:04:37] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:04:37] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:04:37] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:04:37] [INFO] 
+📅 TIMING SIMULAZIONE:
+[12:04:37] [INFO]    P1: tra 10 secondi
+[12:04:37] [INFO]    C2: tra 67.2 secondi
+[12:04:37] [INFO]    C3: tra 68.8 secondi
+[12:04:37] [INFO]    P4: tra 112.0 secondi
+[12:04:37] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[13:02:35] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:02:35] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[13:02:35] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 2x
-[13:02:35] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[13:02:35] [INFO]    P1: 16:16:17 (reale 19:30:00)
-[13:02:35] [INFO]    C2: 16:44:52 (reale 20:27:10)
-[13:02:35] [INFO]    C3: 16:45:42 (reale 20:28:50)
-[13:02:35] [INFO]    P4: 17:07:17 (reale 21:12:00)
-[13:02:35] [INFO] 
+[12:04:48] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:04:48] [WARN] ⚠️ TEMPI_PARZIALE vuoto, uso default 1/2000
+[12:04:48] [INFO] 🎬 INIZIO PRE-PARZIALE (ingresso) - 3 scatti ogni 15 secondi
+[12:05:18] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot1!
+[12:06:04] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot2!
+[12:06:50] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot3!
+[12:06:50] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
+[12:06:50] [INFO] 🎉 SIMULAZIONE ECLISSE COMPLETATA! 🎉
+[12:13:36] [INFO] Configurazione caricata da config_eclipse.json
+[12:13:38] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:13:38] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:13:38] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:13:38] [INFO] 
+📅 TIMING SIMULAZIONE:
+[12:13:38] [INFO]    P1: tra 10 secondi
+[12:13:38] [INFO]    C2: tra 67.2 secondi
+[12:13:38] [INFO]    C3: tra 68.8 secondi
+[12:13:38] [INFO]    P4: tra 112.0 secondi
+[12:13:38] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[13:02:57] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:02:57] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[13:02:57] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 4x
-[13:02:57] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[13:02:57] [INFO]    P1: 14:39:43 (reale 19:30:00)
-[13:02:57] [INFO]    C2: 14:54:00 (reale 20:27:10)
-[13:02:57] [INFO]    C3: 14:54:25 (reale 20:28:50)
-[13:02:57] [INFO]    P4: 15:05:13 (reale 21:12:00)
-[13:02:57] [INFO] 
+[12:13:48] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:13:48] [INFO]    Tempo scatto per fasi parziali: 1/2000
+[12:13:48] [INFO] 
+🎬 INIZIO PRE-PARZIALE (ingresso)
+[12:14:19] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot1!
+[12:14:19] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:15:05] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot2!
+[12:15:05] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:15:50] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot3!
+[12:15:50] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
+[12:15:50] [INFO] 
+🎬 INIZIO ANELLO DIAMANTE (ingresso)
+[12:15:50] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (ingresso)
+[12:15:50] [INFO] 
+🎬 INIZIO TOTALITA' - CORONA INTERNA
+[12:15:50] [INFO] ✅ COMPLETATA TOTALITA' - CORONA INTERNA
+[12:15:50] [INFO] 
+🎬 INIZIO TOTALITA' - CORONA ESTERNA
+[12:15:50] [INFO] ✅ COMPLETATA TOTALITA' - CORONA ESTERNA
+[12:15:50] [INFO] 
+🎬 INIZIO ANELLO DIAMANTE (uscita)
+[12:15:50] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (uscita)
+[12:15:50] [INFO] 
+🎬 INIZIO POST-PARZIALE (uscita)
+[12:16:21] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot1!
+[12:16:21] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:17:07] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot2!
+[12:17:07] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:17:52] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot3!
+[12:17:52] [INFO] ✅ COMPLETATA POST-PARZIALE (uscita)
+[12:17:52] [INFO] 
+🎉 SIMULAZIONE ECLISSE COMPLETATA! 🎉
+[12:28:18] [INFO] Configurazione caricata da config_eclipse.json
+[12:28:20] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:28:20] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:28:20] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:28:20] [INFO] 
+📅 TIMING SIMULAZIONE:
+[12:28:20] [INFO]    P1: tra 10 secondi
+[12:28:20] [INFO]    C2: tra 67.2 secondi
+[12:28:20] [INFO]    C3: tra 68.8 secondi
+[12:28:20] [INFO]    P4: tra 112.0 secondi
+[12:28:20] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[13:03:07] [INFO] ⏳ Attesa 5795.5 sec reali (386.4 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
-[13:07:19] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:07:19] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[13:07:19] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 8x
-[13:07:19] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[13:07:19] [INFO]    P1: 13:55:09 (reale 19:30:00)
-[13:07:19] [INFO]    C2: 14:02:18 (reale 20:27:10)
-[13:07:19] [INFO]    C3: 14:02:31 (reale 20:28:50)
-[13:07:19] [INFO]    P4: 14:07:54 (reale 21:12:00)
-[13:07:19] [INFO] 
+[12:28:30] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:28:30] [INFO]    Tempo scatto per fasi parziali: 1/2000
+[12:28:30] [INFO] 
+🎬 INIZIO PRE-PARZIALE (ingresso)
+[12:28:30] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot1
+[12:28:30] [INFO] 📸 PRE-PARZIALE_1/2000_shot1 (1/3)
+[12:28:30] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:28:45] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot2
+[12:28:45] [INFO] 📸 PRE-PARZIALE_1/2000_shot2 (2/3)
+[12:28:45] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:29:00] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot3
+[12:29:01] [INFO] 📸 PRE-PARZIALE_1/2000_shot3 (3/3)
+[12:29:01] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
+[12:29:01] [INFO] 
+⏳ Attesa 26.9 secondi per ANELLO DIAMANTE...
+[12:29:27] [INFO] 
+🎬 INIZIO ANELLO DIAMANTE (ingresso)
+[12:29:27] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (ingresso)
+[12:29:27] [INFO] 
+🎬 INIZIO TOTALITA' - CORONA INTERNA
+[12:29:27] [INFO] ✅ COMPLETATA TOTALITA' - CORONA INTERNA
+[12:29:27] [INFO] 
+🎬 INIZIO TOTALITA' - CORONA ESTERNA
+[12:29:27] [INFO] ✅ COMPLETATA TOTALITA' - CORONA ESTERNA
+[12:29:27] [INFO] 
+⏳ Attesa 1.6 secondi per ANELLO DIAMANTE (uscita)...
+[12:29:29] [INFO] 
+🎬 INIZIO ANELLO DIAMANTE (uscita)
+[12:29:29] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (uscita)
+[12:29:29] [INFO] 
+⏳ Attesa 43.2 secondi per POST-PARZIALE...
+[12:29:48] [INFO] Configurazione caricata da config_eclipse.json
+[12:30:09] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
+[12:30:09] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
+[12:30:09] [INFO]    60 secondi reali = 1 minuto di eclisse
+[12:30:09] [INFO] 
+📅 TIMING SIMULAZIONE:
+[12:30:09] [INFO]    P1: tra 10 secondi
+[12:30:09] [INFO]    C2: tra 67.2 secondi
+[12:30:09] [INFO]    C3: tra 68.8 secondi
+[12:30:09] [INFO]    P4: tra 112.0 secondi
+[12:30:09] [INFO] 
 ⏳ Attesa iniziale di 10 secondi...
-[13:07:29] [INFO] ⏳ Attesa 2860.0 sec reali (381.3 min simulati) fino a 🌑 PRE-PARZIALE (ingresso)
-[13:07:42] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:07:57] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[13:07:57] [INFO] ⏳ Attesa 382.0 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[13:08:41] [ERROR] File config_SolarEclipse_IT4.json non trovato!
-[13:09:04] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:10:24] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:10:30] [INFO] ✅ digiCamControl già in esecuzione
-[13:10:30] [INFO] 🔍 Test connessione camera...
-[13:10:31] [INFO] ✅ Camera connessa!
-[13:10:31] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:22:52] [INFO] Configurazione caricata da config_SolarEclipse_IT.json
-[13:22:54] [INFO] ✅ digiCamControl già in esecuzione
-[13:22:54] [INFO] 🔍 Verifica camera reale...
-[13:22:54] [INFO]    Tempo attuale: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
-
-:;response:error;message:no camera is connected
-[13:22:55] [ERROR] ❌ Camera NON connessa!
+[12:30:19] [INFO] 
+📸 Intervallo tra scatti parziali: 15 secondi reali
+[12:30:19] [INFO]    Tempo scatto per fasi parziali: 1/2000
+[12:30:19] [INFO] 
+🎬 INIZIO PRE-PARZIALE (ingresso)
+[12:30:19] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot1
+[12:30:19] [INFO] 📸 PRE-PARZIALE_1/2000_shot1 (1/3)
+[12:30:19] [INFO] ⏳ Prossimo scatto tra 15 secondi...
+[12:30:34] [INFO] Configurazione caricata da config_eclipse.json
+[12:31:06] [INFO] 🚀 Avvio digiCamControl...
+[12:31:11] [INFO] ✅ digiCamControl avviato
+[12:31:11] [INFO] 🔍 Test connessione camera...
+[12:31:11] [INFO] ✅ Camera connessa!
+[12:31:12] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[12:31:32] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[12:31:32] [INFO] ⏳ Attesa 418.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)

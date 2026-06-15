@@ -1,4 +1,12 @@
 SolarEclipse_IT_TEST_V4.py
+test_telegram.py
+
+# Credenziali sensibili
+secrets.json
+*.key
+*.pem
+credentials.json
+
 # Cache di Python (file compilati automaticamente)
 __pycache__/
 *.py[cod]
