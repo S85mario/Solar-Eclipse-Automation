@@ -215,3 +215,64 @@
 [12:31:12] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
 [12:31:32] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
 [12:31:32] [INFO] ⏳ Attesa 418.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
+[13:02:34] [INFO] Configurazione caricata da config_eclipse.json
+[13:03:18] [INFO] 🚀 Avvio digiCamControl...
+[13:03:24] [INFO] ✅ digiCamControl avviato
+[13:03:24] [INFO] 🔍 Test connessione camera...
+[13:03:24] [INFO] ✅ Camera connessa!
+[13:03:24] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:03:39] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[13:03:39] [INFO] ⏳ Attesa 6.3 minuti fino a PRE-PARZIALE (ingresso) (13:10:00)
+[13:10:03] [INFO] 🎯 Ora PRE-PARZIALE (ingresso) raggiunta!
+[13:10:03] [ERROR] ❌ ERRORE: list index out of range
+[13:24:20] [INFO] Configurazione caricata da config_eclipse.json
+[13:24:56] [INFO] Configurazione caricata da config_eclipse.json
+[13:24:59] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
+[13:25:02] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
+[13:25:02] [INFO] 🔍 Test connessione camera...
+[13:25:02] [INFO] ✅ Camera connessa!
+[13:25:03] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:25:21] [INFO] Configurazione caricata da config_eclipse.json
+[13:25:27] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
+[13:25:30] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
+[13:25:30] [INFO] 🔍 Test connessione camera...
+[13:25:30] [INFO] ✅ Camera connessa!
+[13:25:31] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:30:36] [INFO] Configurazione caricata da config_eclipse.json
+[13:30:42] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
+[13:30:45] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
+[13:30:45] [INFO] 🔍 Test connessione camera...
+[13:30:45] [INFO] ✅ Camera connessa!
+[13:30:46] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:32:18] [INFO] Configurazione caricata da config_eclipse.json
+[13:32:20] [INFO] ✅ digiCamControl già in esecuzione
+[13:32:20] [INFO] 🔍 Test connessione camera...
+[13:32:20] [INFO] ✅ Camera connessa!
+[13:32:30] [INFO] Configurazione caricata da config_eclipse.json
+[13:32:33] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
+[13:32:36] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
+[13:32:36] [INFO] 🔍 Test connessione camera...
+[13:32:36] [INFO] ✅ Camera connessa!
+[13:32:37] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
+[13:59:04] [INFO] Configurazione caricata da config_eclipse.json
+[13:59:28] [INFO] 🚀 Avvio digiCamControl...
+[13:59:36] [INFO] ✅ digiCamControl avviato e minimizzato
+[13:59:41] [INFO] 🔍 Test connessione camera...
+[13:59:46] [ERROR] ❌ Camera non trovata!
+[13:59:49] [INFO] 🔍 Test connessione camera...
+[13:59:54] [ERROR] ❌ Camera non trovata!
+[13:59:57] [INFO] 🔍 Test connessione camera...
+[14:00:02] [ERROR] ❌ Camera non trovata!
+[14:03:54] [INFO] Configurazione caricata da config_eclipse.json
+[14:04:02] [INFO] 🚀 Avvio digiCamControl da: C:\Program Files (x86)\digiCamControl\CameraControl.exe
+[14:04:02] [INFO] ⏳ Attendere l'avvio di digiCamControl...
+[14:04:19] [INFO] ✅ digiCamControl avviato con successo
+[14:04:21] [INFO] ✅ digiCamControl in esecuzione
+[14:04:21] [INFO] 🔍 Test connessione camera...
+[14:04:21] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:04:22] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:04:24] [INFO]    ✅ Tempo 1/1000 impostato
+[14:04:31] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[14:04:31] [INFO] ⏳ Attesa 1405.5 minuti fino a PRE-PARZIALE (ingresso) (13:30:00)

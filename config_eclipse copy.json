@@ -1,12 +1,10 @@
 {
-    "hardware": {
+  "hardware": {
     "marca_camera": "CANON",
     "gui_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControl.exe",
     "cmd_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControlRemoteCmd.exe",
     "sim_mode": false,
-    "debug_mode": false,
-    "digicam_background": true,
-    "digicam_minimized": true
+    "debug_mode": false
   },
   
   "coordinate": {
@@ -17,10 +15,10 @@
   
   "timing_eclisse": {
     "_data": "12 Agosto 2026",
-    "p1_inizio": "13:30:00",
-    "totalita_inizio": "13:40:10",
-    "totalita_fine": "13:42:50",
-    "p4_fine": "13:50:00"
+    "p1_inizio": "19:30:00",
+    "totalita_inizio": "20:27:10",
+    "totalita_fine": "20:28:50",
+    "p4_fine": "21:12:00"
   },
   
   "tempi_scatto": {
