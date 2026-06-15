@@ -38,6 +38,8 @@ Desktop.ini
 *.jpg
 *.jpeg
 *.tiff
+*.pdf
+
 
 # Eventuali file di log generati da digiCamControl o dallo script
 *.log
