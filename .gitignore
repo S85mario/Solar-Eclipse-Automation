@@ -17,6 +17,7 @@ venv/
 .venv/
 env/
 ENV/
+OLD/
 
 # File di configurazione degli IDE / Editor
 .vscode/
