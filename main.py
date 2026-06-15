@@ -133,21 +133,25 @@ def main():
             sys.exit(0)
         break
     
-    # Imposta modalità
+    # ============================================================
+    # IMPOSTAZIONE MODALITÀ
+    # ============================================================
     if scelta == "1":
         MODALITA_SIM_COMPRESSA = True
         SIM_MODE = True
-        from utils import constants
-        constants.MODALITA_SIM_COMPRESSA = True
-        constants.SIM_MODE = True
         print(f"\n🔧 AVVIO SIMULAZIONE CON COMPRESSIONE {FATTORE_COMPRESSIONE}x")
     else:
         MODALITA_SIM_COMPRESSA = False
         SIM_MODE = config["hardware"]["sim_mode"]
-        from utils import constants
-        constants.MODALITA_SIM_COMPRESSA = False
-        constants.SIM_MODE = config["hardware"]["sim_mode"]
-        print("\n📷 AVVIO MODALITA' REALE")
+        if SIM_MODE:
+            print("\n🔧 AVVIO SIMULAZIONE BASE")
+        else:
+            print("\n📷 AVVIO MODALITA' REALE")
+    
+    # Aggiorna costanti globali
+    from utils import constants
+    constants.SIM_MODE = SIM_MODE
+    constants.MODALITA_SIM_COMPRESSA = MODALITA_SIM_COMPRESSA
     
     # Inizializza statistiche
     stats['inizio_eclisse'] = datetime.now()
@@ -157,41 +161,56 @@ def main():
     if batteria:
         stats['batteria_inizio'] = batteria
     
-    # Mostra info
+    # Mostra info configurazione
     print(f"\n📋 Configurazione:")
     print(f"   Camera: {config['hardware']['marca_camera']}")
     print(f"   Modalità: {'SIMULAZIONE COMPRESSA' if MODALITA_SIM_COMPRESSA else 'REALE'}")
     if MODALITA_SIM_COMPRESSA:
         print(f"   Compressione: {FATTORE_COMPRESSIONE}x")
+    elif SIM_MODE:
+        print(f"   Simulazione base attiva")
     print(f"   Scatti previsti: {stats['totale_scatti_previsti']}")
     
     calcola_contatti_gps()
     
-    if not MODALITA_SIM_COMPRESSA:
+    # ============================================================
+    # CHECKLIST - Solo in modalità reale (non simulazione)
+    # ============================================================
+    if not MODALITA_SIM_COMPRESSA and not SIM_MODE:
+        print("\n" + "=" * 70)
+        print("   📋 ESECUZIONE CHECKLIST PRE-ECLISSE")
+        print("=" * 70)
+        print(f"\n[DEBUG] CHECKLIST_ITEMS contiene {len(CHECKLIST_ITEMS)} voci:")
+        for i, item in enumerate(CHECKLIST_ITEMS, 1):
+            print(f"   {i}. {item}")
+        print()
         run_checklist()
+    else:
+        print("\n🔧 Modalità simulazione attiva - Checklist saltata")
     
+    # ============================================================
+    # ATTESA FINALE E AVVIO
+    # ============================================================
     print("\n" + "⚠️" * 40)
     if MODALITA_SIM_COMPRESSA:
         print("      AVVIO SIMULAZIONE COMPRESSA")
+    elif SIM_MODE:
+        print("      AVVIO SIMULAZIONE BASE")
     else:
         print("      SCRIPT PRONTO - IN ATTESA DELL'ECLISSE")
         print("      NON SPEGNERE IL COMPUTER O SCOLLEGARE LA CAMERA")
     print("⚠️" * 40)
     
+    # Attesa solo in modalità reale (non simulazione)
     if not MODALITA_SIM_COMPRESSA and not SIM_MODE:
-        input("\n[Premi INVIO per avviare]")
+        input("\n[Premi INVIO per avviare l'acquisizione]")
     
+    # ============================================================
+    # ESECUZIONE PRINCIPALE
+    # ============================================================
     try:
         if MODALITA_SIM_COMPRESSA:
             run_simulazione_compressa()
-            # In main.py, quando scegli opzione 1, aggiungi:
-            if scelta == "1":
-                MODALITA_SIM_COMPRESSA = True
-                SIM_MODE = True
-                # FORZA anche nelle costanti globali
-                from utils import constants
-                constants.SIM_MODE = True
-                constants.MODALITA_SIM_COMPRESSA = True
         else:
             run_automazione_normale()
         

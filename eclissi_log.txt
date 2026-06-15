@@ -276,3 +276,59 @@
 [14:04:24] [INFO]    ✅ Tempo 1/1000 impostato
 [14:04:31] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
 [14:04:31] [INFO] ⏳ Attesa 1405.5 minuti fino a PRE-PARZIALE (ingresso) (13:30:00)
+[14:09:43] [INFO] Configurazione caricata da config_eclipse.json
+[14:10:00] [INFO] ✅ digiCamControl già in esecuzione
+[14:10:02] [INFO] ✅ digiCamControl in esecuzione
+[14:10:02] [INFO] 🔍 Test connessione camera...
+[14:10:02] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:10:03] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:10:04] [INFO]    ✅ Tempo 1/1000 impostato
+[14:10:06] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[14:10:07] [INFO] ⏳ Attesa 1399.9 minuti fino a PRE-PARZIALE (ingresso) (13:30:00)
+[14:25:21] [INFO] Configurazione caricata da config_eclipse.json
+[14:28:28] [INFO] Configurazione caricata da config_eclipse.json
+[14:28:31] [INFO] 🚀 Avvio digiCamControl...
+[14:28:41] [INFO] ✅ digiCamControl in esecuzione
+[14:28:41] [INFO] 🔍 Test connessione camera...
+[14:28:41] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:28:42] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:28:44] [INFO]    ✅ Tempo 1/1000 impostato
+[14:29:53] [INFO] Configurazione caricata da config_eclipse.json
+[14:29:57] [INFO] ✅ digiCamControl già in esecuzione
+[14:29:59] [INFO] ✅ digiCamControl in esecuzione
+[14:29:59] [INFO] 🔍 Test connessione camera...
+[14:29:59] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:30:00] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:30:02] [INFO]    ✅ Tempo 1/1000 impostato
+[14:33:23] [INFO] ✅ digiCamControl già in esecuzione
+[14:33:25] [INFO] ✅ digiCamControl in esecuzione
+[14:33:25] [INFO] 🔍 Test connessione camera...
+[14:33:25] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:33:26] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:33:28] [INFO]    ✅ Tempo 1/1000 impostato
+[14:33:29] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[14:33:29] [INFO] ⏳ Attesa 1436.5 minuti fino a PRE-PARZIALE (ingresso) (14:30:00)
+[14:39:49] [INFO] Configurazione caricata da config_eclipse.json
+[14:46:55] [INFO] Configurazione caricata da config_eclipse.json
+[14:47:48] [INFO] Configurazione caricata da config_eclipse.json
+[14:51:23] [INFO] Configurazione caricata da config_eclipse.json
+[14:55:42] [INFO] Configurazione caricata da config_eclipse.json
+[14:57:41] [INFO] Configurazione caricata da config_eclipse.json
+[14:57:54] [INFO] ✅ digiCamControl già in esecuzione
+[14:57:54] [INFO] ✅ digiCamControl in esecuzione
+[14:57:54] [INFO] 🔍 Test connessione camera...
+[14:57:54] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+
+:;response:"1/1000";
+[14:57:55] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
+[14:57:57] [INFO]    ✅ Tempo 1/1000 impostato
+[14:57:59] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
+[14:57:59] [INFO] ⏳ Attesa 1412.0 minuti fino a PRE-PARZIALE (ingresso) (14:30:00)

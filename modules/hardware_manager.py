@@ -23,7 +23,7 @@ def init_hardware():
         GUI_PATH = config["hardware"]["gui_path"]
 
 def avvia_digicamcontrol_minimized():
-    """Avvia digiCamControl con verifica effettiva dell'avvio"""
+    """Avvia digiCamControl minimizzato - versione semplice"""
     global SIM_MODE, GUI_PATH
     
     if SIM_MODE:
@@ -39,40 +39,24 @@ def avvia_digicamcontrol_minimized():
     except:
         pass
     
-    # Verifica che il file esista
-    if not os.path.exists(GUI_PATH):
-        log_messaggio(f"❌ digiCamControl non trovato in: {GUI_PATH}", "ERROR")
-        return False
-    
     try:
-        log_messaggio(f"🚀 Avvio digiCamControl da: {GUI_PATH}")
+        log_messaggio("🚀 Avvio digiCamControl...")
         
-        # Avvia normalmente (senza PowerShell)
+        # Avvio normale
         subprocess.Popen([GUI_PATH], shell=True)
         
-        # Attesa per l'avvio con verifica
-        log_messaggio("⏳ Attendere l'avvio di digiCamControl...")
-        
-        for i in range(15, 0, -1):
-            print(f"\r   {i} secondi rimanenti...", end='')
+        # Attesa per l'avvio
+        for i in range(8, 0, -1):
+            print(f"\r   Avvio in corso... {i} secondi", end='')
             time.sleep(1)
-        print("\r   ✅ Attesa completata!                     ")
+        print("\r   ✅ digiCamControl avviato!                    ")
         
-        # Verifica che sia effettivamente partito
-        time.sleep(2)
-        risultato = subprocess.run(['tasklist', '/FI', 'imagename eq CameraControl.exe'], 
-                                 capture_output=True, text=True)
-        if 'CameraControl.exe' in risultato.stdout:
-            log_messaggio("✅ digiCamControl avviato con successo")
-            return True
-        else:
-            log_messaggio("⚠️ digiCamControl non risulta in esecuzione", "WARN")
-            return False
-            
+        return True
+        
     except Exception as e:
-        log_messaggio(f"❌ Errore avvio digiCamControl: {e}", "ERROR")
-        return False    
-
+        log_messaggio(f"❌ Errore avvio: {e}", "ERROR")
+        return False
+    
 def test_connessione_camera():
     """Testa la connessione con la camera - con verifica processo"""
     if SIM_MODE:

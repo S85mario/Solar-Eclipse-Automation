@@ -8,9 +8,9 @@ import time
 import json
 from utils.logger import log_messaggio
 from utils.helpers import emetti_suono
-from utils.constants import SIM_MODE, CHECKLIST_ITEMS, TEST_TEMPO
-from .config_manager import salva_configurazione, ottieni_config
+from utils.constants import SIM_MODE, TEST_TEMPO
 from .hardware_manager import avvia_digicamcontrol_minimized, test_connessione_camera, imposta_tempo_scatto
+from .config_manager import salva_configurazione, ottieni_config
 
 def wizard_configurazione():
     """Wizard interattivo per creare config_eclipse.json"""
@@ -61,12 +61,12 @@ def wizard_configurazione():
         ],
         "checklist_items": [
             "Filtro solare montato?",
-            "Fuoco su MANUALE (MF) e bloccato?",
+            "Fuoco su MANUALE (MF) e bloccato col nastro?",
             "Camera su MANUALE (M)?",
-            "ISO 200 e f/8 impostati?",
-            "Salvataggio su SD interna?",
+            "ISO e Diaframma impostati manualmente? (ISO 200, f/8)",
+            "Salvataggio SOLO su SD interna?",
             "Formato RAW attivo?",
-            "Stabilizzatore OFF?",
+            "Stabilizzatore immagine OFF?",
             "Autofocus DISATTIVATO?"
         ],
         "file_sistema": {
@@ -83,86 +83,70 @@ def wizard_configurazione():
     
     nome_file = input("Nome file configurazione [config_eclipse.json]: ") or "config_eclipse.json"
     salva_configurazione(config, nome_file)
+    print(f"\n✅ Configurazione salvata in {nome_file}")
     return nome_file
 
 def run_checklist():
     """Checklist pre-eclisse interattiva"""
-    global CHECKLIST_ITEMS, TEST_TEMPO
+    global TEST_TEMPO
+    
+    # LEGGI DIRETTAMENTE LE VOCI DAL CONFIG
+    config = ottieni_config()
+    checklist_items = config.get("checklist_items", [])
+    
+    print("\n" + "=" * 70)
+    print("   🔴🔴🔴 CHECKLIST PRE-ECLISSE OBBLIGATORIA 🔴🔴🔴")
+    print("=" * 70)
+    print("\n⚠️  LEGGI E CONFERMA OGNI VOCE ⚠️\n")
+    
+    if not checklist_items:
+        print("   ⚠️ Nessuna voce nella checklist! Verifica il file config_eclipse.json")
+        checklist_items = [
+            "Filtro solare montato?",
+            "Camera su MANUALE (M)?",
+            "ISO e Diaframma impostati?",
+            "Salvataggio su SD interna?"
+        ]
+    
+    for i, item in enumerate(checklist_items, 1):
+        input(f"   [{i}/{len(checklist_items)}] {item} [PREMI INVIO]")
+    
+    print("\n" + "-" * 70)
+    print("   ✅ CHECKLIST COMPLETATA! ✅")
+    print("=" * 70)
     
     print("\n" + "!" * 75)
-    print("      SEQUENZA DI CONNESSIONE HARDWARE")
+    print("      CONFIGURAZIONE HARDWARE")
     print("!" * 75)
-    if SIM_MODE:
-        print("  🔧 MODALITA' SIMULAZIONE - Skip connessione")
+    print("  1. ACCENDI CAMERA")
+    print("  2. COLLEGA USB")
+    print("!" * 75)
+    
+    input("\n[Premi INVIO quando camera è collegata e accesa]")
+    
+    # Avvia digiCamControl
+    if not avvia_digicamcontrol_minimized():
+        print("\n⚠️ Impossibile avviare digiCamControl automaticamente")
+        print("   Avvialo manualmente e premi INVIO")
+        input()
+    
+    # Test connessione camera
+    print("\n🔍 Test connessione camera...")
+    for tentativo in range(1, 4):
+        if test_connessione_camera():
+            print("   ✅ Camera connessa!")
+            break
+        if tentativo < 3:
+            print(f"   Tentativo {tentativo}/3 fallito, riprovo...")
+            time.sleep(2)
     else:
-        print("  1. ACCENDI CAMERA")
-        print("  2. COLLEGA USB")
-        print("  3. digiCamControl verrà avviato (attendere 15 secondi)")
-    print("!" * 75)
+        print("   ⚠️ Connessione incerta, continuo comunque...")
     
-    if not SIM_MODE:
-        input("\n[Premi INVIO quando camera è collegata e accesa]")
-        
-        # Avvia digiCamControl
-        if not avvia_digicamcontrol_minimized():
-            print("\n⚠️ digiCamControl non si è avviato automaticamente!")
-            print("   Avvialo MANUALMENTE dal desktop e premi INVIO")
-            input()
-        
-        # Verifica che digiCamControl sia realmente in esecuzione
-        print("\n🔍 Verifica che digiCamControl sia in esecuzione...")
-        time.sleep(2)
-        
-        # Test connessione con retry
-        connesso = False
-        for tentativo in range(1, 4):
-            print(f"\n🔌 Tentativo {tentativo}/3 di connessione...")
-            if test_connessione_camera():
-                connesso = True
-                break
-            if tentativo < 3:
-                print(f"   Riprovo tra 5 secondi...")
-                time.sleep(5)
-        
-        if not connesso:
-            print("\n" + "=" * 60)
-            print("❌ CONNESSIONE CAMERA FALLITA!")
-            print("=" * 60)
-            print("\nVerifica manualmente:")
-            print("  1. digiCamControl è APERTO?")
-            print("  2. La camera è ACCESA?")
-            print("  3. Il cavo USB è collegato?")
-            print("  4. La camera è in modalità M (Manuale)?")
-            print("  5. Hai premuto 'Connect' in digiCamControl?")
-            print("\n⚠️ Dopo aver verificato, premi INVIO per riprovare")
-            input()
-            
-            # Ultimo tentativo
-            print("\n📷 Ultimo tentativo di connessione...")
-            if not test_connessione_camera():
-                print("\n❌ Impossibile connettersi alla camera!")
-                if input("Forzare continuazione? (s/n): ").lower() != 's':
-                    print("❌ Inizializzazione annullata")
-                    sys.exit(1)
-        
-        # Test cambio tempo
-        print(f"\n📷 Test impostazione tempo {TEST_TEMPO}...")
-        for tentativo in range(1, 4):
-            if imposta_tempo_scatto(TEST_TEMPO):
-                print(f"   ✅ Test superato!")
-                break
-            if tentativo < 3:
-                print(f"   Riprovo tra 3 secondi... (tentativo {tentativo+1}/3)")
-                time.sleep(3)
-        else:
-            print("\n⚠️ Il comando test è stato rifiutato dopo 3 tentativi!")
-            print("   Verifica che la camera sia in modalità MANUALE (M)")
-            if input("Forzare continuazione? (s/n): ").lower() != 's':
-                print("❌ Inizializzazione annullata")
-                sys.exit(1)
+    # Test impostazione tempo
+    print(f"\n📷 Test impostazione tempo {TEST_TEMPO}...")
+    if imposta_tempo_scatto(TEST_TEMPO):
+        print("   ✅ Test superato!")
+    else:
+        print("   ⚠️ Test fallito, ma continuo...")
     
-    print("\n📋 CHECKLIST PRE-ECLISSE:")
-    for i, item in enumerate(CHECKLIST_ITEMS, 1):
-        input(f"  [{i}/{len(CHECKLIST_ITEMS)}] {item} [INVIO] ")
-    
-    print("\n✅ Checklist completata!")
+    print("\n✅ Configurazione hardware completata!\n")
