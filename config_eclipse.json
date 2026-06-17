@@ -1,121 +1,54 @@
 {
-    "hardware": {
+  "hardware": {
     "marca_camera": "CANON",
     "gui_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControl.exe",
-    "cmd_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControlRemoteCmd.exe",
-    "sim_mode": false,
-    "debug_mode": false,
-    "digicam_background": true,
-    "digicam_minimized": true
+    "cmd_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControlRemoteCmd.exe"
   },
-  
   "coordinate": {
     "latitudine_dms": "43°44'08.77\"N",
-    "longitudine_dms": "7°55'20.04\"W",
-    "uso_calcolo_gps": false
+    "longitudine_dms": "7°55'20.04\"W"
   },
-  
   "timing_eclisse": {
     "_data": "12 Agosto 2026",
-    "p1_inizio": "14:30:00",
-    "totalita_inizio": "14:40:10",
-    "totalita_fine": "14:42:50",
-    "p4_fine": "14:50:00"
+    "c1_inizio": "19:30:00",
+    "avviso_togli_filtro": "20:26:20",
+    "anello_in_inizio": "20:26:50",
+    "anello_in_fine": "20:27:20",
+    "totalita_inizio": "20:27:25",
+    "totalita_fine": "20:28:40",
+    "anello_out_inizio": "20:28:50",
+    "anello_out_fine": "20:29:20",
+    "avviso_metti_filtro": "20:29:20",
+    "post_parziale_inizio": "20:29:30",
+    "p4_fine": "21:12:00"
   },
-  
   "tempi_scatto": {
-    "protuberanze": ["1/8000", "1/4000", "1/2000", "1/1000"],
-    "corona": ["1/500", "1/250", "1/125", "1/60", "1/30", "1/15", "1/8", "1/4", "0.5", "1", "2"],
-    "burst": ["1/8000", "1/4000", "1/2000"],
     "parziale": ["1/2000"],
-    "raffica_scatti": 3
+    "burst": ["1/2000"],
+    "corona_interna": ["1/500", "1/250", "1/125", "1/60", "1/30", "1/15"],
+    "corona_esterna": ["1/8", "1/4", "0.5", "1", "2"],
+    "raffica_scatti": 5,
+    "intervallo_parziale_sec": 780
   },
-  
-  "intervalli": {
-    "ingresso_parziale_sec": 2700,
-    "uscita_parziale_sec": 2700,
-    "intervallo_parziale_sec": 675,
-    "watchdog_interval_sec": 30
-  },
-  
   "fasi_eclisse": [
-    {
-      "nome": "PRE-PARZIALE (ingresso)",
-      "tempo_riferimento": "p1_inizio",
-      "durata_sec": 2700,
-      "lista_tempi": "parziale",
-      "usa_raffica": false,
-      "intervallo_scatti": 675
-    },
-    {
-      "nome": "ANELLO DIAMANTE (ingresso)",
-      "tempo_riferimento": "totalita_inizio",
-      "durata_sec": 5,
-      "lista_tempi": "burst",
-      "usa_raffica": true,
-      "intervallo_scatti": 0
-    },
-    {
-      "nome": "TOTALITA' - CORONA INTERNA",
-      "tempo_riferimento": "totalita_inizio",
-      "durata_sec": 50,
-      "lista_tempi": "corona_interna",
-      "usa_raffica": false,
-      "intervallo_scatti": 0
-    },
-    {
-      "nome": "TOTALITA' - CORONA ESTERNA",
-      "tempo_riferimento": "totalita_inizio",
-      "durata_sec": 50,
-      "lista_tempi": "corona_esterna",
-      "usa_raffica": false,
-      "intervallo_scatti": 0
-    },
-    {
-      "nome": "ANELLO DIAMANTE (uscita)",
-      "tempo_riferimento": "totalita_fine",
-      "durata_sec": 5,
-      "lista_tempi": "burst",
-      "usa_raffica": true,
-      "intervallo_scatti": 0
-    },
-    {
-      "nome": "POST-PARZIALE (uscita)",
-      "tempo_riferimento": "totalita_fine",
-      "durata_sec": 2700,
-      "lista_tempi": "parziale",
-      "usa_raffica": false,
-      "intervallo_scatti": 675
-    }
+    {"nome": "PRE-PARZIALE", "tempo": "c1_inizio", "durata": 2700, "tempi": "parziale", "raffica": false, "intervallo": 780},
+    {"nome": "ANELLO_DIAMANTE_IN", "tempo": "anello_in_inizio", "durata": 30, "tempi": "burst", "raffica": true, "intervallo": 0},
+    {"nome": "CORONA_INTERNA", "tempo": "totalita_inizio", "durata": 75, "tempi": "corona_interna", "raffica": false, "intervallo": 0},
+    {"nome": "CORONA_ESTERNA", "tempo": "totalita_inizio", "durata": 75, "tempi": "corona_esterna", "raffica": false, "intervallo": 0},
+    {"nome": "ANELLO_DIAMANTE_OUT", "tempo": "anello_out_inizio", "durata": 30, "tempi": "burst", "raffica": true, "intervallo": 0},
+    {"nome": "POST-PARZIALE", "tempo": "post_parziale_inizio", "durata": 2700, "tempi": "parziale", "raffica": false, "intervallo": 600}
   ],
-  
   "checklist_items": [
-    "Filtro solare montato?",
-    "Fuoco su MANUALE (MF) e bloccato col nastro?",
-    "Camera su MANUALE (M)?",
-    "ISO e Diaframma impostati manualmente? (ISO 200, f/8)",
-    "Salvataggio SOLO su SD interna?",
-    "Formato RAW attivo?",
-    "Stabilizzatore immagine OFF?",
-    "Autofocus DISATTIVATO?"
+    "Fotocamera accesa e connessa?",
+    "Cartella di salvataggio configurata?",
+    "Orologio PC sincronizzato?",
+    "File di configurazione valido?",
+    "Batteria sufficiente?",
+    "Spazio libero su disco sufficiente?"
   ],
-  
-  "file_sistema": {
-    "log_file": "eclissi_log.txt",
-    "stato_file": "eclissi_stato.json",
-    "watchdog_file": "watchdog_last.txt",
-    "secrets_file": "secrets.json"
-  },
-  
   "parametri_camera": {
     "iso_default": 200,
     "apertura_default": 8,
     "test_tempo": "1/1000"
-  },
-  
-  "notifiche": {
-    "telegram": {
-      "enabled": true
-    }
   }
 }

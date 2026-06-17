@@ -1,334 +1,73 @@
-[11:54:17] [INFO] Configurazione caricata da config_eclipse.json
-[11:54:31] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[11:54:31] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[11:54:31] [ERROR] ❌ ERRORE: name 'P1_INIZIO' is not defined
-[11:56:33] [INFO] Configurazione caricata da config_eclipse.json
-[11:56:36] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[11:56:36] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[11:56:36] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[11:56:36] [INFO]    P1: 12:04:09 (reale 19:30:00)
-[11:56:36] [INFO]    C2: 12:05:06 (reale 20:27:10)
-[11:56:36] [INFO]    C3: 12:05:08 (reale 20:28:50)
-[11:56:36] [INFO]    P4: 12:05:51 (reale 21:12:00)
-[11:56:36] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[11:56:46] [INFO] ⏳ Attesa 443.3 sec reali (443.3 min simulati) fino a PRE-PARZIALE (ingresso)
-[12:00:15] [INFO] Configurazione caricata da config_eclipse.json
-[12:00:17] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:00:17] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:00:17] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:00:17] [INFO]    1 minuto reale = 60 minuti di eclisse
-[12:00:17] [INFO]    Durata reale eclisse: 102 minuti
-[12:00:17] [INFO]    Durata simulata: 102.0 secondi
-[12:00:17] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[12:00:17] [INFO]    Ora attuale: 12:00:17
-[12:00:17] [INFO]    P1: 12:00:27 (reale 19:30:00)
-[12:00:17] [INFO]    C2: 12:01:25 (reale 20:27:10)
-[12:00:17] [INFO]    C3: 12:01:26 (reale 20:28:50)
-[12:00:17] [INFO]    P4: 12:02:09 (reale 21:12:00)
-[12:00:17] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:00:26] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:00:26] [INFO] 
-⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
-[12:00:27] [ERROR] ❌ ERRORE: list index out of range
-[12:00:45] [INFO] Configurazione caricata da config_eclipse.json
-[12:00:47] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:00:47] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:00:47] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:00:47] [INFO]    1 minuto reale = 60 minuti di eclisse
-[12:00:47] [INFO]    Durata reale eclisse: 102 minuti
-[12:00:47] [INFO]    Durata simulata: 102.0 secondi
-[12:00:47] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[12:00:47] [INFO]    Ora attuale: 12:00:47
-[12:00:47] [INFO]    P1: 12:00:57 (reale 19:30:00)
-[12:00:47] [INFO]    C2: 12:01:55 (reale 20:27:10)
-[12:00:47] [INFO]    C3: 12:01:56 (reale 20:28:50)
-[12:00:47] [INFO]    P4: 12:02:39 (reale 21:12:00)
-[12:00:47] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:00:57] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:00:57] [INFO] 
-⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
-[12:00:57] [ERROR] ❌ ERRORE: list index out of range
-[12:02:46] [INFO] Configurazione caricata da config_eclipse.json
-[12:02:49] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:02:49] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:02:49] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:02:49] [INFO]    1 minuto reale = 60 minuti di eclisse
-[12:02:49] [INFO]    Durata reale eclisse: 102 minuti
-[12:02:49] [INFO]    Durata simulata: 102.0 secondi
-[12:02:49] [INFO] 
-📅 TIMING SIMULAZIONE (tempo reale):
-[12:02:49] [INFO]    Ora attuale: 12:02:49
-[12:02:49] [INFO]    P1: 12:02:59 (reale 19:30:00)
-[12:02:49] [INFO]    C2: 12:03:56 (reale 20:27:10)
-[12:02:49] [INFO]    C3: 12:03:58 (reale 20:28:50)
-[12:02:49] [INFO]    P4: 12:04:41 (reale 21:12:00)
-[12:02:49] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:02:58] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:02:58] [INFO] 
-⏳ Attesa 0.9 secondi per PRE-PARZIALE (ingresso)...
-[12:02:59] [ERROR] ❌ ERRORE: list index out of range
-[12:04:35] [INFO] Configurazione caricata da config_eclipse.json
-[12:04:37] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:04:37] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:04:37] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:04:37] [INFO] 
-📅 TIMING SIMULAZIONE:
-[12:04:37] [INFO]    P1: tra 10 secondi
-[12:04:37] [INFO]    C2: tra 67.2 secondi
-[12:04:37] [INFO]    C3: tra 68.8 secondi
-[12:04:37] [INFO]    P4: tra 112.0 secondi
-[12:04:37] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:04:48] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:04:48] [WARN] ⚠️ TEMPI_PARZIALE vuoto, uso default 1/2000
-[12:04:48] [INFO] 🎬 INIZIO PRE-PARZIALE (ingresso) - 3 scatti ogni 15 secondi
-[12:05:18] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot1!
-[12:06:04] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot2!
-[12:06:50] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE (ingresso)_1/2000_shot3!
-[12:06:50] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
-[12:06:50] [INFO] 🎉 SIMULAZIONE ECLISSE COMPLETATA! 🎉
-[12:13:36] [INFO] Configurazione caricata da config_eclipse.json
-[12:13:38] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:13:38] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:13:38] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:13:38] [INFO] 
-📅 TIMING SIMULAZIONE:
-[12:13:38] [INFO]    P1: tra 10 secondi
-[12:13:38] [INFO]    C2: tra 67.2 secondi
-[12:13:38] [INFO]    C3: tra 68.8 secondi
-[12:13:38] [INFO]    P4: tra 112.0 secondi
-[12:13:38] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:13:48] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:13:48] [INFO]    Tempo scatto per fasi parziali: 1/2000
-[12:13:48] [INFO] 
-🎬 INIZIO PRE-PARZIALE (ingresso)
-[12:14:19] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot1!
-[12:14:19] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:15:05] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot2!
-[12:15:05] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:15:50] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] PRE-PARZIALE_1/2000_shot3!
-[12:15:50] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
-[12:15:50] [INFO] 
-🎬 INIZIO ANELLO DIAMANTE (ingresso)
-[12:15:50] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (ingresso)
-[12:15:50] [INFO] 
-🎬 INIZIO TOTALITA' - CORONA INTERNA
-[12:15:50] [INFO] ✅ COMPLETATA TOTALITA' - CORONA INTERNA
-[12:15:50] [INFO] 
-🎬 INIZIO TOTALITA' - CORONA ESTERNA
-[12:15:50] [INFO] ✅ COMPLETATA TOTALITA' - CORONA ESTERNA
-[12:15:50] [INFO] 
-🎬 INIZIO ANELLO DIAMANTE (uscita)
-[12:15:50] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (uscita)
-[12:15:50] [INFO] 
-🎬 INIZIO POST-PARZIALE (uscita)
-[12:16:21] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot1!
-[12:16:21] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:17:07] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot2!
-[12:17:07] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:17:52] [ERROR] ❌ CRITICO: Scatto fallito per [SIM] POST-PARZIALE_1/2000_shot3!
-[12:17:52] [INFO] ✅ COMPLETATA POST-PARZIALE (uscita)
-[12:17:52] [INFO] 
-🎉 SIMULAZIONE ECLISSE COMPLETATA! 🎉
-[12:28:18] [INFO] Configurazione caricata da config_eclipse.json
-[12:28:20] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:28:20] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:28:20] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:28:20] [INFO] 
-📅 TIMING SIMULAZIONE:
-[12:28:20] [INFO]    P1: tra 10 secondi
-[12:28:20] [INFO]    C2: tra 67.2 secondi
-[12:28:20] [INFO]    C3: tra 68.8 secondi
-[12:28:20] [INFO]    P4: tra 112.0 secondi
-[12:28:20] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:28:30] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:28:30] [INFO]    Tempo scatto per fasi parziali: 1/2000
-[12:28:30] [INFO] 
-🎬 INIZIO PRE-PARZIALE (ingresso)
-[12:28:30] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot1
-[12:28:30] [INFO] 📸 PRE-PARZIALE_1/2000_shot1 (1/3)
-[12:28:30] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:28:45] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot2
-[12:28:45] [INFO] 📸 PRE-PARZIALE_1/2000_shot2 (2/3)
-[12:28:45] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:29:00] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot3
-[12:29:01] [INFO] 📸 PRE-PARZIALE_1/2000_shot3 (3/3)
-[12:29:01] [INFO] ✅ COMPLETATA PRE-PARZIALE (ingresso)
-[12:29:01] [INFO] 
-⏳ Attesa 26.9 secondi per ANELLO DIAMANTE...
-[12:29:27] [INFO] 
-🎬 INIZIO ANELLO DIAMANTE (ingresso)
-[12:29:27] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (ingresso)
-[12:29:27] [INFO] 
-🎬 INIZIO TOTALITA' - CORONA INTERNA
-[12:29:27] [INFO] ✅ COMPLETATA TOTALITA' - CORONA INTERNA
-[12:29:27] [INFO] 
-🎬 INIZIO TOTALITA' - CORONA ESTERNA
-[12:29:27] [INFO] ✅ COMPLETATA TOTALITA' - CORONA ESTERNA
-[12:29:27] [INFO] 
-⏳ Attesa 1.6 secondi per ANELLO DIAMANTE (uscita)...
-[12:29:29] [INFO] 
-🎬 INIZIO ANELLO DIAMANTE (uscita)
-[12:29:29] [INFO] ✅ COMPLETATA ANELLO DIAMANTE (uscita)
-[12:29:29] [INFO] 
-⏳ Attesa 43.2 secondi per POST-PARZIALE...
-[12:29:48] [INFO] Configurazione caricata da config_eclipse.json
-[12:30:09] [INFO] 🚀 SIMULAZIONE ECLISSE CON TEMPO COMPRESSO
-[12:30:09] [INFO] 🔧 SIMULAZIONE CON COMPRESSIONE 60x
-[12:30:09] [INFO]    60 secondi reali = 1 minuto di eclisse
-[12:30:09] [INFO] 
-📅 TIMING SIMULAZIONE:
-[12:30:09] [INFO]    P1: tra 10 secondi
-[12:30:09] [INFO]    C2: tra 67.2 secondi
-[12:30:09] [INFO]    C3: tra 68.8 secondi
-[12:30:09] [INFO]    P4: tra 112.0 secondi
-[12:30:09] [INFO] 
-⏳ Attesa iniziale di 10 secondi...
-[12:30:19] [INFO] 
-📸 Intervallo tra scatti parziali: 15 secondi reali
-[12:30:19] [INFO]    Tempo scatto per fasi parziali: 1/2000
-[12:30:19] [INFO] 
-🎬 INIZIO PRE-PARZIALE (ingresso)
-[12:30:19] [INFO] [SIM] 📸 Scatto: PRE-PARZIALE_1/2000_shot1
-[12:30:19] [INFO] 📸 PRE-PARZIALE_1/2000_shot1 (1/3)
-[12:30:19] [INFO] ⏳ Prossimo scatto tra 15 secondi...
-[12:30:34] [INFO] Configurazione caricata da config_eclipse.json
-[12:31:06] [INFO] 🚀 Avvio digiCamControl...
-[12:31:11] [INFO] ✅ digiCamControl avviato
-[12:31:11] [INFO] 🔍 Test connessione camera...
-[12:31:11] [INFO] ✅ Camera connessa!
-[12:31:12] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[12:31:32] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[12:31:32] [INFO] ⏳ Attesa 418.5 minuti fino a PRE-PARZIALE (ingresso) (19:30:00)
-[13:02:34] [INFO] Configurazione caricata da config_eclipse.json
-[13:03:18] [INFO] 🚀 Avvio digiCamControl...
-[13:03:24] [INFO] ✅ digiCamControl avviato
-[13:03:24] [INFO] 🔍 Test connessione camera...
-[13:03:24] [INFO] ✅ Camera connessa!
-[13:03:24] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:03:39] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[13:03:39] [INFO] ⏳ Attesa 6.3 minuti fino a PRE-PARZIALE (ingresso) (13:10:00)
-[13:10:03] [INFO] 🎯 Ora PRE-PARZIALE (ingresso) raggiunta!
-[13:10:03] [ERROR] ❌ ERRORE: list index out of range
-[13:24:20] [INFO] Configurazione caricata da config_eclipse.json
-[13:24:56] [INFO] Configurazione caricata da config_eclipse.json
-[13:24:59] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
-[13:25:02] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
-[13:25:02] [INFO] 🔍 Test connessione camera...
-[13:25:02] [INFO] ✅ Camera connessa!
-[13:25:03] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:25:21] [INFO] Configurazione caricata da config_eclipse.json
-[13:25:27] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
-[13:25:30] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
-[13:25:30] [INFO] 🔍 Test connessione camera...
-[13:25:30] [INFO] ✅ Camera connessa!
-[13:25:31] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:30:36] [INFO] Configurazione caricata da config_eclipse.json
-[13:30:42] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
-[13:30:45] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
-[13:30:45] [INFO] 🔍 Test connessione camera...
-[13:30:45] [INFO] ✅ Camera connessa!
-[13:30:46] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:32:18] [INFO] Configurazione caricata da config_eclipse.json
-[13:32:20] [INFO] ✅ digiCamControl già in esecuzione
-[13:32:20] [INFO] 🔍 Test connessione camera...
-[13:32:20] [INFO] ✅ Camera connessa!
-[13:32:30] [INFO] Configurazione caricata da config_eclipse.json
-[13:32:33] [INFO] 🚀 Avvio digiCamControl (minimizzato)...
-[13:32:36] [INFO] ✅ digiCamControl avviato (icona nella taskbar)
-[13:32:36] [INFO] 🔍 Test connessione camera...
-[13:32:36] [INFO] ✅ Camera connessa!
-[13:32:37] [ERROR] ❌ CRITICO: Cambio tempo fallito (1/1000)!
-[13:59:04] [INFO] Configurazione caricata da config_eclipse.json
-[13:59:28] [INFO] 🚀 Avvio digiCamControl...
-[13:59:36] [INFO] ✅ digiCamControl avviato e minimizzato
-[13:59:41] [INFO] 🔍 Test connessione camera...
-[13:59:46] [ERROR] ❌ Camera non trovata!
-[13:59:49] [INFO] 🔍 Test connessione camera...
-[13:59:54] [ERROR] ❌ Camera non trovata!
-[13:59:57] [INFO] 🔍 Test connessione camera...
-[14:00:02] [ERROR] ❌ Camera non trovata!
-[14:03:54] [INFO] Configurazione caricata da config_eclipse.json
-[14:04:02] [INFO] 🚀 Avvio digiCamControl da: C:\Program Files (x86)\digiCamControl\CameraControl.exe
-[14:04:02] [INFO] ⏳ Attendere l'avvio di digiCamControl...
-[14:04:19] [INFO] ✅ digiCamControl avviato con successo
-[14:04:21] [INFO] ✅ digiCamControl in esecuzione
-[14:04:21] [INFO] 🔍 Test connessione camera...
-[14:04:21] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+[13:14:59] [SISTEMA] SISTEMA: ========================================
+[13:14:59] [SISTEMA] SISTEMA: AVVIO SCRIPT ECLISSE
+[13:14:59] [SISTEMA] SISTEMA: Data/ora: 2026-06-17 13:14:59
+[13:14:59] [SISTEMA] SISTEMA: ========================================
+[13:14:59] [SISTEMA] SISTEMA: Caricamento configurazione...
+[13:14:59] [SISTEMA] SISTEMA: Configurazione caricata con successo
+[13:14:59] [SISTEMA] SISTEMA: --- VERIFICHE INIZIALI ---
+[13:14:59] [INFO] 🔍 Verifica connessione fotocamera...
+[13:14:59] [INFO] 🔍 Test connessione camera...
+[13:15:20] [SISTEMA] SISTEMA: Audio riprodotto: errore_connessione
+[13:15:20] [ERROR] ❌ Camera non trovata!
+[13:15:20] [WARN] ⚠️ Fotocamera non connessa!
+[13:15:24] [INFO] 📁 Verifica cartella di salvataggio...
+[13:15:24] [INFO] 🕐 Verifica sincronizzazione oraria...
+[13:15:24] [INFO] 📄 Verifica file configurazione...
+[13:15:24] [INFO] ✅ File configurazione presente
+[13:15:24] [INFO] 🔋 Verifica batteria e spazio...
+[13:15:24] [INFO] ✅ Batteria: 98%
+[13:15:25] [INFO] ✅ Spazio libero: 118GB
+[13:15:25] [SISTEMA] SISTEMA: --- VERIFICHE COMPLETATE ---
+[13:15:29] [SISTEMA] SISTEMA: Verifica digiCamControl...
+[13:15:29] [INFO] 🚀 Avvio digiCamControl...
+[13:15:37] [INFO] 🔍 Test connessione camera...
+[13:15:37] [INFO] ✅ Camera connessa! digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
 
-:;response:"1/1000";
-[14:04:22] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:04:24] [INFO]    ✅ Tempo 1/1000 impostato
-[14:04:31] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[14:04:31] [INFO] ⏳ Attesa 1405.5 minuti fino a PRE-PARZIALE (ingresso) (13:30:00)
-[14:09:43] [INFO] Configurazione caricata da config_eclipse.json
-[14:10:00] [INFO] ✅ digiCamControl già in esecuzione
-[14:10:02] [INFO] ✅ digiCamControl in esecuzione
-[14:10:02] [INFO] 🔍 Test connessione camera...
-[14:10:02] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
+:;response:"1/2000";
+[13:15:37] [DEBUG] HARDWARE: set shutterspeed 1/1000
+[13:15:46] [SISTEMA] SISTEMA: SCRIPT AVVIATO
+[13:15:46] [INFO] 📅 PRE-PARZIALE: da 19:30:00 a 21:12:00, durata 102.0 minuti
+[13:15:46] [INFO] ⏳ In attesa dell'orario di inizio PRE-PARZIALE alle 19:30:00...
+[13:15:46] [WARN] ⚠️ Attesa di 6.2 ore per PRE-PARZIALE - sembra eccessiva!
+[13:15:46] [INFO] ⏳ In attesa di PRE-PARZIALE alle 19:30:00... (22454 secondi)
+[13:17:41] [WARN] 🛑 Script interrotto
+[19:09:33] [SISTEMA] SISTEMA: ========================================
+[19:09:33] [SISTEMA] SISTEMA: AVVIO SCRIPT ECLISSE
+[19:09:33] [SISTEMA] SISTEMA: Data/ora: 2026-06-17 19:09:33
+[19:09:33] [SISTEMA] SISTEMA: ========================================
+[19:09:33] [SISTEMA] SISTEMA: Caricamento configurazione...
+[19:09:33] [SISTEMA] SISTEMA: Configurazione caricata con successo
+[19:09:33] [SISTEMA] SISTEMA: --- VERIFICHE INIZIALI ---
+[19:09:33] [INFO] 🔍 Verifica connessione fotocamera...
+[19:09:33] [INFO] 🔍 Test connessione camera...
+[19:09:54] [SISTEMA] SISTEMA: Audio riprodotto: errore_connessione
+[19:09:54] [ERROR] ❌ Camera non trovata!
+[19:09:54] [WARN] ⚠️ Fotocamera non connessa!
+[19:09:54] [INFO] 📁 Verifica cartella di salvataggio...
+[19:09:54] [INFO] 🕐 Verifica sincronizzazione oraria...
+[19:09:54] [INFO] 📄 Verifica file configurazione...
+[19:09:54] [INFO] ✅ File configurazione presente
+[19:09:54] [INFO] 🔋 Verifica batteria e spazio...
+[19:09:54] [INFO] ✅ Batteria: 95%
+[19:09:54] [INFO] ✅ Spazio libero: 115GB
+[19:09:54] [SISTEMA] SISTEMA: --- VERIFICHE COMPLETATE ---
+[19:09:57] [SISTEMA] SISTEMA: Verifica digiCamControl...
+[19:09:58] [INFO] 🚀 Avvio digiCamControl...
+[19:10:06] [INFO] 🔍 Test connessione camera...
+[19:10:06] [INFO] ✅ Camera connessa! digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
 
-:;response:"1/1000";
-[14:10:03] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:10:04] [INFO]    ✅ Tempo 1/1000 impostato
-[14:10:06] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[14:10:07] [INFO] ⏳ Attesa 1399.9 minuti fino a PRE-PARZIALE (ingresso) (13:30:00)
-[14:25:21] [INFO] Configurazione caricata da config_eclipse.json
-[14:28:28] [INFO] Configurazione caricata da config_eclipse.json
-[14:28:31] [INFO] 🚀 Avvio digiCamControl...
-[14:28:41] [INFO] ✅ digiCamControl in esecuzione
-[14:28:41] [INFO] 🔍 Test connessione camera...
-[14:28:41] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
-
-:;response:"1/1000";
-[14:28:42] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:28:44] [INFO]    ✅ Tempo 1/1000 impostato
-[14:29:53] [INFO] Configurazione caricata da config_eclipse.json
-[14:29:57] [INFO] ✅ digiCamControl già in esecuzione
-[14:29:59] [INFO] ✅ digiCamControl in esecuzione
-[14:29:59] [INFO] 🔍 Test connessione camera...
-[14:29:59] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
-
-:;response:"1/1000";
-[14:30:00] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:30:02] [INFO]    ✅ Tempo 1/1000 impostato
-[14:33:23] [INFO] ✅ digiCamControl già in esecuzione
-[14:33:25] [INFO] ✅ digiCamControl in esecuzione
-[14:33:25] [INFO] 🔍 Test connessione camera...
-[14:33:25] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
-
-:;response:"1/1000";
-[14:33:26] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:33:28] [INFO]    ✅ Tempo 1/1000 impostato
-[14:33:29] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[14:33:29] [INFO] ⏳ Attesa 1436.5 minuti fino a PRE-PARZIALE (ingresso) (14:30:00)
-[14:39:49] [INFO] Configurazione caricata da config_eclipse.json
-[14:46:55] [INFO] Configurazione caricata da config_eclipse.json
-[14:47:48] [INFO] Configurazione caricata da config_eclipse.json
-[14:51:23] [INFO] Configurazione caricata da config_eclipse.json
-[14:55:42] [INFO] Configurazione caricata da config_eclipse.json
-[14:57:41] [INFO] Configurazione caricata da config_eclipse.json
-[14:57:54] [INFO] ✅ digiCamControl già in esecuzione
-[14:57:54] [INFO] ✅ digiCamControl in esecuzione
-[14:57:54] [INFO] 🔍 Test connessione camera...
-[14:57:54] [INFO] ✅ Camera connessa! Risposta: digiCamControl remote command line utility (2.1.7.0, 25/03/2025 20:20:50) running
-
-:;response:"1/1000";
-[14:57:55] [INFO]    Tentativo 1/3: impostazione tempo 1/1000...
-[14:57:57] [INFO]    ✅ Tempo 1/1000 impostato
-[14:57:59] [INFO] 🚀 MOTORE ECLISSE ATTIVO - MODALITA' REALE
-[14:57:59] [INFO] ⏳ Attesa 1412.0 minuti fino a PRE-PARZIALE (ingresso) (14:30:00)
+:;response:error;message:no camera is connected
+[19:10:06] [DEBUG] HARDWARE: set shutterspeed 1/1000
+[19:10:14] [SISTEMA] SISTEMA: SCRIPT AVVIATO
+[19:10:14] [INFO] 📅 PRE-PARZIALE: da 19:30:00 a 21:12:00, durata 102.0 minuti
+[19:10:14] [INFO] ⏳ In attesa dell'orario di inizio PRE-PARZIALE alle 19:30:00...
+[19:10:14] [INFO] ⏳ In attesa di PRE-PARZIALE alle 19:30:00... (1186 secondi)
+[19:29:40] [SISTEMA] SISTEMA: Audio riprodotto: mancano_20_secondi
+[19:29:40] [INFO] ⏰ PRE-PARZIALE tra 20 secondi!
+[19:30:00] [INFO] 🎯 PRE-PARZIALE raggiunta alle 19:30:00!
+[19:30:00] [INFO] 🎬 PRE-PARZIALE - 7 scatti ogni 13 minuti a 1/2000
+[19:30:00] [DEBUG] HARDWARE: set shutterspeed 1/2000
+[19:30:00] [INFO]    Fine fase: 21:12:00
+[19:30:03] [SUCCESS] SCATTO: PRE-PARZIALE_1/2000_shot1
+[19:30:03] [INFO] 📸 PRE-PARZIALE_1/2000_shot1
+[19:30:03] [INFO] ⏳ Prossimo scatto tra 13 minuti (alle 19:43:01)
