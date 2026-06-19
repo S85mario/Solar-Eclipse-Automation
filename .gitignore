@@ -1,7 +1,7 @@
 SolarEclipse_IT_TEST_V4.py
 test_telegram.py
 config_eclipse_copy.json
-
+TestEclipse.py
 # Credenziali sensibili
 secrets.json
 *.key
