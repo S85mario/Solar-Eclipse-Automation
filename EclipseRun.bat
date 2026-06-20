@@ -7,7 +7,7 @@ echo    SOLAR ECLIPSE AUTOMATION SCRIPT v5.0
 echo    Avvio in corso...
 echo ============================================================
 echo.
-
+REM cls
 REM Verifica che Python sia installato
 python --version >nul 2>&1
 if errorlevel 1 (

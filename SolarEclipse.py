@@ -8,9 +8,15 @@ import urllib.parse
 import sys
 
 # ==============================================================================
-# CONFIGURAZIONE GLOBALE E DEBUG COLORE (DINAMICO)
+# CONFIGURAZIONE GLOBALE E DEBUG COLORE
 # ==============================================================================
 DEBUG_MODE = False  # Viene sovrascritto dall'input iniziale dell'utente
+
+# Destinazione salvataggio foto:
+# "1" = Solo su scheda SD della fotocamera (Consigliato per la raffica ad alta velocità)
+# "0" = Solo su PC
+# "2" = Sia su PC che su scheda SD
+TARGET_STORAGE = "1" 
 
 # Codici colore ANSI per la console
 CLR_RESET = "\033[0m"
@@ -25,7 +31,7 @@ def log_debug(msg):
     if DEBUG_MODE:
         print(f"{CLR_DEBUG}[DEBUG] {msg}{CLR_RESET}")
 
-# Inizializzazione supporto colori su Windows Terminal / CMD vecchio
+# Inizializzazione supporto colori su Windows Terminal / CMD
 if os.name == 'nt':
     os.system('color')
 
@@ -42,14 +48,13 @@ else:
 # ==============================================================================
 # CONFIGURAZIONE ORARI ECLISSI 12 AGOSTO 2026
 # ==============================================================================
-C2_TIME = datetime(2026, 6, 20, 13, 45, 10)
-C3_TIME = datetime(2026, 6, 20, 13, 46, 50)
+C2_TIME = datetime(2026, 6, 20, 14, 13, 10)
+C3_TIME = datetime(2026, 6, 20, 14, 14, 50)
+# Per l'eclissi reale basterà decommentare queste sotto e commentare quelle sopra:
 #C2_TIME = datetime(2026, 8, 12, 20, 27, 10)
 #C3_TIME = datetime(2026, 8, 12, 20, 28, 50)
 
-PATH_TO_CMD = r"C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe"
 PORTA_SERVER = "2727" 
-
 BASE_URL_SLC = f"http://127.0.0.1:{PORTA_SERVER}/?slc="
 BASE_URL_CMD = f"http://127.0.0.1:{PORTA_SERVER}/?CMD="
 SECRETS_FILE = "secrets.json"
@@ -91,14 +96,14 @@ def run_startup_checklist():
         ("WEB SERVER", f"Enable attivo nelle impostazioni sulla porta {PORTA_SERVER}."),
         ("FUOCO MANUALE (MF)", "Obiettivo su MF e ghiera bloccata."),
         ("RIVEDILE IMMAGINI", "Image Review su OFF nei menu della mirrorless."),
-        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fasi parziali.")
+        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fases parziali.")
     ]
     for i, (titolo, descrizione) in enumerate(checklist, 1):
         input(f"[{i}/{len(checklist)}] {CLR_WARN}📌 {titolo}:{CLR_RESET} {descrizione}\n   [INVIO per confermare...]")
     send_telegram_message("🚀 *Script Online!* Timeline caricata e checklist superata.")
 
 # ==============================================================================
-# FUNZIONE DI SCATTO CON LOG DINAMICI
+# FUNZIONE DI SCATTO CON LOG DINAMICI E SALVATAGGIO CONFIGURATO
 # ==============================================================================
 def execute_camera_command(shutter, aperture, iso, label):
     shutter_clean = shutter.replace('"', '')
@@ -108,41 +113,58 @@ def execute_camera_command(shutter, aperture, iso, label):
     try:
         log_debug(f"Inizio sequenza per: {label}")
         
-        # 1. Cambio Parametri via EXE
-        log_debug(f"Esecuzione CLI -> Imposto ISO: {iso} | Shutter: {shutter_clean} | Aperture: {aperture_final}")
-        subprocess.run([PATH_TO_CMD, "/c", f"set iso {iso}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.run([PATH_TO_CMD, "/c", f"set shutterspeed {shutter_clean}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.run([PATH_TO_CMD, "/c", f"set aperture {aperture_final}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # 1. PREPARAZIONE URL CON SINTASSI NATIVA CORRETTA
+        url_iso = f"{BASE_URL_SLC}set&param1=iso&param2={iso}"
+        url_aperture = f"{BASE_URL_SLC}set&param1=aperture&param2={aperture_final}"
+        url_shutter = f"{BASE_URL_SLC}set&param1=shutterspeed&param2={urllib.parse.quote(shutter_clean)}"
+        url_transfer = f"{BASE_URL_SLC}set&param1=transfer&param2={TARGET_STORAGE}"
         
-        # 2. Blocco Download via Web Server (Sintassi ufficiale)
-        url_folder = f"{BASE_URL_SLC}set&param1=session.folder&param2=None"
-        url_download = f"{BASE_URL_SLC}set&param1=session.downloadonlyjpg&param2=false"
+        # 2. INVIO CONFIGURAZIONI ESPOSIZIONE
+        log_debug(f"Invio ISO -> {iso}")
+        resp_iso = urllib.request.urlopen(url_iso, timeout=2).read().decode('utf-8').strip()
+        log_debug(f"Risposta Server per ISO: {resp_iso}")
+        time.sleep(0.05)
         
-        log_debug(f"Invio blocco download -> URL cartella: {url_folder}")
-        urllib.request.urlopen(url_folder, timeout=2).read()
+        log_debug(f"Invio Diaframma -> {aperture_final}")
+        resp_ap = urllib.request.urlopen(url_aperture, timeout=2).read().decode('utf-8').strip()
+        log_debug(f"Risposta Server per Diaframma: {resp_ap}")
+        time.sleep(0.05)
         
-        log_debug(f"Invio blocco trasferimento -> URL flag: {url_download}")
-        urllib.request.urlopen(url_download, timeout=2).read()
+        log_debug(f"Invio Tempo -> {shutter_clean}")
+        resp_sh = urllib.request.urlopen(url_shutter, timeout=2).read().decode('utf-8').strip()
+        log_debug(f"Risposta Server per Tempo: {resp_sh}")
+        time.sleep(0.05)
+
+        # 3. FORZATURA DESTINAZIONE STORAGE (CORRETTA)
+        log_debug(f"Forzo destinazione salvataggio (Modo: {TARGET_STORAGE}) ->")
+        resp_tr = urllib.request.urlopen(url_transfer, timeout=2).read().decode('utf-8').strip()
+        log_debug(f"Risposta Server per Storage: {resp_tr}")
         
-        # Pausa stabilizzazione
-        log_debug("Pausa di stabilizzazione elettronica (0.30s)...")
-        time.sleep(0.30)
+        # Pausa di stabilizzazione finale pre-scatto
+        time.sleep(0.10)
         
-        # 3. Impulso di scatto finale via Web Server
-        url_scatto = f"{BASE_URL_CMD}Capture"
-        log_debug(f"Invio trigger scatto -> URL: {url_scatto}")
-        urllib.request.urlopen(url_scatto, timeout=2).read()
+        # 4. TRIGGER DI SCATTO (RAFFICA AD ALTA VELOCITÀ PER 0.5 SECONDI)
+        url_premi = f"{BASE_URL_CMD}CaptureNoAf"
+        url_rilascia = f"{BASE_URL_CMD}Release"
         
-        # Log di successo standard in verde (Sempre visibile)
+        log_debug("⬇️ Pressione pulsante di scatto avviata...")
+        urllib.request.urlopen(url_premi, timeout=2).read()
+        
+        time.sleep(0.50) # Mantiene premuto per la raffica ad alta velocità
+        
+        log_debug("⬆️ Rilascio pulsante di scatto...")
+        urllib.request.urlopen(url_rilascia, timeout=2).read()
+        
+        # Log standard di successo a schermo
         timestamp = datetime.now().strftime('%H:%M:%S.%f')[:-3]
-        print(f"{CLR_OK}[{timestamp}] 📸 {label} -> CONFIGURATO (ISO {iso} | {shutter_clean} | f/{aperture_final}){CLR_RESET}")
-        send_telegram_message(f"📸 `{label}` scattata (Solo su SD).")
+        print(f"{CLR_OK}[{timestamp}] 📸 {label} -> CONFIGURATO ED ESEGUITO (ISO {iso} | {shutter_clean} | f/{aperture_final}){CLR_RESET}")
+        send_telegram_message(f"📸 `{label}` eseguita (ISO {iso} | {shutter_clean} | f/{aperture_final})")
         
     except Exception as e:
         print(f"{CLR_ERR}❌ Errore critico su {label}: {e}{CLR_RESET}")
 
 # ==============================================================================
-# TIMELINE DI SCATTO AGGIORNATA
+# TIMELINE DI SCATTO
 # ==============================================================================
 script_data = """
 TAKEPIC,C2,-,58:00,1,1/250,8,100,1,RAW,L,N,Parziale "C1" Primo Contatto -58 min
