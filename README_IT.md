@@ -1,433 +1,101 @@
-<<<<<<< HEAD
-Uno script Python automatizzato progettato per gestire sequenze di bracketing in alta gamma dinamica (HDR) durante le eclissi solari. Automatizza le impostazioni della fotocamera (Tempo di scatto, Diaframma, ISO) gestendo tempistiche precise calcolate rispetto ai punti di contatto C2 (Inizio Totalità) e C3 (Fine Totalità).
+# SolarEclipse2026 📸 🌒
 
-Lo script si interfaccia direttamente con la CLI di digiCamControl per garantire comunicazioni stabili ed evitare colli di bottiglia durante le repentine variazioni di parametri (es. Anello di Diamante e Grani di Baily).
-Caratteristiche
+Sistema di controllo ibrido automatizzato per fotocamere Canon/Nikon tramite **digiCamControl** per bracketing ad alta precisione durante l'**Eclissi Solare Totale del 12 agosto 2026**.
 
-    ⏱️ Sincronizzazione Astronomica: Automatizza la sequenza di scatto basandosi su scostamenti temporali esatti rispetto a C2 e C3.
+Questo script combina l'affidabilità a prova di bomba della CLI di digiCamControl (`CameraControlRemoteCmd.exe`) per il cambio dei parametri della fotocamera con la velocità sotto il millisecondo dei trigger HTTP del Web Server per lo scatto immediato. Ottimizzato per fotocamere astromodificate e progettato per salvare i file **rigorosamente sulla scheda SD della fotocamera**, in modo da massimizzare la velocità di svuotamento del buffer ed evitare il sovraccarico di memoria sul PC.
 
-    📷 Controllo Diaframma Stabilizzato: Forzatura della sintassi nativa (f/X.0) e pause hardware dedicate per evitare blocchi elettronici sulle lenti.
+---
 
-    🤖 Integrazione Telegram: Invio di log in tempo reale, conferme di scatto e notifiche di errore direttamente su un canale o bot Telegram.
+# 🚀 Funzionalità Chiave
 
-    ⚙️ Timeline Personalizzabile: Struttura flessibile basata su stringhe standard TAKEPIC per modificare rapidamente la raffica HDR.
+* **Motore Ibrido:** Impostazione dei parametri tramite CLI nativa (~1s di overhead tra i lunghi intervalli) + trigger di scatto HTTP ultra-rapido (~22ms di latenza per una sincronizzazione esatta).
+* **Salvataggio Forzato solo su SD:** Sovrascrive automaticamente le impostazioni predefinite della sessione di digiCamControl per imporre il salvataggio dei file direttamente sulla scheda di memoria della fotocamera (`CameraMemoryOnly`), mantenendo pulito il PC.
+* **Modalità Debug Interattiva:** Permette di attivare o disattivare facilmente log dettagliati e colorati in console e le richieste URL precise all'avvio.
+* **Notifiche Telegram:** Aggiornamenti in tempo reale, log degli errori e avvisi critici per i filtri inviati direttamente sul tuo telefono.
+* **Ottimizzato per Astromodifica:** Mappatura dei tempi di esposizione della timeline personalizzata per sfruttare la maggiore sensibilità all'Idrogeno Alfa ($H\alpha$ a $656.3\text{ nm}$) per catturare protuberanze solari e cromosfera in modo sbalorditivo.
 
-Prerequisiti
+---
 
-    Sistema Operativo: Windows 10 / 11
+# 🛠️ Prerequisiti e Configurazione
 
-    Python: 3.x
+# 1. Requisiti
+* Sistema operativo Windows con digiCamControl installato.
+* Python 3.x.
+* Una fotocamera DSLR/Mirrorless compatibile (es. serie Canon EOS R) collegata tramite cavo USB-C ad alta velocità.
 
-    Software: digiCamControl installato nel percorso predefinito (C:\\Program Files (x86)\\digiCamControl\\).
+# 2. Struttura dei File
+Assicurati che la cartella del tuo progetto contenga:
+```text
+├── SolarEclipse2026.py   # Lo script principale
+└── secrets.json          # Configurazione del bot Telegram (Opzionale)
 
-    Setup Camera: Corpo macchina impostato su Manuale (M), obiettivo su Fuoco Manuale (MF) e finestra di Live View chiusa nell'interfaccia di digiCamControl.
-=======
-================================================================================
-                    SOLAR ECLIPSE AUTOMATION SCRIPT
-================================================================================
+# 3. Configurazione Telegram (secrets.json)
 
-Script professionale per l'automazione della fotografia durante un'eclissi solare totale
-
-Python 3.8+ | Windows | digiCamControl
-
-================================================================================
-                              INDICE
-================================================================================
-
-1.  Panoramica
-2.  Funzionalità
-3.  Requisiti
-4.  Installazione
-5.  Configurazione
-6.  Utilizzo
-7.  Sequenza Temporale
-8.  Struttura File
-9.  Logging
-10. Risoluzione Problemi
-11. Test
-12. Best Practices
-13. FAQ
-14. Ringraziamenti
-
-================================================================================
-                            1. PANORAMICA
-================================================================================
-
-Questo script automatizza l'intera sequenza fotografica durante un'eclissi 
-solare totale. Controlla la tua fotocamera tramite digiCamControl, esegue 
-sequenze HDR precise, riproduce avvisi audio nei momenti critici e invia 
-notifiche in tempo reale via Telegram.
-
-Perfetto per astrofotografi che vogliono concentrarsi sull'esperienza 
-dell'eclissi mentre lo script gestisce tutte le operazioni della fotocamera 
-con precisione millimetrica.
-
-================================================================================
-                           2. FUNZIONALITÀ
-================================================================================
-
-  Funzionalità           | Descrizione
-  -----------------------|------------------------------------------------------
-  Scatto Automatico      | Sequenza completa dall'inizio alla fine dell'eclissi
-  Timing Assoluto        | Tutte le azioni basate sull'orario esatto del PC
-  Bracketing HDR         | Sequenze di esposizione automatiche per la corona
-  Modalità Raffica       | Scatti continui durante le fasi dell'anello di diamante
-  Avvisi Audio           | Segnali acustici personalizzati per il filtro solare
-  Notifiche Telegram     | Aggiornamenti in tempo reale e comandi remoti
-  Log Dettagliato        | Ogni evento, scatto ed errore registrato con timestamp
-  Integrazione digiCam   | Controllo completo tramite comandi remoti
-  Report Automatico      | Statistiche dettagliate dopo l'evento
-  Recupero Errori        | Tentativi di riconnessione automatici in caso di errore
-
-================================================================================
-                             3. REQUISITI
-================================================================================
-
-HARDWARE:
-  - PC Windows (portatile consigliato per la portabilità)
-  - Fotocamera compatibile (Canon, Nikon, Sony tramite digiCamControl)
-  - Cavo USB
-  - Treppiede (consigliato)
-
-SOFTWARE:
-  - digiCamControl (gratuito) - https://digicamcontrol.com/
-  - Python 3.8 o superiore
-
-LIBRERIE OPZIONALI:
-  pip install requests   # Per le notifiche Telegram
-  pip install psutil     # Per il monitoraggio batteria e spazio su disco
-
-================================================================================
-                            4. INSTALLAZIONE
-================================================================================
-
-PASSO 1: Clona il Repository
-  git clone https://github.com/S85mario/Solar-Eclipse-Automation.git
-  cd Solar-Eclipse-Automation
-
-PASSO 2: Installa digiCamControl
-  Scarica da https://digicamcontrol.com/ e installa
-
-PASSO 3: Installa le Dipendenze Python (Opzionale)
-  pip install requests psutil
-
-PASSO 4: Prepara i File Audio (Opzionale)
-  Crea la cartella: C:\Eclissi\Audio\
-  
-  Aggiungi i file .wav:
-    togli_filtro.wav       - "Togli il filtro solare"
-    metti_filtro.wav       - "Rimetti il filtro solare"
-    mancano_20_secondi.wav - "Conto alla rovescia 20 secondi"
-    errore_connessione.wav - "Errore di connessione"
-    attenzione.wav         - "Attenzione"
-
-================================================================================
-                            5. CONFIGURAZIONE
-================================================================================
-
-CONFIG_ECLIPSE.JSON
-
-Crea questo file nella stessa cartella di main.py:
+Se desideri ricevere avvisi sul telefono in tempo reale sul campo, crea un file secrets.json:
 
 {
-  "hardware": {
-    "marca_camera": "CANON",
-    "gui_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControl.exe",
-    "cmd_path": "C:\\Program Files (x86)\\digiCamControl\\CameraControlRemoteCmd.exe"
-  },
-  "coordinate": {
-    "latitudine_dms": "43°44'08.77\"N",
-    "longitudine_dms": "7°55'20.04\"W"
-  },
-  "timing_eclisse": {
-    "_data": "12 Agosto 2026",
-    "c1_inizio": "19:30:00",
-    "avviso_togli_filtro": "20:26:20",
-    "anello_in_inizio": "20:26:50",
-    "anello_in_fine": "20:27:20",
-    "totalita_inizio": "20:27:25",
-    "totalita_fine": "20:28:40",
-    "anello_out_inizio": "20:28:50",
-    "anello_out_fine": "20:29:20",
-    "avviso_metti_filtro": "20:29:20",
-    "post_parziale_inizio": "20:29:30",
-    "p4_fine": "21:12:00"
-  },
-  "tempi_scatto": {
-    "parziale": ["1/2000"],
-    "burst": ["1/2000"],
-    "corona_interna": ["1/500", "1/250", "1/125", "1/60", "1/30", "1/15"],
-    "corona_esterna": ["1/8", "1/4", "0.5", "1", "2"],
-    "raffica_scatti": 5,
-    "intervallo_parziale_sec": 780
-  },
-  "checklist_items": [
-    "Fotocamera accesa e connessa?",
-    "Cartella di salvataggio configurata?",
-    "Orologio PC sincronizzato?",
-    "File di configurazione valido?",
-    "Batteria sufficiente?",
-    "Spazio libero su disco sufficiente?"
-  ],
-  "parametri_camera": {
-    "iso_default": 200,
-    "apertura_default": 8,
-    "test_tempo": "1/1000"
+  "telegram": {
+    "bot_token": "IL_TUO_BOT_TOKEN_QUI",
+    "chat_id": "IL_TUO_CHAT_ID_QUI"
   }
 }
 
-SECRETS.JSON (per Telegram)
+Fase / Evento,Tempi Relativi alla Totalità,Impostazioni (ISO | Tempo | Diaframma),Obiettivo dello Scatto
+Fase Parziale C1,C2 - 58 min,ISO 100 | 1/250s | f/8.0,Tracciamento Primo Contatto
+Fasi Parziali,C2 -40m / -20m / -10m / -5m,ISO 100 | 1/250s | f/8.0,Tracciamento disco solare
+Anello di Diamante C2,C2 - 5 sec,ISO 400 | 1/100s | f/8.0,Fondersi con i grani di Baily
+Grani di Baily C2,C2 - 2 sec,ISO 200 | 1/3200s | f/16.0,Picchi nitidi nelle valli lunari
+HDR 1,C2 + 0 sec,ISO 200 | 1/4000s | f/8.0,Protuberanze (Hα)
+HDR 2 & 3,C2 + 2 sec / + 4 sec,"ISO 200 | 1/1000s, 1/250s | f/8.0",Corona Interna e Media
+HDR 4 & 5,C2 + 6 sec / + 8 sec,"ISO 200 | 1/60s, 1/15s | f/8.0",Corona Estesa ed Esterna
+HDR 6 & 7,C2 + 10 sec / + 12 sec,"ISO 200 | 1/4s, 1.0s | f/8.0",Strutture Profonde ed Earthshine
+Grani di Baily C3,C3 + 2 sec,ISO 200 | 1/3200s | f/16.0,Prep. anello di diamante Terzo Contatto
+Anello di Diamante C3,C3 + 5 sec,ISO 400 | 1/100s | f/8.0,Uscita dalla Totalità
+Fasi Parziali,C3 +5m fino a +30m,ISO 100 | 1/250s | f/8.0,Tracciamento finale dell'uscita
 
-Crea questo file per le notifiche Telegram:
->>>>>>> ca534a5a0664f09d5be63bc010e0e06a3abd18f4
+📋 Checklist di Dispiegamento sul Campo (Pre-Flight)
 
-Configurazione
+Quando avvii lo script, una checklist interattiva ti chiederà di confermare ogni passaggio fondamentale prima dell'attivazione:
 
-<<<<<<< HEAD
-    Credenziali Telegram: Crea un file chiamato secrets.json nella stessa cartella dello script:
-    JSON
+  1  [ ] ALIMENTAZIONE: PC collegato a una rete stabile/Powerbank e batteria della fotocamera al 100%.
 
-    {
-        "telegram": {
-            "bot_token": "IL_TUO_BOT_TOKEN",
-            "chat_id": "IL_TUO_CHAT_ID"
-        }
-    }
+  2  [ ] CAVO: Cavo di tethering USB-C ad alta velocità bloccato saldamente.
 
-    Orari dell'Eclissi: Modifica le variabili C2_TIME e C3_TIME inserendo gli orari astronomici precisi calcolati per le coordinate geografiche della tua postazione.
-=======
-Come ottenere le credenziali Telegram:
-  1. Apri Telegram e cerca @BotFather
-  2. Invia /newbot e segui le istruzioni
-  3. Copia il token del bot
-  4. Cerca @userinfobot e invia /start
-  5. Copia il tuo chat ID
+  3  [ ] DIGICAMCONTROL: Software attivo, fotocamera rilevata, LIVE VIEW CHIUSO (Fondamentale per evitare lag).
 
-================================================================================
-                             6. UTILIZZO
-================================================================================
+  4  [ ] WEB SERVER: Web Server attivo nelle impostazioni di digiCamControl (porta predefinita 2727).
 
-AVVIA LO SCRIPT:
-  python main.py
+  5  [ ] FUOCO MANUALE (MF): Fuoco bloccato sull'infinito precedentemente tramite Live View, obiettivo commutato su MF e fissato con nastro.
 
-COSA SUCCEDE DURANTE L'ESECUZIONE:
-  1. Controlli Iniziali - Connessione camera, batteria, spazio su disco
-  2. Checklist - Verifica interattiva di tutte le preparazioni
-  3. Configurazione Hardware - digiCamControl si avvia e testa la connessione
-  4. Attesa C1 - Lo script attende silenziosamente l'orario di inizio
-  5. Esecuzione Automatica - Sequenza completa automatica
-  6. Generazione Report - Riepilogo con statistiche alla fine
+  6  [ ] RIVEDILE IMMAGINI: "Rivedi Immagine" impostato su OFF nei menu interni della fotocamera (Fondamentale per prevenire i blocchi BUSY).
 
-COMANDI TELEGRAM (se configurati):
-  /status  - Mostra le statistiche attuali
-  /stop    - Arresto di emergenza
-  /pause   - Pausa temporanea
-  /resume  - Riprendi l'esecuzione
-  /help    - Mostra i comandi disponibili
+  7  [ ] FILTRO SOLARE: Filtro solare ND 3.8/5.0 fissato saldamente per le fasi parziali.
 
-================================================================================
-                        7. SEQUENZA TEMPORALE
-================================================================================
+💻 Utilizzo
 
-SEQUENZA COMPLETA DELL'ECLISSE:
+  1  Avvia digiCamControl e assicurati che la tua fotocamera sia completamente riconosciuta.
 
-  Ora       | Evento                 | Azione
-  ----------|------------------------|-------------------------------------------
-  19:30:00  | C1 - Inizio Parziale   | Scatti ogni 13 minuti
-  20:26:20  | Avviso Filtro          | "Togli il filtro solare"
-  20:26:50  | Anello Diamante IN     | Scatti a raffica per 30 secondi
-  20:27:25  | Totalità (C2)          | Bracketing corona interna
-  20:28:00  | Totalità (C2)          | Bracketing corona esterna
-  20:28:40  | Fine Totalità          | Fine bracketing
-  20:28:50  | Anello Diamante OUT    | Scatti a raffica per 30 secondi
-  20:29:20  | Avviso Filtro          | "Rimetti il filtro solare"
-  20:29:30  | Inizio Post-Parziale   | Scatti ogni 10 minuti
-  21:12:00  | P4 - Fine Eclisse      | Completato
+  2  Apri un terminale/prompt dei comandi nella directory dello script ed esegui:
+    
+    python SolarEclipse2026.py
 
-RIEPILOGO SCATTI:
+  3 Selezione Debug: Lo script chiederà: Vuoi attivare la modalità DEBUG avanzata? (s/N):.
 
-  Fase               | Scatti | Intervallo
-  -------------------|--------|---------------
-  Parziale (IN)      | ~8     | 13 minuti
-  Anello Diamante IN | ~15    | 30 sec raffica
-  Corona Interna     | 6      | Sequenziale
-  Corona Esterna     | 5      | Sequenziale
-  Anello Diamante OUT| ~15    | 30 sec raffica
-  Parziale (OUT)     | ~10    | 10 minuti
-  -------------------|--------|---------------
-  TOTALE             | ~59    |
+    - Premi S per i test (mostra i log completi colorati in ANSI e gli endpoint web attivi).
 
-================================================================================
-                        8. STRUTTURA FILE
-================================================================================
+    - Premi Invio (No) il giorno dell'eclissi per un'esecuzione pulita e standard.
 
-Solar-Eclipse-Automation/
-├── main.py                          # Script principale
-├── config_eclipse.json              # Configurazione
-├── secrets.json                     # Credenziali Telegram (NON CONDIVIDERE!)
-├── eclissi_log.txt                  # Log semplice
-├── eclissi_dettaglio.log            # Log dettagliato con timestamp
-├── report_eclisse_*.txt             # Report automatico
-│
-└── C:\Eclissi\Audio\                # File audio (opzionali)
-    ├── togli_filtro.wav
-    ├── metti_filtro.wav
-    ├── mancano_20_secondi.wav
-    ├── errore_connessione.wav
-    └── attenzione.wav
+  4 Completa la checklist sullo schermo premendo INVIO a ogni passaggio.
+  5 Giù le mani: Una volta avviato, NON toccare il corpo della fotocamera e non premere il pulsante Play per visualizzare l'anteprima delle immagini. Lascia che lo script gestisca il buffer.    
 
-================================================================================
-                            9. LOGGING
-================================================================================
+  ⚠️ Promemoria Critici per la Sicurezza durante la Totalità
 
-DUE FILE DI LOG:
+    Rimozione del Filtro: Lo script emetterà un forte lampeggio in console e un avviso su Telegram a C2 - 4min 50s con scritto: ⚠️ RIMUOVERE FILTRO ND 3.8 ORA!. Rimuovi immediatamente il filtro solare per catturare l'Anello di Diamante e la Totalità.
 
-  eclissi_log.txt          Log semplice con timestamp e messaggi
-  eclissi_dettaglio.log    Log dettagliato con millisecondi e dati JSON
+    Reinserimento del Filtro: Subito dopo l'Anello di Diamante C3, lo script mostrerà l'avviso: 🚨 REINSERIRE FILTRO ND 3.8 IMMEDIATAMENTE!. Riposiziona subito il filtro solare per proteggere il sensore e le ottiche della fotocamera dalla luce solare diretta e concentrata durante le fasi parziali finali.
 
-ESEMPIO DI LOG:
+⚙️ Note sull'Astromodifica
 
-  [2026-06-17 19:30:00.123] [INFO] In attesa dell'orario di inizio PRE-PARZIALE
-  [2026-06-17 19:30:01.789] [SUCCESS] SCATTO: PRE-PARZIALE_1/2000_shot1
-  [2026-06-17 20:26:20.000] [INFO] AVVISO: TOGLI IL FILTRO SOLARE
-  [2026-06-17 20:26:50.000] [INFO] ANELLO_DIAMANTE_IN - Raffica 5 scatti
-  [2026-06-17 21:12:00.000] [INFO] ECLISSE COMPLETATA!
+Questa sequenza è fortemente ottimizzata per sensori privi del filtro IR-cut nativo o con filtro sostituito. Le rapide esposizioni a 1/4000s (HDR 1) risolveranno nativamente una quantità sbalorditiva di contrasto strutturale all'interno dei filamenti solari in idrogeno-alfa, mentre l'intero spettro mostrerà una saturazione rosa/magenta amplificata vicino al confine della corona interna. Assicurati di regolare il Bilanciamento del Bianco in post-produzione partendo dai dati RAW nativi.
 
-================================================================================
-                        10. RISOLUZIONE PROBLEMI
-================================================================================
-
-PROBLEMA: Fotocamera non trovata
-SOLUZIONE:
-  1. Controlla la connessione USB
-  2. Fotocamera in modalità Manuale (M)
-  3. digiCamControl in esecuzione
-  4. Premi "Connect" in digiCamControl
-
-PROBLEMA: digiCamControl non si avvia
-SOLUZIONE: Verifica il percorso in config_eclipse.json
-
-PROBLEMA: Lo script parte immediatamente
-SOLUZIONE: Controlla l'orario c1_inizio nel config - potrebbe essere già passato
-
-PROBLEMA: L'audio non viene riprodotto
-SOLUZIONE: Verifica la cartella C:\Eclissi\Audio\ e i file .wav
-
-PROBLEMA: Telegram non funziona
-SOLUZIONE: Controlla token e chat_id in secrets.json
-
-PROBLEMA: Lo script si blocca
-SOLUZIONE: Aspetta - potrebbe essere in un periodo di attesa programmato
-
-PROBLEMA: Scatti falliti
-SOLUZIONE: La fotocamera potrebbe essere andata in standby - controlla le impostazioni di risparmio energetico
-
-TEST VELOCE FOTOCAMERA:
-  "C:\Program Files (x86)\digiCamControl\CameraControlRemoteCmd.exe" /c get shutterspeed
-  Output atteso: :;response:"1/2000";
-
-================================================================================
-                            11. TEST
-================================================================================
-
-TEST VELOCE CON ORARI MODIFICATI:
-
-Per testare senza aspettare ore, modifica config_eclipse.json:
-
-  "c1_inizio": "20:00:00",
-  "avviso_togli_filtro": "20:10:00",
-  "anello_in_inizio": "20:10:30",
-  "anello_in_fine": "20:11:00",
-  "totalita_inizio": "20:11:05",
-  "totalita_fine": "20:12:20",
-  "anello_out_inizio": "20:12:30",
-  "anello_out_fine": "20:13:00",
-  "avviso_metti_filtro": "20:13:00",
-  "post_parziale_inizio": "20:13:10",
-  "p4_fine": "20:30:00"
-
-Questo comprime l'intera sequenza in circa 30 minuti.
-
-================================================================================
-                        12. BEST PRACTICES
-================================================================================
-
-1 SETTIMANA PRIMA:
-  [ ] Testa lo script con orari modificati
-  [ ] Verifica le batterie della fotocamera (avere ricambi)
-  [ ] Formatta le schede SD
-  [ ] Fai un backup dei file di configurazione
-  [ ] Controlla la qualità del cavo USB
-
-GIORNO PRIMA:
-  [ ] Carica la batteria del PC al 100%
-  [ ] Prepara cavi di ricambio
-  [ ] Verifica l'orientamento del filtro solare
-  [ ] Blocca la messa a fuoco con nastro adesivo
-  [ ] Sincronizza l'orologio del PC (usa time.windows.com)
-
-DURANTE L'ECLISSE:
-  [ ] Non toccare PC o fotocamera
-  [ ] Monitora solo i log (nessuna interazione)
-  [ ] Usa batteria esterna se possibile
-  [ ] Mantieni la calma - lo script fa tutto
-
-DOPO L'ECLISSE:
-  [ ] Fai il backup di tutte le foto
-  [ ] Salva i file di log
-  [ ] Non formattare la SD fino a doppio backup completato
-  [ ] Condividi i tuoi risultati!
-
-================================================================================
-                              13. FAQ
-================================================================================
-
-D: Posso usarlo con qualsiasi fotocamera?
-R: Qualsiasi fotocamera supportata da digiCamControl (Canon, Nikon, Sony)
-
-D: Cosa succede se la fotocamera si disconnette durante l'eclisse?
-R: Lo script tenterà automaticamente di riconnettersi
-
-D: Funziona senza Telegram?
-R: Sì, Telegram è opzionale. Lo script funziona perfettamente anche senza.
-
-D: Posso usare il WiFi invece dell'USB?
-R: Non consigliato - l'USB è più affidabile per eventi critici.
-
-D: Cosa succede se la batteria del PC si scarica?
-R: Al riavvio, lo script riprenderà dall'ultimo stato salvato.
-
-D: Quante foto farà?
-R: Circa 59 scatti (configurabile)
-
-D: Cosa succede se perdo l'orario di inizio?
-R: Lo script rileva se C1 è passato e parte immediatamente.
-
-D: Devo tenere aperto il prompt dei comandi?
-R: Sì, lo script viene eseguito nella finestra del prompt dei comandi.
-
-D: Posso minimizzare la finestra dello script?
-R: Sì, ma non chiuderla.
-
-================================================================================
-                         14. RINGRAZIAMENTI
-================================================================================
-
-- Il team di digiCamControl per l'eccellente software di controllo fotocamera
-- La comunità astrofotografica italiana per i test sul campo
-- Tutti i contributori open source
-
-================================================================================
-                             SUPPORTO
-================================================================================
-
-GitHub Issues: https://github.com/S85mario/Solar-Eclipse-Automation/issues
-
-================================================================================
-
-                      Buona eclisse! 🌞🌑📸
-
-             Documentazione versione 5.0 - Giugno 2026
-
-================================================================================
->>>>>>> ca534a5a0664f09d5be63bc010e0e06a3abd18f4
+Cieli sereni per il 12 agosto 2026! 🌌
