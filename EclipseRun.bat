@@ -1,9 +1,9 @@
 @echo off
-title Solar Eclipse Automation Script v5.0
+title Solar Eclipse Automation Script
 color 0A
 
 echo ============================================================
-echo    SOLAR ECLIPSE AUTOMATION SCRIPT v5.0
+echo    SOLAR ECLIPSE AUTOMATION SCRIPT
 echo    Avvio in corso...
 echo ============================================================
 echo.
