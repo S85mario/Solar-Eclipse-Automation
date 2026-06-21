@@ -1,39 +1,45 @@
 import subprocess
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 import json
 import urllib.request
 import urllib.parse
 import sys
+import email.utils
 
 # ==============================================================================
 # CONFIGURAZIONE GLOBALE E DEBUG COLORE
 # ==============================================================================
-DEBUG_MODE = False  # Viene sovrascritto dall'input iniziale dell'utente
+DEBUG_MODE = False  
 
-# Destinazione salvataggio foto:
-# "1" = Solo su scheda SD della fotocamera (Consigliato per la raffica ad alta velocità)
-# "0" = Solo su PC
-# "2" = Sia su PC che su scheda SD
+# Destinazione salvataggio foto: "1" = SD Camera | "0" = PC | "2" = Entrambi
 TARGET_STORAGE = "1" 
 
 # Codici colore ANSI per la console
 CLR_RESET = "\033[0m"
-CLR_DEBUG = "\033[94m"    # Blu
-CLR_INFO  = "\033[96m"    # Ciano
-CLR_OK    = "\033[92m"    # Verde
-CLR_WARN  = "\033[93m"    # Giallo
-CLR_ERR   = "\033[91m"    # Rosso
+CLR_DEBUG = "\033[94m"    
+CLR_INFO  = "\033[96m"    
+CLR_OK    = "\033[92m"    
+CLR_WARN  = "\033[93m"    
+CLR_ERR   = "\033[91m"    
 CLR_BOLD  = "\033[1m"
 
 def log_debug(msg):
     if DEBUG_MODE:
         print(f"{CLR_DEBUG}[DEBUG] {msg}{CLR_RESET}")
 
-# Inizializzazione supporto colori su Windows Terminal / CMD
 if os.name == 'nt':
     os.system('color')
+
+# SINTESI VOCALE NATIVA WINDOWS (NON-BLOCKING)
+def speach_alert(testo):
+    """Fa parlare il PC in background senza bloccare il timing dello script"""
+    command = f"Add-Type -AssemblyName System.Speech; $val = New-Object System.Speech.Synthesis.SpeechSynthesizer; $val.Speak('{testo}')"
+    try:
+        subprocess.Popen(['powershell', '-Command', command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
 
 # Chiedi all'utente se attivare il Debug all'avvio
 print(f"{CLR_BOLD}{CLR_INFO}=== CONFIGURAZIONE SCRIPT ==={CLR_RESET}")
@@ -46,11 +52,13 @@ else:
     print(f"{CLR_WARN}-> Modalità DEBUG Disattivata (Solo log essenziali).{CLR_RESET}\n")
 
 # ==============================================================================
-# CONFIGURAZIONE ORARI ECLISSI 12 AGOSTO 2026
+# CONFIGURAZIONE ORARI ECLISSI (AGGIORNATI PER TEST OGGI: 21 GIUGNO 2026)
 # ==============================================================================
-C2_TIME = datetime(2026, 6, 20, 14, 13, 10)
-C3_TIME = datetime(2026, 6, 20, 14, 14, 50)
-# Per l'eclissi reale basterà decommentare queste sotto e commentare quelle sopra:
+# IMPORTANTE: Cambia l'ora (ora, minuto) per farla partire qualche minuto nel futuro rispetto a adesso
+C2_TIME = datetime(2026, 6, 21, 14, 23, 00)
+C3_TIME = datetime(2026, 6, 21, 14, 24, 40)
+
+# Per l'eclissi reale basterà decommentare queste sotto:
 #C2_TIME = datetime(2026, 8, 12, 20, 27, 10)
 #C3_TIME = datetime(2026, 8, 12, 20, 28, 50)
 
@@ -83,8 +91,31 @@ def send_telegram_message(message):
     except Exception: pass
 
 # ==============================================================================
-# INTERFACCIA CHECKLIST
+# CONTROLLI PRE-FLIGHT (NTP CHECK & INTERFACCIA)
 # ==============================================================================
+def check_pc_clock_sync():
+    print(f"\n{CLR_BOLD}{CLR_INFO}🌐 VERIFICA SINCRONIZZAZIONE ORARE (NTP CHECK)...{CLR_RESET}")
+    try:
+        req = urllib.request.Request('https://www.google.com', method='HEAD')
+        with urllib.request.urlopen(req, timeout=3) as response:
+            date_header = response.headers.get('Date')
+        if not date_header: return
+        
+        server_time = email.utils.parsedate_to_datetime(date_header)
+        pc_time = datetime.now(timezone.utc)
+        discrepanza = abs((pc_time - server_time).total_seconds())
+        SOGLIA_MASSIMA = 1.0 
+        
+        if discrepanza > SOGLIA_MASSIMA:
+            print(f"{CLR_BOLD}{CLR_ERR}❌ ERRORE CRITICO: L'orologio del PC è sballato di {discrepanza:.2f} secondi!{CLR_RESET}")
+            speach_alert("Attenzione. Orologio del computer non sincronizzato.")
+            scelta = input(f"{CLR_BOLD}Vuoi forzare l'avvio comunque? (y/N): {CLR_RESET}").strip().lower()
+            if scelta != 'y': sys.exit()
+        else:
+            print(f"{CLR_OK}✅ Orologio sincronizzato! Discrepanza: {discrepanza:.2f} secondi.{CLR_RESET}\n")
+    except Exception:
+        print(f"{CLR_WARN}⚠️ Impossibile connettersi al server del tempo per il controllo orario.{CLR_RESET}")
+
 def run_startup_checklist():
     print(f"\n{CLR_BOLD}{CLR_INFO}" + "="*60)
     print("   CHECKLIST CONFIGURAZIONE CONFIGURATA - ECLISSI 2026   ")
@@ -96,14 +127,15 @@ def run_startup_checklist():
         ("WEB SERVER", f"Enable attivo nelle impostazioni sulla porta {PORTA_SERVER}."),
         ("FUOCO MANUALE (MF)", "Obiettivo su MF e ghiera bloccata."),
         ("RIVEDILE IMMAGINI", "Image Review su OFF nei menu della mirrorless."),
-        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fases parziali.")
+        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fasi parziali.")
     ]
     for i, (titolo, descrizione) in enumerate(checklist, 1):
         input(f"[{i}/{len(checklist)}] {CLR_WARN}📌 {titolo}:{CLR_RESET} {descrizione}\n   [INVIO per confermare...]")
-    send_telegram_message("🚀 *Script Online!* Timeline caricata e checklist superata.")
+    send_telegram_message("🚀 *Script Online!* Sincronizzazione completata e checklist superata.")
+    speach_alert("Sistema online. Pronto per l'eclissi.")
 
 # ==============================================================================
-# FUNZIONE DI SCATTO CON LOG DINAMICI E SALVATAGGIO CONFIGURATO
+# FUNZIONE DI SCATTO
 # ==============================================================================
 def execute_camera_command(shutter, aperture, iso, label):
     shutter_clean = shutter.replace('"', '')
@@ -113,87 +145,88 @@ def execute_camera_command(shutter, aperture, iso, label):
     try:
         log_debug(f"Inizio sequenza per: {label}")
         
-        # 1. PREPARAZIONE URL CON SINTASSI NATIVA CORRETTA
         url_iso = f"{BASE_URL_SLC}set&param1=iso&param2={iso}"
         url_aperture = f"{BASE_URL_SLC}set&param1=aperture&param2={aperture_final}"
         url_shutter = f"{BASE_URL_SLC}set&param1=shutterspeed&param2={urllib.parse.quote(shutter_clean)}"
         url_transfer = f"{BASE_URL_SLC}set&param1=transfer&param2={TARGET_STORAGE}"
         
-        # 2. INVIO CONFIGURAZIONI ESPOSIZIONE
-        log_debug(f"Invio ISO -> {iso}")
-        resp_iso = urllib.request.urlopen(url_iso, timeout=2).read().decode('utf-8').strip()
-        log_debug(f"Risposta Server per ISO: {resp_iso}")
+        # Invio configurazioni
+        urllib.request.urlopen(url_iso, timeout=2).read()
         time.sleep(0.05)
-        
-        log_debug(f"Invio Diaframma -> {aperture_final}")
-        resp_ap = urllib.request.urlopen(url_aperture, timeout=2).read().decode('utf-8').strip()
-        log_debug(f"Risposta Server per Diaframma: {resp_ap}")
+        urllib.request.urlopen(url_aperture, timeout=2).read()
         time.sleep(0.05)
-        
-        log_debug(f"Invio Tempo -> {shutter_clean}")
-        resp_sh = urllib.request.urlopen(url_shutter, timeout=2).read().decode('utf-8').strip()
-        log_debug(f"Risposta Server per Tempo: {resp_sh}")
+        urllib.request.urlopen(url_shutter, timeout=2).read()
         time.sleep(0.05)
-
-        # 3. FORZATURA DESTINAZIONE STORAGE (CORRETTA)
-        log_debug(f"Forzo destinazione salvataggio (Modo: {TARGET_STORAGE}) ->")
-        resp_tr = urllib.request.urlopen(url_transfer, timeout=2).read().decode('utf-8').strip()
-        log_debug(f"Risposta Server per Storage: {resp_tr}")
+        urllib.request.urlopen(url_transfer, timeout=2).read()
         
-        # Pausa di stabilizzazione finale pre-scatto
-        time.sleep(0.10)
+        time.sleep(0.15)
         
-        # 4. TRIGGER DI SCATTO (RAFFICA AD ALTA VELOCITÀ PER 0.5 SECONDI)
+        # Scatto
         url_premi = f"{BASE_URL_CMD}CaptureNoAf"
         url_rilascia = f"{BASE_URL_CMD}Release"
         
-        log_debug("⬇️ Pressione pulsante di scatto avviata...")
+        log_debug("⬇️ Scatto avviato...")
         urllib.request.urlopen(url_premi, timeout=2).read()
-        
-        time.sleep(0.50) # Mantiene premuto per la raffica ad alta velocità
-        
-        log_debug("⬆️ Rilascio pulsante di scatto...")
+        time.sleep(0.50) 
         urllib.request.urlopen(url_rilascia, timeout=2).read()
         
-        # Log standard di successo a schermo
         timestamp = datetime.now().strftime('%H:%M:%S.%f')[:-3]
-        print(f"{CLR_OK}[{timestamp}] 📸 {label} -> CONFIGURATO ED ESEGUITO (ISO {iso} | {shutter_clean} | f/{aperture_final}){CLR_RESET}")
-        send_telegram_message(f"📸 `{label}` eseguita (ISO {iso} | {shutter_clean} | f/{aperture_final})")
+        print(f"{CLR_OK}[{timestamp}] 📸 {label} -> ESEGUITO (ISO {iso} | {shutter_clean} | f/{aperture_final}){CLR_RESET}")
+        send_telegram_message(f"📸 `{label}` eseguita.")
         
     except Exception as e:
         print(f"{CLR_ERR}❌ Errore critico su {label}: {e}{CLR_RESET}")
 
 # ==============================================================================
-# TIMELINE DI SCATTO
+# TIMELINE DI SCATTO GENERALE (3 CICLI HDR + FASI PARZIALI)
 # ==============================================================================
 script_data = """
-TAKEPIC,C2,-,58:00,1,1/250,8,100,1,RAW,L,N,Parziale "C1" Primo Contatto -58 min
-TAKEPIC,C2,-,40:00,1,1/250,8,100,1,RAW,L,N,Parziale -40 min
-TAKEPIC,C2,-,20:00,1,1/250,8,100,1,RAW,L,N,Parziale -20 min
-TAKEPIC,C2,-,10:00,1,1/250,8,100,1,RAW,L,N,Parziale -10 min
-TAKEPIC,C2,-,05:00,1,1/250,8,100,1,RAW,L,N,Parziale -5 min
+TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +58 min
+TAKEPIC,C3,-,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +40 min
+TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +20 min
+TAKEPIC,C3,-,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +10 min
+TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +5 min
 TAKEPIC,C2,-,00:05,1,1/100,8,400,3,RAW,L,N,Anello di Diamante C2
 TAKEPIC,C2,-,00:02,1,1/3200,16,200,3,RAW,L,N,Grani di Baily C2
-TAKEPIC,C2,+,00:00,1,1/4000,8,200,3,RAW,L,N,HDR 1 - Protuberanze
-TAKEPIC,C2,+,00:02,1,1/1000,8,200,2,RAW,L,N,HDR 2 - Corona Interna
-TAKEPIC,C2,+,00:04,1,1/250,8,200,2,RAW,L,N,HDR 3 - Corona Media
-TAKEPIC,C2,+,00:06,1,1/60,8,200,2,RAW,L,N,HDR 4 - Corona Media Estesa
-TAKEPIC,C2,+,00:08,1,1/15,8,200,2,RAW,L,N,HDR 5 - Corona Esterna
-TAKEPIC,C2,+,00:10,1,1/4,8,200,2,RAW,L,N,HDR 6 - Strutture Profonde
-TAKEPIC,C2,+,00:12,1,1,8,200,2,RAW,L,N,HDR 7 - Earthshine e Max Corona
+
+TAKEPIC,C2,+,00:00,1,1/4000,8,200,3,RAW,L,N,Ciclo 1 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:02,1,1/1000,8,200,2,RAW,L,N,Ciclo 1 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:04,1,1/250,8,200,2,RAW,L,N,Ciclo 1 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:06,1,1/60,8,200,2,RAW,L,N,Ciclo 1 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:08,1,1/15,8,200,2,RAW,L,N,Ciclo 1 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,00:10,1,1/4,8,200,2,RAW,L,N,Ciclo 1 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,00:12,1,1,8,200,2,RAW,L,N,Ciclo 1 - HDR 7 - Earthshine
+
+TAKEPIC,C2,+,00:25,1,1/4000,8,200,3,RAW,L,N,Ciclo 2 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:27,1,1/1000,8,200,2,RAW,L,N,Ciclo 2 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:29,1,1/250,8,200,2,RAW,L,N,Ciclo 2 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:31,1,1/60,8,200,2,RAW,L,N,Ciclo 2 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:33,1,1/15,8,200,2,RAW,L,N,Ciclo 2 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,00:35,1,1/4,8,200,2,RAW,L,N,Ciclo 2 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,00:37,1,1,8,200,2,RAW,L,N,Ciclo 2 - HDR 7 - Earthshine
+
+TAKEPIC,C2,+,00:50,1,1/4000,8,200,3,RAW,L,N,Ciclo 3 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:52,1,1/1000,8,200,2,RAW,L,N,Ciclo 3 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:54,1,1/250,8,200,2,RAW,L,N,Ciclo 3 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:56,1,1/60,8,200,2,RAW,L,N,Ciclo 3 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:58,1,1/15,8,200,2,RAW,L,N,Ciclo 3 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,01:00,1,1/4,8,200,2,RAW,L,N,Ciclo 3 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,01:02,1,1,8,200,2,RAW,L,N,Ciclo 3 - HDR 7 - Earthshine
+
 TAKEPIC,C3,+,00:02,1,1/3200,16,200,3,RAW,L,N,Grani di Baily C3
 TAKEPIC,C3,+,00:05,1,1/100,8,400,3,RAW,L,N,Anello di Diamond C3
-TAKEPIC,C3,+,05:00,1,1/250,8,100,1,RAW,L,N,Parziale +5 min
-TAKEPIC,C3,+,10:00,1,1/250,8,100,1,RAW,L,N,Parziale +10 min
-TAKEPIC,C3,+,20:00,1,1/250,8,100,1,RAW,L,N,Parziale +20 min
-TAKEPIC,C3,+,30:00,1,1/250,8,100,1,RAW,L,N,Parziale +30 min
-"""
 
+TAKEPIC,C3,+,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +5 min
+TAKEPIC,C3,+,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +10 min
+TAKEPIC,C3,+,20:00,1,1/250,8,100,3,RAW,L,N,Parziale +20 min
+TAKEPIC,C3,+,30:00,1,1/250,8,100,3,RAW,L,N,Parziale +30 min
+"""
 # ==============================================================================
-# LOGICA DI CONTROLLO TEMPORALE
+# LOGICA DI CONTROLLO TEMPORALE (MAIN FLOW)
 # ==============================================================================
 cronoprogramma = []
 for line in script_data.strip().split('\n'):
+    if not line.strip(): continue
     parts = line.split(',')
     _, contatto, segno, offset_str, _, shutter, aperture, iso, _, _, _, _, commento = parts
     minuti, secondi = map(int, offset_str.split(':'))
@@ -203,33 +236,71 @@ for line in script_data.strip().split('\n'):
     cronoprogramma.append({'time': target_time, 'shutter': shutter, 'aperture': aperture, 'iso': iso, 'label': commento})
 
 cronoprogramma.sort(key=lambda x: x['time'])
-run_startup_checklist()
-scatti_validi = [s for s in cronoprogramma if s['time'] > datetime.now()]
 
+# Avvio controlli iniziali
+run_startup_checklist()
+check_pc_clock_sync()
+
+scatti_validi = [s for s in cronoprogramma if s['time'] > datetime.now()]
 print(f"\n{CLR_BOLD}{CLR_INFO}🚀 Monitoraggio avviato. Scatti validi in coda: {len(scatti_validi)}{CLR_RESET}\n")
 
 promemoria_rimozione_inviato = False
 promemoria_inserimento_inviato = False
 
 for scatto in scatti_validi:
+    # Ciclo di attesa preciso al millisecondo per lo scatto corrente
     while datetime.now() < scatto['time']:
         tempo_rimanente = scatto['time'] - datetime.now()
         
+        # ALLARME FILTRO INGRESSO TOTALITÀ (A -4 minuti e 50 secondi dal C2)
         if scatto['label'] == "Anello di Diamante C2" and tempo_rimanente <= timedelta(minutes=4, seconds=50) and not promemoria_rimozione_inviato:
             msg = "⚠️ RIMUOVERE FILTRO ND 3.8 ORA!"
             print(f"\n{CLR_BOLD}{CLR_WARN}{msg}{CLR_RESET}\n")
             send_telegram_message(msg)
+            speach_alert("Attenzione! Rimuovere il filtro solare adesso. Ripeto. Rimuovere il filtro solare immediatamente.")
             promemoria_rimozione_inviato = True
+            
         time.sleep(0.01)
+    
+    # ==========================================================================
+    # REGISTRO DEGLI ANNUNCI VOCALI (TEXT-TO-SPEECH)
+    # ==========================================================================
+    if scatto['label'] == "Anello di Diamante C2":
+        speach_alert("Anello di diamante. Inizio della totalità.")
         
+    elif scatto['label'] == "Grani di Baily C2":
+        speach_alert("Grani di Baily in ingresso.")
+        
+    elif "HDR 1" in scatto['label']:
+        # Estrae dinamicamente "Ciclo 1", "Ciclo 2" o "Ciclo 3" dalla stringa
+        nome_ciclo = scatto['label'].split(" - ")[0]
+        speach_alert(f"Avvio {nome_ciclo} della corona.")
+        
+    elif scatto['label'] == "Grani di Baily C3":
+        speach_alert("Grani di Baily in uscita.")
+        
+    elif scatto['label'] == "Anello di Diamond C3":
+        speach_alert("Anello di diamante in uscita. Fine della totalità.")
+        
+    elif scatto['label'] == "Parziale +5 min":
+        speach_alert("Esecuzione scatto parzialità. Più cinque minuti dal terzo contatto.")
+        
+    elif scatto['label'] == "Parziale +10 min":
+        speach_alert("Esecuzione scatto parzialità. Più dieci minuti dal terzo contatto.")
+
+    # Esecuzione fisica del comando sulla fotocamera
     execute_camera_command(scatto['shutter'], scatto['aperture'], scatto['iso'], scatto['label'])
     
+    # ALLARME FILTRO USCITA TOTALITÀ (Subito dopo lo scatto C3)
     if scatto['label'] == "Anello di Diamond C3" and not promemoria_inserimento_inviato:
         msg = "🚨 REINSERIRE FILTRO ND 3.8 IMMEDIATAMENTE!"
         print(f"\n{CLR_BOLD}{CLR_ERR}{msg}{CLR_RESET}\n")
         send_telegram_message(msg)
+        speach_alert("Pericolo! Reinserire il filtro solare immediatamente! Coprire l'obiettivo!")
         promemoria_inserimento_inviato = True
 
+    # Piccolo cooldown per non intasare il loop di controllo
     time.sleep(0.15)
 
 print(f"\n{CLR_BOLD}{CLR_OK}🏁 Sequenza completata con successo!{CLR_RESET}")
+speach_alert("Tutti gli scatti in programma sono stati eseguiti. Sequenza completata con successo.")
