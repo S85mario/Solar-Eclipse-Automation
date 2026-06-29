@@ -9,9 +9,10 @@ import sys
 import email.utils
 
 # ==============================================================================
-# CONFIGURAZIONE GLOBALE E DEBUG COLORE
+# CONFIGURAZIONE GLOBALE, AGGIORNAMENTO E DEBUG COLORE
 # ==============================================================================
 DEBUG_MODE = False  
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse.py"
 
 # Destinazione salvataggio foto: "1" = SD Camera | "0" = PC | "2" = Entrambi
 TARGET_STORAGE = "1" 
@@ -41,8 +42,46 @@ def speach_alert(testo):
     except Exception:
         pass
 
-# Chiedi all'utente se attivare il Debug all'avvio
-print(f"{CLR_BOLD}{CLR_INFO}=== CONFIGURAZIONE SCRIPT ==={CLR_RESET}")
+# FUNZIONE DI AGGIORNAMENTO AUTOMATICO DA GITHUB
+def check_for_updates():
+    print(f"{CLR_BOLD}{CLR_INFO}🔄 VERIFICA AGGIORNAMENTI DA GITHUB...{CLR_RESET}")
+    scelta_up = input("Vuoi verificare se ci sono aggiornamenti del codice su GitHub? (s/N): ").strip().lower()
+    if scelta_up != 's':
+        print(f"{CLR_WARN}-> Verifica aggiornamenti saltata.{CLR_RESET}\n")
+        return
+
+    try:
+        print(f"{CLR_INFO}Controllo della versione remota...{CLR_RESET}")
+        req = urllib.request.Request(GITHUB_RAW_URL)
+        with urllib.request.urlopen(req, timeout=5) as response:
+            remote_code = response.read().decode('utf-8')
+        
+        # Legge il file locale corrente
+        current_script_path = sys.argv[0]
+        with open(current_script_path, 'r', encoding='utf-8') as f:
+            local_code = f.read()
+        
+        if remote_code.strip() != local_code.strip():
+            print(f"{CLR_BOLD}{CLR_WARN}⚠️ TROVATA NUOVA VERSIONE SU GITHUB!{CLR_RESET}")
+            conferma = input("Vuoi aggiornare e sovrascrivere lo script locale adesso? (s/N): ").strip().lower()
+            if conferma == 's':
+                with open(current_script_path, 'w', encoding='utf-8') as f:
+                    f.write(remote_code)
+                print(f"{CLR_BOLD}{CLR_OK}✅ Script aggiornato con successo! Riavvia lo script per applicare le modifiche.{CLR_RESET}")
+                speach_alert("Aggiornamento completato. Riavviare il programma.")
+                sys.exit()
+            else:
+                print(f"{CLR_WARN}-> Aggiornamento annullato dall'utente.{CLR_RESET}\n")
+        else:
+            print(f"{CLR_OK}✅ Il codice è già aggiornato all'ultima versione di GitHub.{CLR_RESET}\n")
+    except Exception as e:
+        print(f"{CLR_ERR}❌ Impossibile verificare gli aggiornamenti: {e}{CLR_RESET}\n")
+
+# Esegui subito il controllo aggiornamenti all'avvio
+check_for_updates()
+
+# Chiedi all'utente se attivare il Debug
+print(f"{CLR_BOLD}{CLR_INFO}=== CONFIGURAZIONE DEBUG ==={CLR_RESET}")
 scelta_debug = input("Vuoi attivare la modalità DEBUG avanzata? (s/N): ").strip().lower()
 if scelta_debug == 's':
     DEBUG_MODE = True
@@ -52,15 +91,44 @@ else:
     print(f"{CLR_WARN}-> Modalità DEBUG Disattivata (Solo log essenziali).{CLR_RESET}\n")
 
 # ==============================================================================
-# CONFIGURAZIONE ORARI ECLISSI (AGGIORNATI PER TEST OGGI: 21 GIUGNO 2026)
+# CONFIGURAZIONE DINAMICA ORARI ECLISSI
 # ==============================================================================
-# IMPORTANTE: Cambia l'ora (ora, minuto) per farla partire qualche minuto nel futuro rispetto a adesso
-C2_TIME = datetime(2026, 6, 21, 14, 23, 00)
-C3_TIME = datetime(2026, 6, 21, 14, 24, 40)
+print(f"{CLR_BOLD}{CLR_INFO}=== IMPOSTAZIONE ORARI ECLISSI ==={CLR_RESET}")
+print("1) Imposta Orari REALI (12 Agosto 2026)")
+print("2) Imposta Orari TEST RAPIDO (Oggi - Qualche minuto nel futuro)")
+print("3) Inserimento MANUALE personalizzato")
+scelta_ora = input("Scegli un'opzione (1/2/3): ").strip()
 
-# Per l'eclissi reale basterà decommentare queste sotto:
-#C2_TIME = datetime(2026, 8, 12, 20, 27, 10)
-#C3_TIME = datetime(2026, 8, 12, 20, 28, 50)
+now = datetime.now()
+
+if scelta_ora == '1':
+    C2_TIME = datetime(2026, 8, 12, 20, 27, 10)
+    C3_TIME = datetime(2026, 8, 12, 20, 28, 50)
+elif scelta_ora == '2':
+    # Imposta automaticamente il test a +2 minuti da adesso per il C2 e +4 per il C3
+    C2_TIME = now + timedelta(minutes=2)
+    C3_TIME = now + timedelta(minutes=4)
+else:
+    print(f"\n{CLR_WARN}Inserisci i dati per l'orario personalizzato (Formato numerico):{CLR_RESET}")
+    anno = int(input("Anno (es. 2026): ").strip())
+    mese = int(input("Mese (1-12): ").strip())
+    giorno = int(input("Giorno (1-31): ").strip())
+    
+    print(f"\n{CLR_INFO}-> Configurazione Contatto C2 (Inizio Totalità):{CLR_RESET}")
+    ora_c2 = int(input("  Ora (0-23): ").strip())
+    min_c2 = int(input("  Minuto (0-59): ").strip())
+    sec_c2 = int(input("  Secondo (0-59): ").strip())
+    C2_TIME = datetime(anno, mese, giorno, ora_c2, min_c2, sec_c2)
+    
+    print(f"\n{CLR_INFO}-> Configurazione Contatto C3 (Fine Totalità):{CLR_RESET}")
+    ora_c3 = int(input("  Ora (0-23): ").strip())
+    min_c3 = int(input("  Minuto (0-59): ").strip())
+    sec_c3 = int(input("  Secondo (0-59): ").strip())
+    C3_TIME = datetime(anno, mese, giorno, ora_c3, min_c3, sec_c3)
+
+print(f"\n{CLR_BOLD}{CLR_OK}⏱️ ORARI CONFIGURATI PER LA SESSIONE:{CLR_RESET}")
+print(f"🔴 C2 (Inizio Totalità): {C2_TIME.strftime('%Y-%m-%d %H:%M:%S')}")
+print(f"🔵 C3 (Fine Totalità):   {C3_TIME.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 PORTA_SERVER = "2727" 
 BASE_URL_SLC = f"http://127.0.0.1:{PORTA_SERVER}/?slc="
@@ -94,7 +162,7 @@ def send_telegram_message(message):
 # CONTROLLI PRE-FLIGHT (NTP CHECK & INTERFACCIA)
 # ==============================================================================
 def check_pc_clock_sync():
-    print(f"\n{CLR_BOLD}{CLR_INFO}🌐 VERIFICA SINCRONIZZAZIONE ORARE (NTP CHECK)...{CLR_RESET}")
+    print(f"\n{CLR_BOLD}{CLR_INFO}🌐 VERIFICA SINCRONIZZAZIONE ORA (NTP CHECK)...{CLR_RESET}")
     try:
         req = urllib.request.Request('https://www.google.com', method='HEAD')
         with urllib.request.urlopen(req, timeout=3) as response:
@@ -112,7 +180,7 @@ def check_pc_clock_sync():
             scelta = input(f"{CLR_BOLD}Vuoi forzare l'avvio comunque? (y/N): {CLR_RESET}").strip().lower()
             if scelta != 'y': sys.exit()
         else:
-            print(f"{CLR_OK}✅ Orologio sincronizzato! Discrepanza: {discrepanza:.2f} secondi.{CLR_RESET}\n")
+            print(f"{CLR_OK}✅ Orologio synchronized! Discrepanza: {discrepanza:.2f} secondi.{CLR_RESET}\n")
     except Exception:
         print(f"{CLR_WARN}⚠️ Impossibile connettersi al server del tempo per il controllo orario.{CLR_RESET}")
 
@@ -126,8 +194,8 @@ def run_startup_checklist():
         ("DIGICAMCONTROL", "Software aperto, Camera rilevata, LIVE VIEW CHIUSO."),
         ("WEB SERVER", f"Enable attivo nelle impostazioni sulla porta {PORTA_SERVER}."),
         ("FUOCO MANUALE (MF)", "Obiettivo su MF e ghiera bloccata."),
-        ("RIVEDILE IMMAGINI", "Image Review su OFF nei menu della mirrorless."),
-        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fasi parziali.")
+        ("VISUALIZZAZIONE IMMAGINI", "Image Review su OFF nei menu della mirrorless."),
+        ("FILTRO SOLARE", "Filtro ND 3.8 inserito per le fases parziali.")
     ]
     for i, (titolo, descrizione) in enumerate(checklist, 1):
         input(f"[{i}/{len(checklist)}] {CLR_WARN}📌 {titolo}:{CLR_RESET} {descrizione}\n   [INVIO per confermare...]")
@@ -181,45 +249,50 @@ def execute_camera_command(shutter, aperture, iso, label):
 # TIMELINE DI SCATTO GENERALE (3 CICLI HDR + FASI PARZIALI)
 # ==============================================================================
 script_data = """
-TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +58 min
-TAKEPIC,C3,-,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +40 min
-TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +20 min
-TAKEPIC,C3,-,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +10 min
-TAKEPIC,C3,-,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +5 min
-TAKEPIC,C2,-,00:05,1,1/100,8,400,3,RAW,L,N,Anello di Diamante C2
-TAKEPIC,C2,-,00:02,1,1/3200,16,200,3,RAW,L,N,Grani di Baily C2
+TAKEPIC,C3,-,58:00,1,1/250,8,100,1,RAW,L,N,Parziale +58 min
+TAKEPIC,C3,-,40:00,1,1/250,8,100,1,RAW,L,N,Parziale +40 min
+TAKEPIC,C3,-,20:00,1,1/250,8,100,1,RAW,L,N,Parziale +20 min
+TAKEPIC,C3,-,10:00,1,1/250,8,100,1,RAW,L,N,Parziale +10 min
+TAKEPIC,C3,-,05:00,1,1/250,8,100,1,RAW,L,N,Parziale +5 min
+TAKEPIC,C3,-,01:00,1,1/250,8,100,1,RAW,L,N,Parziale +1 min
+TAKEPIC,C2,-,00:10,1,1/100,8,400,1,RAW,L,N,Grani di Baily C2
+TAKEPIC,C2,-,00:08,1,1/100,8,400,1,RAW,L,N,Grani di Baily C2
+TAKEPIC,C2,-,00:05,1,1/3200,16,200,1,RAW,L,N,Anello di Diamante C2
+TAKEPIC,C2,-,00:02,1,1/3200,16,200,1,RAW,L,N,Anello di Diamante C2
 
-TAKEPIC,C2,+,00:00,1,1/4000,8,200,3,RAW,L,N,Ciclo 1 - HDR 1 - Protuberanze
-TAKEPIC,C2,+,00:02,1,1/1000,8,200,2,RAW,L,N,Ciclo 1 - HDR 2 - Corona Interna
-TAKEPIC,C2,+,00:04,1,1/250,8,200,2,RAW,L,N,Ciclo 1 - HDR 3 - Corona Media
-TAKEPIC,C2,+,00:06,1,1/60,8,200,2,RAW,L,N,Ciclo 1 - HDR 4 - Corona Media Estesa
-TAKEPIC,C2,+,00:08,1,1/15,8,200,2,RAW,L,N,Ciclo 1 - HDR 5 - Corona Esterna
-TAKEPIC,C2,+,00:10,1,1/4,8,200,2,RAW,L,N,Ciclo 1 - HDR 6 - Strutture Profonde
-TAKEPIC,C2,+,00:12,1,1,8,200,2,RAW,L,N,Ciclo 1 - HDR 7 - Earthshine
+TAKEPIC,C2,+,00:00,1,1/4000,8,200,1,RAW,L,N,Ciclo 1 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:02,1,1/1000,8,200,1,RAW,L,N,Ciclo 1 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:04,1,1/250,8,200,1,RAW,L,N,Ciclo 1 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:06,1,1/60,8,200,1,RAW,L,N,Ciclo 1 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:08,1,1/15,8,200,1,RAW,L,N,Ciclo 1 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,00:10,1,1/4,8,200,1,RAW,L,N,Ciclo 1 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,00:12,1,1,8,200,1,RAW,L,N,Ciclo 1 - HDR 7 - Earthshine
 
-TAKEPIC,C2,+,00:25,1,1/4000,8,200,3,RAW,L,N,Ciclo 2 - HDR 1 - Protuberanze
-TAKEPIC,C2,+,00:27,1,1/1000,8,200,2,RAW,L,N,Ciclo 2 - HDR 2 - Corona Interna
-TAKEPIC,C2,+,00:29,1,1/250,8,200,2,RAW,L,N,Ciclo 2 - HDR 3 - Corona Media
-TAKEPIC,C2,+,00:31,1,1/60,8,200,2,RAW,L,N,Ciclo 2 - HDR 4 - Corona Media Estesa
-TAKEPIC,C2,+,00:33,1,1/15,8,200,2,RAW,L,N,Ciclo 2 - HDR 5 - Corona Esterna
-TAKEPIC,C2,+,00:35,1,1/4,8,200,2,RAW,L,N,Ciclo 2 - HDR 6 - Strutture Profonde
-TAKEPIC,C2,+,00:37,1,1,8,200,2,RAW,L,N,Ciclo 2 - HDR 7 - Earthshine
+TAKEPIC,C2,+,00:25,1,1/4000,8,200,1,RAW,L,N,Ciclo 2 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:27,1,1/1000,8,200,1,RAW,L,N,Ciclo 2 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:29,1,1/250,8,200,1,RAW,L,N,Ciclo 2 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:31,1,1/60,8,200,1,RAW,L,N,Ciclo 2 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:33,1,1/15,8,200,1,RAW,L,N,Ciclo 2 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,00:35,1,1/4,8,200,1,RAW,L,N,Ciclo 2 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,00:37,1,1,8,200,1,RAW,L,N,Ciclo 2 - HDR 7 - Earthshine
 
-TAKEPIC,C2,+,00:50,1,1/4000,8,200,3,RAW,L,N,Ciclo 3 - HDR 1 - Protuberanze
-TAKEPIC,C2,+,00:52,1,1/1000,8,200,2,RAW,L,N,Ciclo 3 - HDR 2 - Corona Interna
-TAKEPIC,C2,+,00:54,1,1/250,8,200,2,RAW,L,N,Ciclo 3 - HDR 3 - Corona Media
-TAKEPIC,C2,+,00:56,1,1/60,8,200,2,RAW,L,N,Ciclo 3 - HDR 4 - Corona Media Estesa
-TAKEPIC,C2,+,00:58,1,1/15,8,200,2,RAW,L,N,Ciclo 3 - HDR 5 - Corona Esterna
-TAKEPIC,C2,+,01:00,1,1/4,8,200,2,RAW,L,N,Ciclo 3 - HDR 6 - Strutture Profonde
-TAKEPIC,C2,+,01:02,1,1,8,200,2,RAW,L,N,Ciclo 3 - HDR 7 - Earthshine
+TAKEPIC,C2,+,00:50,1,1/4000,8,200,1,RAW,L,N,Ciclo 3 - HDR 1 - Protuberanze
+TAKEPIC,C2,+,00:52,1,1/1000,8,200,1,RAW,L,N,Ciclo 3 - HDR 2 - Corona Interna
+TAKEPIC,C2,+,00:54,1,1/250,8,200,1,RAW,L,N,Ciclo 3 - HDR 3 - Corona Media
+TAKEPIC,C2,+,00:56,1,1/60,8,200,1,RAW,L,N,Ciclo 3 - HDR 4 - Corona Media Estesa
+TAKEPIC,C2,+,00:58,1,1/15,8,200,1,RAW,L,N,Ciclo 3 - HDR 5 - Corona Esterna
+TAKEPIC,C2,+,01:00,1,1/4,8,200,1,RAW,L,N,Ciclo 3 - HDR 6 - Strutture Profonde
+TAKEPIC,C2,+,01:02,1,1,8,200,1,RAW,L,N,Ciclo 3 - HDR 7 - Earthshine
 
-TAKEPIC,C3,+,00:02,1,1/3200,16,200,3,RAW,L,N,Grani di Baily C3
-TAKEPIC,C3,+,00:05,1,1/100,8,400,3,RAW,L,N,Anello di Diamond C3
+TAKEPIC,C2,+,00:10,1,1/100,8,400,1,RAW,L,N,Grani di Baily C2
+TAKEPIC,C2,+,00:08,1,1/100,8,400,1,RAW,L,N,Grani di Baily C2
+TAKEPIC,C2,+,00:05,1,1/3200,16,200,1,RAW,L,N,Anello di Diamante C2
+TAKEPIC,C2,+,00:02,1,1/3200,16,200,1,RAW,L,N,Anello di Diamante C2
 
-TAKEPIC,C3,+,05:00,1,1/250,8,100,3,RAW,L,N,Parziale +5 min
-TAKEPIC,C3,+,10:00,1,1/250,8,100,3,RAW,L,N,Parziale +10 min
-TAKEPIC,C3,+,20:00,1,1/250,8,100,3,RAW,L,N,Parziale +20 min
-TAKEPIC,C3,+,30:00,1,1/250,8,100,3,RAW,L,N,Parziale +30 min
+TAKEPIC,C3,+,05:00,1,1/250,8,100,1,RAW,L,N,Parziale +5 min
+TAKEPIC,C3,+,10:00,1,1/250,8,100,1,RAW,L,N,Parziale +10 min
+TAKEPIC,C3,+,20:00,1,1/250,8,100,1,RAW,L,N,Parziale +20 min
+TAKEPIC,C3,+,30:00,1,1/250,8,100,1,RAW,L,N,Parziale +30 min
 """
 # ==============================================================================
 # LOGICA DI CONTROLLO TEMPORALE (MAIN FLOW)
@@ -272,7 +345,6 @@ for scatto in scatti_validi:
         speach_alert("Grani di Baily in ingresso.")
         
     elif "HDR 1" in scatto['label']:
-        # Estrae dinamicamente "Ciclo 1", "Ciclo 2" o "Ciclo 3" dalla stringa
         nome_ciclo = scatto['label'].split(" - ")[0]
         speach_alert(f"Avvio {nome_ciclo} della corona.")
         
