@@ -7,7 +7,8 @@ echo    SOLAR ECLIPSE AUTOMATION SCRIPT
 echo    Avvio in corso...
 echo ============================================================
 echo.
-REM cls
+
+:LOOP
 REM Verifica che Python sia installato
 python --version >nul 2>&1
 if errorlevel 1 (
@@ -34,10 +35,24 @@ if not exist "SolarEclipse.py" (
 echo [INFO] Avvio %SCRIPT_FILE%...
 echo.
 
+REM Lancia lo script Python
 python %SCRIPT_FILE%
+
+REM Cattura il codice di uscita restituito da sys.exit()
+set EXIT_CODE=%errorlevel%
 
 echo.
 echo ============================================================
-echo    Script terminato
+echo    Script interrotto o terminato con codice: %EXIT_CODE%
 echo ============================================================
+
+REM Se il codice è 5, significa che Python ha fatto l'aggiornamento e vuole ripartire
+if %EXIT_CODE% equ 5 (
+    echo [AGGIORNAMENTO] Rilevato aggiornamento codice. Riavvio automatico...
+    timeout /t 2 >nul
+    cls
+    goto LOOP
+)
+
+REM Se il codice è 0 (finito normalmente) o qualsiasi altra cosa, si ferma qui
 pause
