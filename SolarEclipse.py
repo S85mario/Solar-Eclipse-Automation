@@ -42,14 +42,9 @@ def speach_alert(testo):
     except Exception:
         pass
 
-# FUNZIONE DI AGGIORNAMENTO AUTOMATICO DA GITHUB
+# FUNZIONE DI AGGIORNAMENTO AUTOMATICO DA GITHUB (FORZATO SENZA INPUT)
 def check_for_updates():
-    print(f"{CLR_BOLD}{CLR_INFO}🔄 VERIFICA AGGIORNAMENTI DA GITHUB...{CLR_RESET}")
-    scelta_up = input("Vuoi verificare se ci sono aggiornamenti del codice su GitHub? (s/N): ").strip().lower()
-    if scelta_up != 's':
-        print(f"{CLR_WARN}-> Verifica aggiornamenti saltata.{CLR_RESET}\n")
-        return
-
+    print(f"{CLR_BOLD}{CLR_INFO}🔄 VERIFICA AGGIORNAMENTO DA GITHUB...{CLR_RESET}")
     try:
         print(f"{CLR_INFO}Controllo della versione remota...{CLR_RESET}")
         req = urllib.request.Request(GITHUB_RAW_URL)
@@ -62,16 +57,17 @@ def check_for_updates():
             local_code = f.read()
         
         if remote_code.strip() != local_code.strip():
-            print(f"{CLR_BOLD}{CLR_WARN}⚠️ TROVATA NUOVA VERSIONE SU GITHUB!{CLR_RESET}")
-            conferma = input("Vuoi aggiornare e sovrascrivere lo script locale adesso? (s/N): ").strip().lower()
-            if conferma == 's':
-                with open(current_script_path, 'w', encoding='utf-8') as f:
-                    f.write(remote_code)
-                print(f"{CLR_BOLD}{CLR_OK}✅ Script aggiornato con successo! Riavvia lo script per applicare le modifiche.{CLR_RESET}")
-                speach_alert("Aggiornamento completato. Riavviare il programma.")
-                sys.exit(5)
-            else:
-                print(f"{CLR_WARN}-> Aggiornamento annullato dall'utente.{CLR_RESET}\n")
+            print(f"{CLR_BOLD}{CLR_WARN}⚠️ TROVATA NUOVA VERSIONE! Aggiornamento automatico in corso...{CLR_RESET}")
+            
+            # Scrive direttamente il nuovo codice sul file locale
+            with open(current_script_path, 'w', encoding='utf-8') as f:
+                f.write(remote_code)
+                
+            print(f"{CLR_BOLD}{CLR_OK}✅ Script aggiornato con successo! Riavvio automatico...{CLR_RESET}")
+            speach_alert("Aggiornamento completato. Riavvio in corso.")
+            
+            # Esci con codice 5 per far ricascare il file .bat nel loop e farlo ripartire
+            sys.exit(5)
         else:
             print(f"{CLR_OK}✅ Il codice è già aggiornato all'ultima versione di GitHub.{CLR_RESET}\n")
     except Exception as e:
