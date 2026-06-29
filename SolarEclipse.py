@@ -44,7 +44,7 @@ def speach_alert(testo):
 
 # FUNZIONE DI AGGIORNAMENTO AUTOMATICO DA GITHUB
 def check_for_updates():
-    print(f"{CLR_BOLD}{CLR_INFO}🔄 VERIFICA AGGIORNAMENTI DA GITHUB...{CLR_RESET}")
+    print(f"{CLR_BOLD}{CLR_INFO}🔄 VERIFICA  DA GITHUB...{CLR_RESET}")
     scelta_up = input("Vuoi verificare se ci sono aggiornamenti del codice su GitHub? (s/N): ").strip().lower()
     if scelta_up != 's':
         print(f"{CLR_WARN}-> Verifica aggiornamenti saltata.{CLR_RESET}\n")
