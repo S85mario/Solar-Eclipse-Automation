@@ -43,11 +43,11 @@ set EXIT_CODE=%errorlevel%
 
 echo.
 echo ============================================================
-echo    Script interrotto o terminato con codice: %EXIT_CODE%
+echo    Script interrotto o terminato con codice: %errorlevel%
 echo ============================================================
 
-REM Se il codice è 5, significa che Python ha fatto l'aggiornamento e vuole ripartire
-if %EXIT_CODE% equ 5 (
+REM Usiamo direttamente %errorlevel% senza assegnarlo a una nuova variabile
+if %errorlevel% equ 5 (
     echo [AGGIORNAMENTO] Rilevato aggiornamento codice. Riavvio automatico...
     timeout /t 2 >nul
     cls
