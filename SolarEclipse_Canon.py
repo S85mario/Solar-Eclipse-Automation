@@ -117,7 +117,7 @@ def get_ora_corretta_ora():
 # FUNZIONE DI AGGIORNAMENTO SU RICHIESTA VIA MENU
 # ==============================================================================
 def check_for_updates():
-    URL_AGGIORNAMENTO = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse.py"
+    URL_AGGIORNAMENTO = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse_Canon.py"
     log_all("info", "🔄 VERIFICA AGGIORNAMENTI DA GITHUB IN CORSO...", CLR_BOLD + CLR_INFO)
     try:
         req = urllib.request.Request(URL_AGGIORNAMENTO)

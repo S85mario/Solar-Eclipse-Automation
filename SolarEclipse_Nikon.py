@@ -80,7 +80,7 @@ def misura_discrepanza_oraria():
     global DISCREPANZA_TEMPO
     log_all("info", "⏱️ CALCOLO DISCREPANZA: Verifica sfasamento orario con il server...", CLR_BOLD + CLR_INFO)
     try:
-        url_target = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse.py"
+        url_target = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse_Nikon.py"
         req = urllib.request.Request(url_target, method='HEAD')
         
         # Prendiamo il tempo del PC prima e dopo la richiesta per compensare la latenza di rete
