@@ -19,7 +19,7 @@ if errorlevel 1 (
 )
 
 REM Verifica che il file SolarEclipse.py esista
-if not exist "SolarEclipse.py" (
+if not exist "SolarEclipse_Canon.py" (
     if not exist "eclipse_automation.py" (
         echo [ERRORE] File SolarEclipse.py o eclipse_automation.py non trovato!
         echo Assicurati di essere nella cartella corretta
@@ -29,7 +29,7 @@ if not exist "SolarEclipse.py" (
         set SCRIPT_FILE=eclipse_automation.py
     )
 ) else (
-    set SCRIPT_FILE=SolarEclipse.py
+    set SCRIPT_FILE=SolarEclipse_Canon.py
 )
 
 echo [INFO] Avvio %SCRIPT_FILE%...
