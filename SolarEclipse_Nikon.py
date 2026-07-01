@@ -80,7 +80,7 @@ def misura_discrepanza_oraria():
     global DISCREPANZA_TEMPO
     log_all("info", "⏱️ CALCOLO DISCREPANZA: Verifica sfasamento orario con il server...", CLR_BOLD + CLR_INFO)
     try:
-        url_target = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse_Nikon.py"
+        url_target = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse.py"
         req = urllib.request.Request(url_target, method='HEAD')
         
         # Prendiamo il tempo del PC prima e dopo la richiesta per compensare la latenza di rete
@@ -117,7 +117,7 @@ def get_ora_corretta_ora():
 # FUNZIONE DI AGGIORNAMENTO SU RICHIESTA VIA MENU
 # ==============================================================================
 def check_for_updates():
-    URL_AGGIORNAMENTO = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse.py"
+    URL_AGGIORNAMENTO = "https://raw.githubusercontent.com/S85mario/Solar-Eclipse-Automation/main/SolarEclipse_Nikon.py"
     log_all("info", "🔄 VERIFICA AGGIORNAMENTI DA GITHUB IN CORSO...", CLR_BOLD + CLR_INFO)
     try:
         req = urllib.request.Request(URL_AGGIORNAMENTO)
